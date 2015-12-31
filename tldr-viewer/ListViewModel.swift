@@ -9,7 +9,9 @@
 import Foundation
 
 class ListViewModel {
+    // no-op closures until the ViewController provides its own
     var updateSignal: () -> Void = {}
+    var showDetail: (detailViewModel: DetailViewModel) -> Void = {(vm) in}
     
     internal var cellViewModels = [BaseCellViewModel]()
     
@@ -39,11 +41,18 @@ class ListViewModel {
         var vms = [BaseCellViewModel]()
         
         for command in commands {
-            let cellViewModel = CommandCellViewModel(command: command)
+            let cellViewModel = CommandCellViewModel(command: command, action: {
+                let detailViewModel = DetailViewModel(command: command)
+                self.showDetail(detailViewModel: detailViewModel)
+            })
             vms.append(cellViewModel)
         }
         
         self.cellViewModels = vms
         self.updateSignal()
+    }
+    
+    func didSelectRowAtIndexPath(indexPath: NSIndexPath) {
+        self.cellViewModels[indexPath.row].performAction()
     }
 }

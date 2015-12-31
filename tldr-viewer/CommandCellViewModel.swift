@@ -9,12 +9,18 @@
 import Foundation
 
 struct CommandCellViewModel: BaseCellViewModel {
+    typealias CellViewModelAction = () -> Void
+    
     var cellIdentifier: String!
+    var action: CellViewModelAction = {}
+    
     var commandText: String!
     var platforms: String!
     
-    init(command: Command) {
+    init(command: Command, action: CellViewModelAction) {
         self.cellIdentifier = "CommandCell"
+        self.action = action
+        
         self.commandText = command.name
         
         var platforms = ""
@@ -26,5 +32,9 @@ struct CommandCellViewModel: BaseCellViewModel {
         }
         
         self.platforms = platforms
+    }
+    
+    func performAction() {
+        self.action()
     }
 }

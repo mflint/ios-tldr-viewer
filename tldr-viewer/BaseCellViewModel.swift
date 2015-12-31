@@ -10,4 +10,6 @@ import Foundation
 
 protocol BaseCellViewModel {
     var cellIdentifier: String! { get }
+    var action: () -> Void { get set}
+    func performAction()
 }

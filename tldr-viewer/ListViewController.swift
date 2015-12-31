@@ -14,8 +14,15 @@ class ListViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.viewModel = ListViewModel()
+        
         self.viewModel.updateSignal = {
-            self.tableView.reloadData()
+            dispatch_async(dispatch_get_main_queue(), {
+                self.tableView.reloadData()
+            })
+        }
+        
+        self.viewModel.showDetail = {(detailViewModel) -> Void in
+            self.performSegueWithIdentifier("showDetail", sender: detailViewModel)
         }
     }
 
@@ -27,6 +34,15 @@ class ListViewController: UITableViewController {
     // MARK: - Segues
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        var destinationVC = segue.destinationViewController as UIViewController
+        
+        if let navigationVC = destinationVC as? UINavigationController {
+            destinationVC = navigationVC.topViewController!
+        }
+        
+        if let detailVC = destinationVC as? DetailViewController, detailViewModel = sender as? DetailViewModel {
+            detailVC.viewModel = detailViewModel
+        }
     }
 
     // MARK: - Table View
@@ -46,6 +62,10 @@ class ListViewController: UITableViewController {
             baseCell.configure(cellViewModel)
         }
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.viewModel.didSelectRowAtIndexPath(indexPath)
     }
 }
 

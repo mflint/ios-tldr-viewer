@@ -22,6 +22,7 @@
 		342514A71C34BCEF001D31F4 /* TLDRRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342514A61C34BCEF001D31F4 /* TLDRRequest.swift */; };
 		342514A91C34BD82001D31F4 /* TLDRResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342514A81C34BD82001D31F4 /* TLDRResponse.swift */; };
 		342514AB1C34C5D8001D31F4 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342514AA1C34C5D8001D31F4 /* Command.swift */; };
+		342514AF1C353FD3001D31F4 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342514AE1C353FD3001D31F4 /* DetailViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		342514A61C34BCEF001D31F4 /* TLDRRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TLDRRequest.swift; sourceTree = "<group>"; };
 		342514A81C34BD82001D31F4 /* TLDRResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TLDRResponse.swift; sourceTree = "<group>"; };
 		342514AA1C34C5D8001D31F4 /* Command.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
+		342514AE1C353FD3001D31F4 /* DetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				342514871C349D96001D31F4 /* DetailViewController.swift */,
+				342514AE1C353FD3001D31F4 /* DetailViewModel.swift */,
 			);
 			name = Detail;
 			sourceTree = "<group>";
@@ -198,6 +201,7 @@
 				342514A51C34BA05001D31F4 /* TLDRURLSessionConfiguration.swift in Sources */,
 				342514A71C34BCEF001D31F4 /* TLDRRequest.swift in Sources */,
 				342514841C349D96001D31F4 /* AppDelegate.swift in Sources */,
+				342514AF1C353FD3001D31F4 /* DetailViewModel.swift in Sources */,
 				3425149F1C34AA9F001D31F4 /* BaseCell.swift in Sources */,
 				3425149D1C34A4CC001D31F4 /* BaseCellViewModel.swift in Sources */,
 				342514AB1C34C5D8001D31F4 /* Command.swift in Sources */,
