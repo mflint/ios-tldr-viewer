@@ -1,0 +1,47 @@
+body {
+    font-family: 'Avenir-Book';
+    font-size: 1.25em;
+    margin: 1em;
+    word-wrap: break-word;
+}
+
+p {
+    margin: 0;
+}
+
+h1 {
+    font-size: 2em;
+    margin: 0 0.23em;
+}
+
+blockquote {
+    font-family: 'Avenir-Book';
+    font-size: 1.25em;
+    margin: 0 0.55em;
+}
+
+code {
+    font-family: 'Menlo-Regular';
+    background-color: #f2f2f2;
+    color: #212121;
+    display: block;
+    padding: 0.55em 3em;
+    margin: 0;
+}
+
+ul {
+    list-style: none;
+    padding: 0 !important;
+    margin: 1em 0 0 0;
+    margin-top: 1em
+}
+
+li {
+    padding: 0.5em 0.55em;
+    line-height: 1.1;
+}
+
+li:before {
+    content: "*";
+    padding: 0 12px;
+}

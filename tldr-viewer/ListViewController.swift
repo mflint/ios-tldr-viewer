@@ -24,6 +24,10 @@ class ListViewController: UITableViewController {
         self.viewModel.showDetail = {(detailViewModel) -> Void in
             self.performSegueWithIdentifier("showDetail", sender: detailViewModel)
         }
+        
+//        for name in UIFont.familyNames() {
+//            print("-> " + name)
+//        }
     }
 
     override func viewWillAppear(animated: Bool) {

@@ -14,14 +14,14 @@ struct CommandCellViewModel: BaseCellViewModel {
     var cellIdentifier: String!
     var action: CellViewModelAction = {}
     
-    var commandText: String!
-    var platforms: String!
+    var commandText: NSAttributedString!
+    var platforms: NSAttributedString!
     
     init(command: Command, action: CellViewModelAction) {
         self.cellIdentifier = "CommandCell"
         self.action = action
         
-        self.commandText = command.name
+        self.commandText = Theme.bodyAttributed(command.name)
         
         var platforms = ""
         for (index, platform) in command.platforms.enumerate() {
@@ -31,7 +31,7 @@ struct CommandCellViewModel: BaseCellViewModel {
             }
         }
         
-        self.platforms = platforms
+        self.platforms = Theme.detailAttributed(platforms)
     }
     
     func performAction() {
