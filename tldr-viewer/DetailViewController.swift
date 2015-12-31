@@ -13,6 +13,11 @@ class DetailViewController: UIViewController {
 
     var viewModel: DetailViewModel! {
         didSet {
+            self.viewModel.updateSignal = {
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.configureView()
+                })
+            }
             self.configureView()
         }
     }
