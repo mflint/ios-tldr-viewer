@@ -29,7 +29,7 @@ struct CommandCellViewModel: BaseCellViewModel {
         
         var platforms = ""
         for (index, platform) in command.platforms.enumerate() {
-            platforms += platform
+            platforms += platform.displayName
             if (index < command.platforms.count - 1) {
                 platforms += ", "
             }

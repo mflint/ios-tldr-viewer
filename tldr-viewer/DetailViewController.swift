@@ -123,10 +123,10 @@ class DetailViewController: UIViewController {
         self.platformsSegmentedControl.removeAllSegments()
         
         for (index, platform) in viewModel.platformOptions.enumerate() {
-            self.platformsSegmentedControl.insertSegmentWithTitle(platform, atIndex: index, animated: false)
+            self.platformsSegmentedControl.insertSegmentWithTitle(platform.displayName, atIndex: index, animated: false)
         }
         
-        self.platformsSegmentedControl.selectedSegmentIndex = viewModel.platformOptions.indexOf(viewModel.selectedPlatform)!
+        self.platformsSegmentedControl.selectedSegmentIndex = viewModel.selectedPlatform
     }
     
     func doShowOrHideSegmentedControl(show: Bool) {

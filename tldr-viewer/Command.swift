@@ -10,5 +10,5 @@ import Foundation
 
 struct Command {
     let name: String!
-    let platforms: [String]!
+    let platforms: [Platform]!
 }

@@ -20,13 +20,13 @@ class DetailViewModel {
     var loading: Bool = false
     
     // tldr page in HTML
-    var detailHTML: [String:String] = [:]
+    var detailHTML: [Int:String] = [:]
     var currentDetailHTML : String?
     
     // multi-platforms
     var showPlatforms: Bool
-    var platformOptions: [String] = []
-    var selectedPlatform: String = ""
+    var platformOptions: [Platform] = []
+    var selectedPlatform: Int
     
     private var command: Command!
     
@@ -36,7 +36,7 @@ class DetailViewModel {
         self.navigationBarTitle = self.command.name
         self.showPlatforms = self.command.platforms.count > 1
         self.platformOptions = self.command.platforms
-        self.selectedPlatform = self.command.platforms[0]
+        self.selectedPlatform = 0
         
         self.loadDetail()
         self.update()
@@ -49,7 +49,7 @@ class DetailViewModel {
             self.message = Theme.detailAttributed("Loading...")
             self.loading = true
             
-            let urlString = "https://raw.githubusercontent.com/tldr-pages/tldr/master/pages/" + selectedPlatform + "/" + self.command.name + ".md"
+            let urlString = "https://raw.githubusercontent.com/tldr-pages/tldr/master/pages/" + platformOptions[selectedPlatform].name + "/" + self.command.name + ".md"
             TLDRRequest.requestWithURL(urlString) { response in
                 let markdownString = response.responseString
                 
@@ -70,7 +70,7 @@ class DetailViewModel {
     }
     
     func selectPlatform(platformIndex: NSInteger) {
-        self.selectedPlatform = self.platformOptions[platformIndex]
+        self.selectedPlatform = platformIndex
         self.loadDetail()
         self.update()
     }

@@ -8,19 +8,14 @@
 
 import UIKit
 
-class ListViewController: UITableViewController {
+class ListViewController: UIViewController {
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     private var viewModel: ListViewModel!
-    private let searchController = UISearchController(searchResultsController: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        searchController.searchResultsUpdater = self
-        searchController.dimsBackgroundDuringPresentation = false
-        searchController.hidesNavigationBarDuringPresentation = false
-        searchController.searchBar.autocapitalizationType = .None
-        definesPresentationContext = true
-        tableView.tableHeaderView = searchController.searchBar
         
         self.viewModel = ListViewModel()
         
@@ -43,10 +38,10 @@ class ListViewController: UITableViewController {
         self.splitViewController?.delegate = self.viewModel;
     }
 
-    override func viewWillAppear(animated: Bool) {
-        self.clearsSelectionOnViewWillAppear = self.splitViewController!.collapsed
-        super.viewWillAppear(animated)
-    }
+//    override func viewWillAppear(animated: Bool) {
+//        self.clearsSelectionOnViewWillAppear = self.splitViewController!.collapsed
+//        super.viewWillAppear(animated)
+//    }
 
     // MARK: - Segues
 
@@ -61,14 +56,16 @@ class ListViewController: UITableViewController {
         detailVC.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
         detailVC.navigationItem.leftItemsSupplementBackButton = true
     }
+}
 
-    // MARK: - Table View
+// MARK: - UITableViewDataSource
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+extension ListViewController: UITableViewDataSource {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let viewModel = self.viewModel {
             return viewModel.filteredCellViewModels.count
         }
@@ -76,7 +73,7 @@ class ListViewController: UITableViewController {
         return 0
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cellViewModel = self.viewModel.filteredCellViewModels[indexPath.row]
         let cell = tableView.dequeueReusableCellWithIdentifier(cellViewModel.cellIdentifier, forIndexPath: indexPath)
         if let baseCell = cell as? BaseCell {
@@ -84,17 +81,21 @@ class ListViewController: UITableViewController {
         }
         return cell
     }
-    
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.viewModel.didSelectRowAtIndexPath(indexPath)
-        self.searchController.searchBar.resignFirstResponder()
+}
+
+// MARK: - UISearchBarDelegate
+
+extension ListViewController: UISearchBarDelegate {
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        self.viewModel.filterTextDidChange(searchText)
     }
 }
 
-// MARK: - UISearchResultsUpdating
+// MARK: - UITableViewDelegate
 
-extension ListViewController: UISearchResultsUpdating {
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
-        self.viewModel.filterTextDidChange(searchController.searchBar.text!, active:searchController.active)
+extension ListViewController: UITableViewDelegate {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.viewModel.didSelectRowAtIndexPath(indexPath)
+        self.searchBar.resignFirstResponder()
     }
 }

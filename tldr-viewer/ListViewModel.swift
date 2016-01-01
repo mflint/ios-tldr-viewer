@@ -14,7 +14,6 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
     var updateSignal: () -> Void = {}
     var showDetail: (detailViewModel: DetailViewModel) -> Void = {(vm) in}
     
-    internal var searchActive: Bool = false
     internal var searchText: String = ""
     
     internal var itemSelected: Bool = false
@@ -35,7 +34,11 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
                 
                 for commandJSON in jsonDict["commands"]! {
                     let name = commandJSON["name"] as! String
-                    let platforms = commandJSON["platform"] as! Array<String>
+                    var platforms = [Platform]()
+                    for platformName in commandJSON["platform"] as! Array<String> {
+                        let platform = Platform.get(platformName)
+                        platforms.append(platform)
+                    }
                     let command = Command(name: name , platforms: platforms)
                     
                     commands.append(command)
@@ -66,7 +69,7 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
     
     func updateFilteredCellViewModels() {
         self.filteredCellViewModels = self.cellViewModels.filter{ cellViewModel in
-            if !self.searchActive || self.searchText.characters.count == 0 {
+            if self.searchText.characters.count == 0 {
                 return true
             }
             
@@ -83,9 +86,8 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
         self.filteredCellViewModels[indexPath.row].performAction()
     }
     
-    func filterTextDidChange(text: String, active: Bool) {
+    func filterTextDidChange(text: String) {
         self.searchText = text
-        self.searchActive = active
         self.updateFilteredCellViewModels()
         self.updateSignal()
     }
