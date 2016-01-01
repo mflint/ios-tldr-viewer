@@ -11,10 +11,14 @@ import UIKit
 
 class Theme {
     static func setup() {
+        // navigation bar and item
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.tldrLightBody(), NSFontAttributeName: UIFont.tldrBody()]
         UINavigationBar.appearance().barTintColor = UIColor.tldrTeal()
         UINavigationBar.appearance().tintColor = UIColor.tldrLightBody()
         UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: UIFont.tldrBody()], forState: .Normal)
+        
+        // segmented control
+        UISegmentedControl.appearance().tintColor = UIColor.tldrTeal()
     }
     
     static func css() -> String {

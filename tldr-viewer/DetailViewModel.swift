@@ -16,42 +16,62 @@ class DetailViewModel {
     var navigationBarTitle: String
     
     // the message to show when there's no tldr page
-    var noDataMessage: String
+    var message: NSAttributedString?
+    var loading: Bool = false
     
     // tldr page in HTML
-    var detailHTML: String?
+    var detailHTML: [String:String] = [:]
+    var currentDetailHTML : String?
+    
+    // multi-platforms
+    var showPlatforms: Bool
+    var platformOptions: [String] = []
+    var selectedPlatform: String = ""
     
     private var command: Command!
-    private var detailMarkdown: String?
     
     init(command: Command) {
         self.command = command
-        self.noDataMessage = Theme.pageFromHTMLSnippet("<p>Loading...</p>")
+        
         self.navigationBarTitle = self.command.name
+        self.showPlatforms = self.command.platforms.count > 1
+        self.platformOptions = self.command.platforms
+        self.selectedPlatform = self.command.platforms[0]
         
         self.loadDetail()
         self.update()
     }
     
-    func loadDetail() {
-        let urlString = "https://raw.githubusercontent.com/tldr-pages/tldr/master/pages/" + self.command.platforms[0] + "/" + self.command.name + ".md"
-        TLDRRequest.requestWithURL(urlString) { response in
-            self.detailMarkdown = response.responseString
-            self.update()
+    private func loadDetail() {
+        let selectedPlatform = self.selectedPlatform
+        
+        if (self.detailHTML[self.selectedPlatform] == nil) {
+            self.message = Theme.detailAttributed("Loading...")
+            self.loading = true
+            
+            let urlString = "https://raw.githubusercontent.com/tldr-pages/tldr/master/pages/" + selectedPlatform + "/" + self.command.name + ".md"
+            TLDRRequest.requestWithURL(urlString) { response in
+                let markdownString = response.responseString
+                
+                var markdown = Markdown()
+                let html = markdown.transform(markdownString!)
+                self.detailHTML[selectedPlatform] = Theme.pageFromHTMLSnippet(html)
+                self.message = nil
+                self.loading = false
+                
+                self.update()
+            }
         }
     }
     
-    func update() {
-        if (self.detailHTML == nil) {
-            if (self.detailMarkdown == nil) {
-                self.detailHTML = nil
-            } else {
-                var markdown = Markdown()
-                let html = markdown.transform(self.detailMarkdown!)
-                self.detailHTML = Theme.pageFromHTMLSnippet(html)
-            }
-        }
-        
+    private func update() {
+        self.currentDetailHTML = self.detailHTML[self.selectedPlatform]
         self.updateSignal()
+    }
+    
+    func selectPlatform(platformIndex: NSInteger) {
+        self.selectedPlatform = self.platformOptions[platformIndex]
+        self.loadDetail()
+        self.update()
     }
 }

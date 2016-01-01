@@ -10,7 +10,17 @@ import UIKit
 import WebKit
 
 class DetailViewController: UIViewController {
+    @IBOutlet weak var platformsSegmentedControl: UISegmentedControl!
+
+    @IBOutlet weak var messageView: UIView!
+    @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
+    
     var webView: WKWebView!
+    
+    // these two conflicting constraints adjust the layout depending on whether the segmented control is shown. Only one should be enabled
+    var webViewToTopAnchorConstraint: NSLayoutConstraint!
+    var webViewToSegmentedControlConstraint: NSLayoutConstraint!
 
     var viewModel: DetailViewModel! {
         didSet {
@@ -20,7 +30,7 @@ class DetailViewController: UIViewController {
             self.configureView()
         }
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -33,7 +43,12 @@ class DetailViewController: UIViewController {
         self.webView.leadingAnchor.constraintEqualToAnchor(self.view.leadingAnchor).active = true
         self.webView.trailingAnchor.constraintEqualToAnchor(self.view.trailingAnchor).active = true
         self.webView.bottomAnchor.constraintEqualToAnchor(self.view.bottomAnchor).active = true
-        self.webView.topAnchor.constraintEqualToAnchor(self.view.topAnchor).active = true
+
+        // two top constraints for the web view
+        self.webViewToTopAnchorConstraint = self.webView.topAnchor.constraintEqualToAnchor(self.view.topAnchor)
+        self.webViewToSegmentedControlConstraint = self.webView.topAnchor.constraintEqualToAnchor(self.platformsSegmentedControl.bottomAnchor, constant: 3)
+        
+        self.loadingIndicator.color = UIColor.tldrTeal()
         
         self.configureView()
     }
@@ -43,27 +58,83 @@ class DetailViewController: UIViewController {
         self.configureView()
     }
     
+    @IBAction func platformSegmentDidChange(sender: AnyObject) {
+        self.viewModel.selectPlatform(self.platformsSegmentedControl.selectedSegmentIndex)
+    }
+    
     func configureView() {
-        if (self.webView != nil) {
-            dispatch_async(dispatch_get_main_queue(), {
-                if let viewModel = self.viewModel {
-                    if viewModel.detailHTML == nil {
-                        self.webView.loadHTMLString(viewModel.noDataMessage, baseURL: nil)
-                    } else {
-                        self.webView.loadHTMLString(viewModel.detailHTML!, baseURL: nil)
-                    }
-                    
-                    self.title = self.viewModel.navigationBarTitle
-                } else {
-                    self.webView.loadHTMLString("Nothing selected", baseURL: nil)
-                    self.title = ""
-                }
-            })
-        } else {
-            if let viewModel = self.viewModel {
-                self.title = viewModel.navigationBarTitle
+        dispatch_async(dispatch_get_main_queue(), {
+            self.doConfigureView()
+        })
+    }
+    
+    func doConfigureView() {
+        var htmlString: String?;
+        var message: NSAttributedString?
+        var loading: Bool = false
+        var sceneTitle: String;
+        var showSegmentedControl = false
+
+        if let viewModel = self.viewModel {
+            if (viewModel.message != nil) {
+                message = viewModel.message
+                loading = viewModel.loading
+                htmlString = nil
+            } else {
+                message = nil
+                htmlString = viewModel.currentDetailHTML!
             }
+            sceneTitle = viewModel.navigationBarTitle
+            
+            showSegmentedControl = viewModel.showPlatforms
+            if (showSegmentedControl) {
+                self.doConfigureSegmentedControl(viewModel)
+            }
+        } else {
+            message = Theme.detailAttributed("Nothing selected")
+            htmlString = nil
+            sceneTitle = ""
         }
+        
+        if let messageToShow = message {
+            self.messageLabel.attributedText = messageToShow
+            self.messageView.hidden = false
+            
+            self.loadingIndicator.hidden = !loading
+            self.loadingIndicator.startAnimating()
+            
+            self.messageView.setNeedsLayout()
+        } else {
+            self.messageView.hidden = true
+        }
+        
+        if let htmlStringToShow = htmlString {
+            self.webView.loadHTMLString(htmlStringToShow, baseURL: nil)
+            self.webView.hidden = false
+        } else {
+            self.webView.hidden = true
+        }
+        
+        self.title = sceneTitle;
+        self.doShowOrHideSegmentedControl(showSegmentedControl)
+    }
+    
+    func doConfigureSegmentedControl(viewModel: DetailViewModel) {
+        self.platformsSegmentedControl.removeAllSegments()
+        
+        for (index, platform) in viewModel.platformOptions.enumerate() {
+            self.platformsSegmentedControl.insertSegmentWithTitle(platform, atIndex: index, animated: false)
+        }
+        
+        self.platformsSegmentedControl.selectedSegmentIndex = viewModel.platformOptions.indexOf(viewModel.selectedPlatform)!
+    }
+    
+    func doShowOrHideSegmentedControl(show: Bool) {
+        self.webViewToSegmentedControlConstraint.active = false
+        self.webViewToTopAnchorConstraint.active = false
+        
+        self.platformsSegmentedControl.hidden = !show
+        self.webViewToSegmentedControlConstraint.active = show
+        self.webViewToTopAnchorConstraint.active = !show
     }
 }
-
