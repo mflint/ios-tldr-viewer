@@ -30,8 +30,16 @@ class ListViewController: UITableViewController {
         }
         
         self.viewModel.showDetail = {(detailViewModel) -> Void in
+            // show the detail
             self.performSegueWithIdentifier("showDetail", sender: detailViewModel)
-        }
+            
+            // and dismiss the primary overlay VC if necessary (iPad only)
+            if (self.splitViewController?.displayMode == .PrimaryOverlay){
+                self.splitViewController?.preferredDisplayMode = .PrimaryHidden
+                self.splitViewController?.preferredDisplayMode = .Automatic
+            }         }
+        
+        self.splitViewController?.delegate = self.viewModel;
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -42,15 +50,15 @@ class ListViewController: UITableViewController {
     // MARK: - Segues
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        var destinationVC = segue.destinationViewController as UIViewController
         
-        if let navigationVC = destinationVC as? UINavigationController {
-            destinationVC = navigationVC.topViewController!
-        }
+        let detailVC = (segue.destinationViewController as! UINavigationController).topViewController as! DetailViewController
         
-        if let detailVC = destinationVC as? DetailViewController, detailViewModel = sender as? DetailViewModel {
+        if let detailViewModel = sender as? DetailViewModel {
             detailVC.viewModel = detailViewModel
         }
+        
+        detailVC.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
+        detailVC.navigationItem.leftItemsSupplementBackButton = true
     }
 
     // MARK: - Table View

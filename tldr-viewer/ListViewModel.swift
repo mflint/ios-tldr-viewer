@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import UIKit
 
-class ListViewModel {
+class ListViewModel: NSObject, UISplitViewControllerDelegate {
     // no-op closures until the ViewController provides its own
     var updateSignal: () -> Void = {}
     var showDetail: (detailViewModel: DetailViewModel) -> Void = {(vm) in}
@@ -16,11 +17,14 @@ class ListViewModel {
     internal var searchActive: Bool = false
     internal var searchText: String = ""
     
+    internal var itemSelected: Bool = false
+    
     private var commands = [Command]()
     private var cellViewModels = [BaseCellViewModel]()
     internal var filteredCellViewModels = [BaseCellViewModel]()
     
-    init() {
+    override init() {
+        super.init()
         self.loadIndex()
     }
     
@@ -75,6 +79,7 @@ class ListViewModel {
     }
     
     func didSelectRowAtIndexPath(indexPath: NSIndexPath) {
+        self.itemSelected = true
         self.filteredCellViewModels[indexPath.row].performAction()
     }
     
@@ -83,5 +88,16 @@ class ListViewModel {
         self.searchActive = active
         self.updateFilteredCellViewModels()
         self.updateSignal()
+    }
+    
+    // MARK: - Split view
+    
+    // not called for iPhone 6+ or iPad
+    func splitViewController(splitViewController: UISplitViewController, collapseSecondaryViewController secondaryViewController: UIViewController, ontoPrimaryViewController primaryViewController: UIViewController) -> Bool {
+        return !self.itemSelected
+    }
+    
+    func splitViewController(svc: UISplitViewController, shouldHideViewController vc: UIViewController, inOrientation orientation: UIInterfaceOrientation) -> Bool {
+        return self.itemSelected && UIInterfaceOrientationIsPortrait(orientation)
     }
 }
