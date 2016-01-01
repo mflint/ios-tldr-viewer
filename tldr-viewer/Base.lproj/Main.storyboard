@@ -151,6 +151,61 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ErrorCell" rowHeight="108" id="eIi-j4-Fbh" customClass="ErrorCell" customModule="tldr_viewer" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="72" width="600" height="108"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eIi-j4-Fbh" id="tMq-Ae-sJL">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="107"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qlS-pa-0x3">
+                                                    <rect key="frame" x="279" y="12" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0JY-vo-1CC" customClass="ActionButton" customModule="tldr_viewer" customModuleProvider="target">
+                                                    <rect key="frame" x="277" y="38" width="46" height="57"/>
+                                                    <state key="normal" title="Button"/>
+                                                    <connections>
+                                                        <action selector="buttonTapped:" destination="eIi-j4-Fbh" eventType="touchUpInside" id="jAx-vR-YUM"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="0JY-vo-1CC" secondAttribute="bottom" constant="12" id="13r-e9-jHE"/>
+                                                <constraint firstItem="0JY-vo-1CC" firstAttribute="centerX" secondItem="tMq-Ae-sJL" secondAttribute="centerX" id="e8g-St-5PT"/>
+                                                <constraint firstItem="0JY-vo-1CC" firstAttribute="top" secondItem="qlS-pa-0x3" secondAttribute="bottom" constant="5" id="fR4-xD-0sA"/>
+                                                <constraint firstItem="qlS-pa-0x3" firstAttribute="top" secondItem="tMq-Ae-sJL" secondAttribute="top" constant="12" id="on4-vB-mne"/>
+                                                <constraint firstItem="qlS-pa-0x3" firstAttribute="centerX" secondItem="tMq-Ae-sJL" secondAttribute="centerX" id="xEz-r4-WrV"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="button" destination="0JY-vo-1CC" id="y2K-Dw-bjn"/>
+                                            <outlet property="errorLabel" destination="qlS-pa-0x3" id="df4-GU-Dtc"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LoadingCell" rowHeight="63" id="yjV-rt-wqv" customClass="LoadingCell" customModule="tldr_viewer" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="180" width="600" height="63"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yjV-rt-wqv" id="KUU-TS-ChG">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="62"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="41H-FU-yEF">
+                                                    <rect key="frame" x="290" y="21" width="20" height="20"/>
+                                                </activityIndicatorView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="41H-FU-yEF" firstAttribute="top" secondItem="KUU-TS-ChG" secondAttribute="top" constant="12" id="1uk-oB-oRU"/>
+                                                <constraint firstItem="41H-FU-yEF" firstAttribute="centerX" secondItem="KUU-TS-ChG" secondAttribute="centerX" id="6a4-AR-0U8"/>
+                                                <constraint firstAttribute="bottom" secondItem="41H-FU-yEF" secondAttribute="bottom" constant="12" id="pw5-yS-Equ"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="activityIndicator" destination="41H-FU-yEF" id="Cbp-hY-7L8"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="7bK-jq-Zjz" id="ZZ8-8r-nHA"/>

@@ -3,21 +3,22 @@ body {
     font-size: 1.25em;
     margin: 1em;
     word-wrap: break-word;
+    color: #313131;
 }
 
 p {
-    margin: 0;
+    margin: 0em;
 }
 
 h1 {
     font-size: 2em;
-    margin: 0 0.23em;
+    margin: 0em;
 }
 
 blockquote {
     font-family: 'Avenir-Book';
     font-size: 1.25em;
-    margin: 0 0.55em;
+    margin: 0em;
 }
 
 code {
@@ -25,8 +26,8 @@ code {
     background-color: #f2f2f2;
     color: #212121;
     display: block;
-    padding: 0.55em 3em;
-    margin: 0;
+    padding: 0.55em 2.2em;
+    margin: 0em;
 }
 
 ul {

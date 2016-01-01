@@ -98,4 +98,12 @@ extension ListViewController: UITableViewDelegate {
         self.viewModel.didSelectRowAtIndexPath(indexPath)
         self.searchBar.resignFirstResponder()
     }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return UITableViewAutomaticDimension
+    }
+    
+    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 50;
+    }
 }

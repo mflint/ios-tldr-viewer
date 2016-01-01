@@ -20,6 +20,9 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
     
     private var commands = [Command]()
     private var cellViewModels = [BaseCellViewModel]()
+    private var errorState = false
+    private var loading = false
+    
     internal var filteredCellViewModels = [BaseCellViewModel]()
     
     override init() {
@@ -27,39 +30,75 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
         self.loadIndex()
     }
     
-    func loadIndex() {
+    private func loadIndex() {
+        self.loading = true
+        
         TLDRRequest.requestWithURL("https://raw.githubusercontent.com/tldr-pages/tldr-pages.github.io/master/assets/index.json") { response in
-            if let jsonDict = response.responseJSON as? Dictionary<String, Array<Dictionary<String, AnyObject>>> {
-                var commands = [Command]()
-                
-                for commandJSON in jsonDict["commands"]! {
-                    let name = commandJSON["name"] as! String
-                    var platforms = [Platform]()
-                    for platformName in commandJSON["platform"] as! Array<String> {
-                        let platform = Platform.get(platformName)
-                        platforms.append(platform)
-                    }
-                    let command = Command(name: name , platforms: platforms)
-                    
-                    commands.append(command)
-                }
-                
-                self.commands = commands;
-                
-                self.updateCellViewModels()
-            }
+            self.processResponse(response)
+        }
+        
+        self.updateCellViewModels()
+    }
+    
+    private func processResponse(response: TLDRResponse) {
+        self.loading = false
+        
+        if let error = response.error {
+            self.handleError(error)
+        } else if let jsonDict = response.responseJSON as? Dictionary<String, Array<Dictionary<String, AnyObject>>> {
+            self.handleSuccess(jsonDict)
         }
     }
     
-    func updateCellViewModels() {
+    private func handleError(error: NSError) {
+        self.commands = []
+        self.errorState = true
+        
+        self.updateCellViewModels()
+    }
+    
+    private func handleSuccess(jsonDict: Dictionary<String, Array<Dictionary<String, AnyObject>>>) {
+        var commands = [Command]()
+        
+        for commandJSON in jsonDict["commands"]! {
+            let name = commandJSON["name"] as! String
+            var platforms = [Platform]()
+            for platformName in commandJSON["platform"] as! Array<String> {
+                let platform = Platform.get(platformName)
+                platforms.append(platform)
+            }
+            let command = Command(name: name , platforms: Platform.sort(platforms))
+            
+            commands.append(command)
+        }
+        
+        self.commands = commands
+        self.errorState = false
+        
+        self.updateCellViewModels()
+    }
+    
+    private func updateCellViewModels() {
         var vms = [BaseCellViewModel]()
         
-        for command in self.commands {
-            let cellViewModel = CommandCellViewModel(command: command, action: {
-                let detailViewModel = DetailViewModel(command: command)
-                self.showDetail(detailViewModel: detailViewModel)
-            })
+        if (self.loading) {
+            let cellViewModel = LoadingCellViewModel()
             vms.append(cellViewModel)
+        } else {
+            if (self.errorState) {
+                let cellViewModel = ErrorCellViewModel(buttonAction: {
+                    self.loadIndex()
+                })
+                vms.append(cellViewModel)
+            }
+            
+            for command in self.commands {
+                let cellViewModel = CommandCellViewModel(command: command, action: {
+                    let detailViewModel = DetailViewModel(command: command)
+                    self.showDetail(detailViewModel: detailViewModel)
+                })
+                vms.append(cellViewModel)
+            }
         }
         
         self.cellViewModels = vms
@@ -67,7 +106,7 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
         self.updateSignal()
     }
     
-    func updateFilteredCellViewModels() {
+    private func updateFilteredCellViewModels() {
         self.filteredCellViewModels = self.cellViewModels.filter{ cellViewModel in
             if self.searchText.characters.count == 0 {
                 return true

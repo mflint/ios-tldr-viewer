@@ -19,6 +19,8 @@ class Theme {
         
         // segmented control
         UISegmentedControl.appearance().tintColor = UIColor.tldrTeal()
+        
+        UITextField.appearanceWhenContainedInInstancesOfClasses([UISearchBar.self]).font = UIFont.tldrBody()
     }
     
     static func css() -> String {
@@ -50,7 +52,7 @@ extension UIFont {
 
 extension UIColor {
     class func tldrBody() -> UIColor {
-        return UIColor.blackColor()
+        return UIColor(red: 33.0/255.0, green: 33.0/255.0, blue: 33.0/255.0, alpha: 1)
     }
     
     class func tldrDetail() -> UIColor {
@@ -59,6 +61,14 @@ extension UIColor {
     
     class func tldrTeal() -> UIColor {
         return UIColor(red: 0, green: 0.5, blue: 0.5, alpha: 1)
+    }
+    
+    class func tldrActionBackground() -> UIColor {
+        return UIColor(red: 219.0/255.0, green: 243.0/255.0, blue: 242.0/255.0, alpha: 1)
+    }
+    
+    class func tldrActionForeground() -> UIColor {
+        return UIColor.darkGrayColor()
     }
     
     class func tldrLightBody() -> UIColor {

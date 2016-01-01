@@ -8,6 +8,8 @@
 
 import Foundation
 
+typealias ViewModelAction = () -> Void
+
 protocol BaseCellViewModel {
     var cellIdentifier: String! { get }
     var action: () -> Void { get set}

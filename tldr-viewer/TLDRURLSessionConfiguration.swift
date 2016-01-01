@@ -11,7 +11,7 @@ import Foundation
 extension NSURLSessionConfiguration {
     class func TLDRSessionConfiguration() -> NSURLSessionConfiguration {
         let config = defaultSessionConfiguration()
-        config.timeoutIntervalForRequest = 15
+        config.timeoutIntervalForRequest = 10
         return config
     }
 }
