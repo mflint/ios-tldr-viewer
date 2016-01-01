@@ -13,7 +13,12 @@ class ListViewModel {
     var updateSignal: () -> Void = {}
     var showDetail: (detailViewModel: DetailViewModel) -> Void = {(vm) in}
     
-    internal var cellViewModels = [BaseCellViewModel]()
+    internal var searchActive: Bool = false
+    internal var searchText: String = ""
+    
+    private var commands = [Command]()
+    private var cellViewModels = [BaseCellViewModel]()
+    internal var filteredCellViewModels = [BaseCellViewModel]()
     
     init() {
         self.loadIndex()
@@ -32,15 +37,17 @@ class ListViewModel {
                     commands.append(command)
                 }
                 
-                self.updateCellViewModels(commands)
+                self.commands = commands;
+                
+                self.updateCellViewModels()
             }
         }
     }
     
-    func updateCellViewModels(commands: [Command]) {
+    func updateCellViewModels() {
         var vms = [BaseCellViewModel]()
         
-        for command in commands {
+        for command in self.commands {
             let cellViewModel = CommandCellViewModel(command: command, action: {
                 let detailViewModel = DetailViewModel(command: command)
                 self.showDetail(detailViewModel: detailViewModel)
@@ -49,10 +56,32 @@ class ListViewModel {
         }
         
         self.cellViewModels = vms
+        self.updateFilteredCellViewModels()
         self.updateSignal()
     }
     
+    func updateFilteredCellViewModels() {
+        self.filteredCellViewModels = self.cellViewModels.filter{ cellViewModel in
+            if !self.searchActive || self.searchText.characters.count == 0 {
+                return true
+            }
+            
+            if let commandCellViewModel = cellViewModel as? CommandCellViewModel {
+                return commandCellViewModel.command.name.lowercaseString.containsString(self.searchText.lowercaseString)
+            }
+            
+            return true
+        }
+    }
+    
     func didSelectRowAtIndexPath(indexPath: NSIndexPath) {
-        self.cellViewModels[indexPath.row].performAction()
+        self.filteredCellViewModels[indexPath.row].performAction()
+    }
+    
+    func filterTextDidChange(text: String, active: Bool) {
+        self.searchText = text
+        self.searchActive = active
+        self.updateFilteredCellViewModels()
+        self.updateSignal()
     }
 }

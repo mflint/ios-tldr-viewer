@@ -11,6 +11,8 @@ import Foundation
 struct CommandCellViewModel: BaseCellViewModel {
     typealias CellViewModelAction = () -> Void
     
+    var command: Command
+    
     var cellIdentifier: String!
     var action: CellViewModelAction = {}
     
@@ -18,6 +20,8 @@ struct CommandCellViewModel: BaseCellViewModel {
     var platforms: NSAttributedString!
     
     init(command: Command, action: CellViewModelAction) {
+        self.command = command
+        
         self.cellIdentifier = "CommandCell"
         self.action = action
         

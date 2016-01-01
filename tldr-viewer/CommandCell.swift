@@ -10,9 +10,11 @@ import UIKit
 
 class CommandCell: UITableViewCell, BaseCell {
     func configure(cellViewModel: BaseCellViewModel!) {
-        if let vm = cellViewModel as? CommandCellViewModel {
-            self.textLabel?.attributedText = vm.commandText
-            self.detailTextLabel?.attributedText = vm.platforms
+        if let textLabel = self.textLabel {
+            if let vm = cellViewModel as? CommandCellViewModel {
+                textLabel.attributedText = vm.commandText
+                self.detailTextLabel?.attributedText = vm.platforms
+            }
         }
     }
 }

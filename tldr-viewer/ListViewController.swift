@@ -10,9 +10,17 @@ import UIKit
 
 class ListViewController: UITableViewController {
     private var viewModel: ListViewModel!
+    private let searchController = UISearchController(searchResultsController: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.hidesNavigationBarDuringPresentation = false
+        definesPresentationContext = true
+        tableView.tableHeaderView = searchController.searchBar
+        
         self.viewModel = ListViewModel()
         
         self.viewModel.updateSignal = {
@@ -24,10 +32,6 @@ class ListViewController: UITableViewController {
         self.viewModel.showDetail = {(detailViewModel) -> Void in
             self.performSegueWithIdentifier("showDetail", sender: detailViewModel)
         }
-        
-//        for name in UIFont.familyNames() {
-//            print("-> " + name)
-//        }
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -56,11 +60,15 @@ class ListViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.viewModel.cellViewModels.count
+        if let viewModel = self.viewModel {
+            return viewModel.filteredCellViewModels.count
+        }
+        
+        return 0
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cellViewModel = self.viewModel.cellViewModels[indexPath.row]
+        let cellViewModel = self.viewModel.filteredCellViewModels[indexPath.row]
         let cell = tableView.dequeueReusableCellWithIdentifier(cellViewModel.cellIdentifier, forIndexPath: indexPath)
         if let baseCell = cell as? BaseCell {
             baseCell.configure(cellViewModel)
@@ -70,6 +78,14 @@ class ListViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.viewModel.didSelectRowAtIndexPath(indexPath)
+        self.searchController.searchBar.resignFirstResponder()
     }
 }
 
+// MARK: - UISearchResultsUpdating
+
+extension ListViewController: UISearchResultsUpdating {
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        self.viewModel.filterTextDidChange(searchController.searchBar.text!, active:searchController.active)
+    }
+}
