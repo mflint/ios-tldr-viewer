@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Master-->
@@ -43,36 +44,63 @@
                                     <action selector="platformSegmentDidChange:" destination="JEX-9P-axG" eventType="valueChanged" id="kjk-8f-i9m"/>
                                 </connections>
                             </segmentedControl>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KMC-Te-eDT">
-                                <rect key="frame" x="279" y="244" width="42" height="49"/>
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KMC-Te-eDT">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iNu-dr-Hwu">
-                                        <rect key="frame" x="0.0" y="0.0" width="42" height="21"/>
+                                        <rect key="frame" x="279" y="218" width="42" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="bYb-sm-vhq">
-                                        <rect key="frame" x="11" y="29" width="20" height="20"/>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="bYb-sm-vhq">
+                                        <rect key="frame" x="290" y="247" width="20" height="20"/>
                                     </activityIndicatorView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yhy-ep-H9I" customClass="ActionButton" customModule="tldr_viewer" customModuleProvider="target">
+                                        <rect key="frame" x="277" y="247" width="46" height="30"/>
+                                        <state key="normal" title="Button"/>
+                                        <connections>
+                                            <action selector="buttonTapped:" destination="JEX-9P-axG" eventType="touchUpInside" id="7K7-1M-vE3"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="iNu-dr-Hwu" firstAttribute="top" secondItem="KMC-Te-eDT" secondAttribute="top" id="5hu-fk-NER"/>
-                                    <constraint firstAttribute="bottom" secondItem="bYb-sm-vhq" secondAttribute="bottom" id="KUH-uB-JSq"/>
+                                    <constraint firstItem="iNu-dr-Hwu" firstAttribute="centerX" secondItem="KMC-Te-eDT" secondAttribute="centerX" id="8Am-FA-Rih"/>
+                                    <constraint firstItem="yhy-ep-H9I" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="KMC-Te-eDT" secondAttribute="leading" id="BAR-mH-Ac1"/>
+                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="bYb-sm-vhq" secondAttribute="bottom" id="KUH-uB-JSq"/>
                                     <constraint firstItem="bYb-sm-vhq" firstAttribute="top" secondItem="iNu-dr-Hwu" secondAttribute="bottom" constant="8" id="TwX-Q6-7ED"/>
                                     <constraint firstItem="bYb-sm-vhq" firstAttribute="centerX" secondItem="KMC-Te-eDT" secondAttribute="centerX" id="WOM-UB-EFk"/>
-                                    <constraint firstItem="iNu-dr-Hwu" firstAttribute="leading" secondItem="KMC-Te-eDT" secondAttribute="leading" id="j7Z-bw-pDS"/>
-                                    <constraint firstAttribute="trailing" secondItem="iNu-dr-Hwu" secondAttribute="trailing" id="oGB-vC-jer"/>
+                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="yhy-ep-H9I" secondAttribute="bottom" id="bR9-Cg-fWG"/>
+                                    <constraint firstItem="iNu-dr-Hwu" firstAttribute="centerY" secondItem="KMC-Te-eDT" secondAttribute="centerY" constant="-40" id="gfv-jI-aSB"/>
+                                    <constraint firstItem="iNu-dr-Hwu" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="KMC-Te-eDT" secondAttribute="leading" id="j7Z-bw-pDS"/>
+                                    <constraint firstItem="yhy-ep-H9I" firstAttribute="top" secondItem="iNu-dr-Hwu" secondAttribute="bottom" constant="8" id="lGn-dF-80D"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="iNu-dr-Hwu" secondAttribute="trailing" id="oGB-vC-jer"/>
+                                    <constraint firstItem="yhy-ep-H9I" firstAttribute="centerX" secondItem="KMC-Te-eDT" secondAttribute="centerX" id="oeW-Kh-d7K"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="yhy-ep-H9I" secondAttribute="trailing" id="zp0-8q-Ebq"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="BAR-mH-Ac1"/>
+                                        <exclude reference="bR9-Cg-fWG"/>
+                                        <exclude reference="zp0-8q-Ebq"/>
+                                        <exclude reference="KUH-uB-JSq"/>
+                                        <exclude reference="5hu-fk-NER"/>
+                                        <exclude reference="j7Z-bw-pDS"/>
+                                        <exclude reference="oGB-vC-jer"/>
+                                    </mask>
+                                </variation>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="mvg-5A-6xc" firstAttribute="top" secondItem="SYR-Wa-9uf" secondAttribute="bottom" constant="3" id="1Qg-D6-BCP"/>
                             <constraint firstItem="mvg-5A-6xc" firstAttribute="centerX" secondItem="svH-Pt-448" secondAttribute="centerX" id="6aP-7X-Rud"/>
-                            <constraint firstItem="KMC-Te-eDT" firstAttribute="centerY" secondItem="svH-Pt-448" secondAttribute="centerY" id="CbQ-hP-oY4"/>
-                            <constraint firstItem="KMC-Te-eDT" firstAttribute="centerX" secondItem="svH-Pt-448" secondAttribute="centerX" id="TEz-u2-38q"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="KMC-Te-eDT" secondAttribute="bottom" id="gmR-oR-Kas"/>
+                            <constraint firstItem="KMC-Te-eDT" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leading" id="pfV-HQ-MQz"/>
+                            <constraint firstItem="KMC-Te-eDT" firstAttribute="top" secondItem="svH-Pt-448" secondAttribute="topMargin" id="tQ1-fb-a0y"/>
+                            <constraint firstAttribute="trailing" secondItem="KMC-Te-eDT" secondAttribute="trailing" id="uig-af-qEA"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
@@ -80,6 +108,7 @@
                     <navigationItem key="navigationItem" id="mOI-FS-AaM"/>
                     <connections>
                         <outlet property="loadingIndicator" destination="bYb-sm-vhq" id="acC-iK-Gvl"/>
+                        <outlet property="messageButton" destination="yhy-ep-H9I" id="Vfh-JZ-ral"/>
                         <outlet property="messageLabel" destination="iNu-dr-Hwu" id="ALB-hf-meM"/>
                         <outlet property="messageView" destination="KMC-Te-eDT" id="crU-Da-mXL"/>
                         <outlet property="platformsSegmentedControl" destination="mvg-5A-6xc" id="1OK-Vd-USi"/>

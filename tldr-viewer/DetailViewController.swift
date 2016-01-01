@@ -15,6 +15,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var messageView: UIView!
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var messageButton: UIButton!
     
     var webView: WKWebView!
     
@@ -49,6 +50,7 @@ class DetailViewController: UIViewController {
         self.webViewToSegmentedControlConstraint = self.webView.topAnchor.constraintEqualToAnchor(self.platformsSegmentedControl.bottomAnchor, constant: 3)
         
         self.loadingIndicator.color = UIColor.tldrTeal()
+        self.messageView.hidden = true
         
         self.configureView()
     }
@@ -62,16 +64,21 @@ class DetailViewController: UIViewController {
         self.viewModel.selectPlatform(self.platformsSegmentedControl.selectedSegmentIndex)
     }
     
-    func configureView() {
+    @IBAction func buttonTapped(sender: AnyObject) {
+        self.viewModel.reloadDetail()
+    }
+    
+    private func configureView() {
         dispatch_async(dispatch_get_main_queue(), {
             self.doConfigureView()
         })
     }
     
-    func doConfigureView() {
+    private func doConfigureView() {
         var htmlString: String?;
         var message: NSAttributedString?
         var loading: Bool = false
+        var buttonTitle: String?
         var sceneTitle: String;
         var showSegmentedControl = false
 
@@ -79,6 +86,7 @@ class DetailViewController: UIViewController {
             if (viewModel.message != nil) {
                 message = viewModel.message
                 loading = viewModel.loading
+                buttonTitle = viewModel.buttonTitle
                 htmlString = nil
             } else {
                 message = nil
@@ -100,8 +108,19 @@ class DetailViewController: UIViewController {
             self.messageLabel.attributedText = messageToShow
             self.messageView.hidden = false
             
-            self.loadingIndicator.hidden = !loading
-            self.loadingIndicator.startAnimating()
+            if (loading) {
+                self.loadingIndicator.hidden = false
+                self.loadingIndicator.startAnimating()
+            } else {
+                self.loadingIndicator.hidden = true
+            }
+            
+            if let buttonTitleToShow = buttonTitle {
+                self.messageButton.setTitle(buttonTitleToShow, forState: .Normal)
+                self.messageButton.hidden = false
+            } else {
+                self.messageButton.hidden = true
+            }
             
             self.messageView.setNeedsLayout()
         } else {
@@ -119,7 +138,7 @@ class DetailViewController: UIViewController {
         self.doShowOrHideSegmentedControl(showSegmentedControl)
     }
     
-    func doConfigureSegmentedControl(viewModel: DetailViewModel) {
+    private func doConfigureSegmentedControl(viewModel: DetailViewModel) {
         self.platformsSegmentedControl.removeAllSegments()
         
         for (index, platform) in viewModel.platformOptions.enumerate() {
@@ -129,7 +148,7 @@ class DetailViewController: UIViewController {
         self.platformsSegmentedControl.selectedSegmentIndex = viewModel.selectedPlatform
     }
     
-    func doShowOrHideSegmentedControl(show: Bool) {
+    private func doShowOrHideSegmentedControl(show: Bool) {
         self.webViewToSegmentedControlConstraint.active = false
         self.webViewToTopAnchorConstraint.active = false
         

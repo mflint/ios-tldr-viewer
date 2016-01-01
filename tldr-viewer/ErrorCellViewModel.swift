@@ -18,7 +18,7 @@ struct ErrorCellViewModel: BaseCellViewModel {
     init(buttonAction:ViewModelAction) {
         self.cellIdentifier = "ErrorCell"
         self.action = buttonAction
-        self.errorText = Theme.detailAttributed("Could not download the commands")
+        self.errorText = Theme.detailAttributed("Could not fetch the commands")
         self.buttonText = "Try again"
     }
     
