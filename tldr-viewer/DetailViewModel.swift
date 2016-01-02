@@ -14,20 +14,11 @@ class DetailViewModel {
     
     // navigation bar title
     var navigationBarTitle: String
-    
-    // the message to show when there's no tldr page
-    var message: NSAttributedString?
-    var loading: Bool = false
-    var buttonTitle: String?
-    
-    // tldr page in HTML
-    var detailHTML: [Int:String] = [:]
-    var currentDetailHTML : String?
-    
+
     // multi-platforms
     var showPlatforms: Bool
-    var platformOptions: [Platform] = []
-    var selectedPlatform: Int
+    var platforms: [DetailPlatformViewModel] = []
+    var selectedPlatform: DetailPlatformViewModel!
     
     private var command: Command!
     
@@ -36,72 +27,23 @@ class DetailViewModel {
         
         self.navigationBarTitle = self.command.name
         self.showPlatforms = self.command.platforms.count > 1
-        self.platformOptions = self.command.platforms
-        self.selectedPlatform = 0
         
-        self.loadDetailIfRequired()
-    }
-    
-    func reloadDetail() {
-        let selectedPlatform = self.selectedPlatform
-        
-        self.doLoadDetail(selectedPlatform)
-    }
-    
-    private func loadDetailIfRequired() {
-        let selectedPlatform = self.selectedPlatform
-        
-        if (self.detailHTML[selectedPlatform] == nil) {
-            self.doLoadDetail(selectedPlatform)
+        let childUpdateSignal = {
+            self.updateSignal()
         }
-    }
-    
-    private func doLoadDetail(loadingPlatform: Int) {
-        self.message = Theme.detailAttributed("Loading...")
-        self.buttonTitle = nil
-        self.loading = true
-        
-        let urlString = "https://raw.githubusercontent.com/tldr-pages/tldr/master/pages/" + platformOptions[selectedPlatform].name + "/" + self.command.name + ".md"
-        TLDRRequest.requestWithURL(urlString) { response in
-            self.processResponse(response, loadingPlatform: loadingPlatform)
+        for (index, platform) in self.command.platforms.enumerate() {
+            let platformVM = DetailPlatformViewModel(updateSignal: childUpdateSignal, command: self.command, platform: platform, platformIndex: index)
+            self.platforms.append(platformVM)
         }
+        self.selectedPlatform = self.platforms[0]
         
-        self.update()
+        self.selectedPlatform.loadDetailIfRequired()
     }
     
-    private func processResponse(response: TLDRResponse, loadingPlatform: Int) {
-        self.loading = false
-        
-        if let error = response.error {
-            self.handleError(error)
-        } else if let markdownString = response.responseString {
-            self.handleSuccess(markdownString, loadingPlatform: loadingPlatform)
+    func selectPlatform(platformIndex: Int) {
+        if (platformIndex >= 0 && platformIndex <= self.platforms.count-1) {
+            self.selectedPlatform = self.platforms[platformIndex]
+            self.selectedPlatform.loadDetailIfRequired()
         }
-        
-        self.update()
-    }
-    
-    private func handleError(error: NSError) {
-        self.message = Theme.detailAttributed("Could not fetch the tldr-page")
-        self.buttonTitle = "Try again"
-    }
-    
-    private func handleSuccess(markdownString: String, loadingPlatform: Int) {
-        var markdown = Markdown()
-        let html = markdown.transform(markdownString)
-        self.detailHTML[loadingPlatform] = Theme.pageFromHTMLSnippet(html)
-        self.message = nil
-        self.buttonTitle = nil
-    }
-    
-    private func update() {
-        self.currentDetailHTML = self.detailHTML[self.selectedPlatform]
-        self.updateSignal()
-    }
-    
-    func selectPlatform(platformIndex: NSInteger) {
-        self.selectedPlatform = platformIndex
-        self.loadDetailIfRequired()
-        self.update()
     }
 }

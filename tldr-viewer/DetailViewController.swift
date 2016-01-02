@@ -65,7 +65,7 @@ class DetailViewController: UIViewController {
     }
     
     @IBAction func buttonTapped(sender: AnyObject) {
-        self.viewModel.reloadDetail()
+        self.viewModel.selectedPlatform.loadDetailIfRequired()
     }
     
     private func configureView() {
@@ -82,15 +82,15 @@ class DetailViewController: UIViewController {
         var sceneTitle: String;
         var showSegmentedControl = false
 
-        if let viewModel = self.viewModel {
-            if (viewModel.message != nil) {
-                message = viewModel.message
-                loading = viewModel.loading
-                buttonTitle = viewModel.buttonTitle
+        if let viewModel = self.viewModel, let platformViewModel = viewModel.selectedPlatform {
+            if (platformViewModel.message != nil) {
+                message = platformViewModel.message
+                loading = platformViewModel.loading
+                buttonTitle = platformViewModel.buttonTitle
                 htmlString = nil
             } else {
                 message = nil
-                htmlString = viewModel.currentDetailHTML!
+                htmlString = platformViewModel.detailHTML!
             }
             sceneTitle = viewModel.navigationBarTitle
             
@@ -141,11 +141,11 @@ class DetailViewController: UIViewController {
     private func doConfigureSegmentedControl(viewModel: DetailViewModel) {
         self.platformsSegmentedControl.removeAllSegments()
         
-        for (index, platform) in viewModel.platformOptions.enumerate() {
-            self.platformsSegmentedControl.insertSegmentWithTitle(platform.displayName, atIndex: index, animated: false)
+        for (index, platform) in viewModel.platforms.enumerate() {
+            self.platformsSegmentedControl.insertSegmentWithTitle(platform.platformName, atIndex: index, animated: false)
         }
         
-        self.platformsSegmentedControl.selectedSegmentIndex = viewModel.selectedPlatform
+        self.platformsSegmentedControl.selectedSegmentIndex = viewModel.selectedPlatform.platformIndex
     }
     
     private func doShowOrHideSegmentedControl(show: Bool) {

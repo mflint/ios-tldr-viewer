@@ -13,6 +13,7 @@
 		34048D221C36E4CF00E91EE7 /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34048D211C36E4CF00E91EE7 /* LoadingCell.swift */; };
 		34048D241C36E4DD00E91EE7 /* LoadingCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34048D231C36E4DD00E91EE7 /* LoadingCellViewModel.swift */; };
 		34048D271C37212A00E91EE7 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34048D261C37212A00E91EE7 /* ActionButton.swift */; };
+		34048D291C37402500E91EE7 /* DetailPlatformViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34048D281C37402500E91EE7 /* DetailPlatformViewModel.swift */; };
 		342514841C349D96001D31F4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342514831C349D96001D31F4 /* AppDelegate.swift */; };
 		342514861C349D96001D31F4 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342514851C349D96001D31F4 /* ListViewController.swift */; };
 		342514881C349D96001D31F4 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342514871C349D96001D31F4 /* DetailViewController.swift */; };
@@ -42,6 +43,7 @@
 		34048D211C36E4CF00E91EE7 /* LoadingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
 		34048D231C36E4DD00E91EE7 /* LoadingCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingCellViewModel.swift; sourceTree = "<group>"; };
 		34048D261C37212A00E91EE7 /* ActionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
+		34048D281C37402500E91EE7 /* DetailPlatformViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailPlatformViewModel.swift; sourceTree = "<group>"; };
 		342514801C349D96001D31F4 /* tldr-viewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "tldr-viewer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		342514831C349D96001D31F4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		342514851C349D96001D31F4 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 			children = (
 				342514871C349D96001D31F4 /* DetailViewController.swift */,
 				342514AE1C353FD3001D31F4 /* DetailViewModel.swift */,
+				34048D281C37402500E91EE7 /* DetailPlatformViewModel.swift */,
 			);
 			name = Detail;
 			sourceTree = "<group>";
@@ -246,6 +249,7 @@
 				34048D241C36E4DD00E91EE7 /* LoadingCellViewModel.swift in Sources */,
 				342514A11C34AE5E001D31F4 /* CommandCellViewModel.swift in Sources */,
 				342514A31C34B01F001D31F4 /* CommandCell.swift in Sources */,
+				34048D291C37402500E91EE7 /* DetailPlatformViewModel.swift in Sources */,
 				3425149A1C34A31E001D31F4 /* ListViewModel.swift in Sources */,
 				342514A51C34BA05001D31F4 /* TLDRURLSessionConfiguration.swift in Sources */,
 				342514A71C34BCEF001D31F4 /* TLDRRequest.swift in Sources */,
