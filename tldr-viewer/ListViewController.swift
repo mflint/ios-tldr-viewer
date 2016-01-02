@@ -36,12 +36,8 @@ class ListViewController: UIViewController {
             }         }
         
         self.splitViewController?.delegate = self.viewModel;
+        self.searchBar.autocapitalizationType = UITextAutocapitalizationType.None
     }
-
-//    override func viewWillAppear(animated: Bool) {
-//        self.clearsSelectionOnViewWillAppear = self.splitViewController!.collapsed
-//        super.viewWillAppear(animated)
-//    }
 
     // MARK: - Segues
 

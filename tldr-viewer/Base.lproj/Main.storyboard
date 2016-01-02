@@ -82,13 +82,13 @@
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
+                                        <exclude reference="5hu-fk-NER"/>
+                                        <exclude reference="j7Z-bw-pDS"/>
+                                        <exclude reference="oGB-vC-jer"/>
                                         <exclude reference="BAR-mH-Ac1"/>
                                         <exclude reference="bR9-Cg-fWG"/>
                                         <exclude reference="zp0-8q-Ebq"/>
                                         <exclude reference="KUH-uB-JSq"/>
-                                        <exclude reference="5hu-fk-NER"/>
-                                        <exclude reference="j7Z-bw-pDS"/>
-                                        <exclude reference="oGB-vC-jer"/>
                                     </mask>
                                 </variation>
                             </view>
