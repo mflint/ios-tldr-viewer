@@ -38,6 +38,17 @@ class ListViewController: UIViewController {
         self.splitViewController?.delegate = self.viewModel;
         self.searchBar.autocapitalizationType = UITextAutocapitalizationType.None
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // iPhone 6 or smaller: deselect the selected row when this ViewController reappears
+        if self.splitViewController!.collapsed {
+            if let selectedRow = self.tableView.indexPathForSelectedRow {
+                self.tableView.deselectRowAtIndexPath(selectedRow, animated: true)
+            }
+        }
+    }
 
     // MARK: - Segues
 
