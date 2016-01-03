@@ -20,6 +20,7 @@ class Theme {
         // segmented control
         UISegmentedControl.appearance().tintColor = UIColor.tldrTeal()
         
+        // UISearchBar text field
         UITextField.appearanceWhenContainedInInstancesOfClasses([UISearchBar.self]).font = UIFont.tldrBody()
     }
     
@@ -35,11 +36,19 @@ class Theme {
         return result
     }
     
-    static func bodyAttributed(string: String) -> NSAttributedString {
+    static func bodyAttributed(string: String?) -> NSAttributedString? {
+        guard let string = string else {
+            return nil
+        }
+        
         return NSAttributedString(string: string, attributes: [NSFontAttributeName:UIFont.tldrBody(), NSForegroundColorAttributeName:UIColor.tldrBody()])
     }
     
-    static func detailAttributed(string: String) -> NSAttributedString {
+    static func detailAttributed(string: String?) -> NSAttributedString? {
+        guard let string = string else {
+            return nil
+        }
+        
         return NSAttributedString(string: string, attributes: [NSFontAttributeName:UIFont.tldrBody(), NSForegroundColorAttributeName:UIColor.tldrDetail()])
     }
 }

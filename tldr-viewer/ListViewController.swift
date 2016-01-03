@@ -53,15 +53,19 @@ class ListViewController: UIViewController {
     // MARK: - Segues
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
-        let detailVC = (segue.destinationViewController as! UINavigationController).topViewController as! DetailViewController
-        
-        if let detailViewModel = sender as? DetailViewModel {
-            detailVC.viewModel = detailViewModel
+        if segue.identifier == "showDetail" {
+            let detailVC = (segue.destinationViewController as! UINavigationController).topViewController as! DetailViewController
+            
+            if let detailViewModel = sender as? DetailViewModel {
+                detailVC.viewModel = detailViewModel
+            }
+            
+            detailVC.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
+            detailVC.navigationItem.leftItemsSupplementBackButton = true
+        } else if segue.identifier == "showInfoPopover" {
+            // this sets the color of the popover arrow on iPad, to match the UINavigationBar color of the destination VC
+            segue.destinationViewController.popoverPresentationController?.backgroundColor = UIColor.tldrTeal()
         }
-        
-        detailVC.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
-        detailVC.navigationItem.leftItemsSupplementBackButton = true
     }
 }
 
@@ -90,14 +94,6 @@ extension ListViewController: UITableViewDataSource {
     }
 }
 
-// MARK: - UISearchBarDelegate
-
-extension ListViewController: UISearchBarDelegate {
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        self.viewModel.filterTextDidChange(searchText)
-    }
-}
-
 // MARK: - UITableViewDelegate
 
 extension ListViewController: UITableViewDelegate {
@@ -112,5 +108,13 @@ extension ListViewController: UITableViewDelegate {
     
     func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 50;
+    }
+}
+
+// MARK: - UISearchBarDelegate
+
+extension ListViewController: UISearchBarDelegate {
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        self.viewModel.filterTextDidChange(searchText)
     }
 }
