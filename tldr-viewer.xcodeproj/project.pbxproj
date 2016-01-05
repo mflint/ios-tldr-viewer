@@ -417,7 +417,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "uk.co.greenlightapps.tldr-viewer";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "bbf9c05e-d90d-41e8-a2cf-9862c6ec01ba";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};

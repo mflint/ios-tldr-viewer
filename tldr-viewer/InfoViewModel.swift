@@ -37,7 +37,7 @@ class InfoViewModel {
     }
     
     private func contactCell() -> BaseCellViewModel {
-        let message = self.attributedString("Contact via email or Twitter.", anchors: ["email", "Twitter"], urls: [NSURL(string: "mailto:tldr@greenlightapps.co.uk")!, "https://twitter.com/mkflint"])
+        let message = self.attributedString("Contact via email or Twitter.", anchors: ["email", "Twitter"], urls: [NSURL(string: "mailto:tldr@greenlightapps.co.uk")!, "https://twitter.com/intent/tweet?text=@mkflint%20"])
         return TextCellViewModel(attributedText: message)
     }
     
