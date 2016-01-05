@@ -6,10 +6,10 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Master-->
+        <!--Commands-->
         <scene sceneID="pY4-Hu-kfo">
             <objects>
-                <navigationController title="Master" id="RMx-3f-FxP" sceneMemberID="viewController">
+                <navigationController title="Commands" id="RMx-3f-FxP" userLabel="Commands" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="Pmd-2v-anx">
                         <autoresizingMask key="autoresizingMask"/>
@@ -132,10 +132,10 @@
             </objects>
             <point key="canvasLocation" x="-856" y="-330"/>
         </scene>
-        <!--Master-->
+        <!--Commands-->
         <scene sceneID="smW-Zh-WAh">
             <objects>
-                <viewController title="Master" id="7bK-jq-Zjz" customClass="ListViewController" customModule="tldr_viewer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Commands" id="7bK-jq-Zjz" userLabel="Commands" customClass="ListViewController" customModule="tldr_viewer" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="tq6-Je-z8g"/>
                         <viewControllerLayoutGuide type="bottom" id="O4g-ib-Gkd"/>
