@@ -23,7 +23,8 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
     private var errorState = false
     private var loading = false
     
-    internal var filteredCellViewModels = [BaseCellViewModel]()
+    internal var sectionViewModels = [SectionViewModel]()
+    internal var sectionIndexes = [String]()
     
     override init() {
         super.init()
@@ -72,7 +73,7 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
             commands.append(command)
         }
         
-        self.commands = commands
+        self.commands = Command.sort(commands)
         self.errorState = false
         
         self.updateCellViewModels()
@@ -102,32 +103,50 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
         }
         
         self.cellViewModels = vms
-        self.updateFilteredCellViewModels()
+        self.makeFilteredSectionsAndCells()
         self.updateSignal()
     }
     
-    private func updateFilteredCellViewModels() {
-        self.filteredCellViewModels = self.cellViewModels.filter{ cellViewModel in
+    private func makeFilteredSectionsAndCells() {
+        let filteredCellViewModels = self.cellViewModels.filter{ cellViewModel in
+            // if the search string is empty, return everything
             if self.searchText.characters.count == 0 {
                 return true
             }
             
+            // otherwise 
             if let commandCellViewModel = cellViewModel as? CommandCellViewModel {
                 return commandCellViewModel.command.name.lowercaseString.containsString(self.searchText.lowercaseString)
             }
             
             return true
         }
+        
+        // all sections
+        var sections = [SectionViewModel]()
+        
+        // current section
+        var currentSection: SectionViewModel?
+        
+        for cellViewModel in filteredCellViewModels {
+            if currentSection == nil || !currentSection!.accept(cellViewModel) {
+                currentSection = SectionViewModel(firstCellViewModel: cellViewModel)
+                sections.append(currentSection!)
+            }
+        }
+        
+        self.sectionViewModels = SectionViewModel.sort(sections)
+        self.sectionIndexes = self.sectionViewModels.map({ section in section.title })
     }
     
     func didSelectRowAtIndexPath(indexPath: NSIndexPath) {
         self.itemSelected = true
-        self.filteredCellViewModels[indexPath.row].performAction()
+        self.sectionViewModels[indexPath.section].cellViewModels[indexPath.row].performAction()
     }
     
     func filterTextDidChange(text: String) {
         self.searchText = text
-        self.updateFilteredCellViewModels()
+        self.makeFilteredSectionsAndCells()
         self.updateSignal()
     }
     

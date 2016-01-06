@@ -9,34 +9,43 @@
 import UIKit
 
 class ListViewController: UIViewController {
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var tableView: UITableView! {
+        didSet {
+            self.tableView.sectionIndexColor = UIColor.tldrTeal()
+        }
+    }
+    @IBOutlet weak var searchBar: UISearchBar! {
+        didSet {
+            self.searchBar.autocapitalizationType = UITextAutocapitalizationType.None
+        }
+    }
     
-    private var viewModel: ListViewModel!
+    private var viewModel: ListViewModel! {
+        didSet {
+            self.viewModel.updateSignal = {
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.tableView.reloadData()
+                })
+            }
+            
+            self.viewModel.showDetail = {(detailViewModel) -> Void in
+                // show the detail
+                self.performSegueWithIdentifier("showDetail", sender: detailViewModel)
+                
+                // and dismiss the primary overlay VC if necessary (iPad only)
+                if (self.splitViewController?.displayMode == .PrimaryOverlay){
+                    self.splitViewController?.preferredDisplayMode = .PrimaryHidden
+                    self.splitViewController?.preferredDisplayMode = .Automatic
+                }         }
+            
+            self.splitViewController?.delegate = self.viewModel
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.viewModel = ListViewModel()
-        
-        self.viewModel.updateSignal = {
-            dispatch_async(dispatch_get_main_queue(), {
-                self.tableView.reloadData()
-            })
-        }
-        
-        self.viewModel.showDetail = {(detailViewModel) -> Void in
-            // show the detail
-            self.performSegueWithIdentifier("showDetail", sender: detailViewModel)
-            
-            // and dismiss the primary overlay VC if necessary (iPad only)
-            if (self.splitViewController?.displayMode == .PrimaryOverlay){
-                self.splitViewController?.preferredDisplayMode = .PrimaryHidden
-                self.splitViewController?.preferredDisplayMode = .Automatic
-            }         }
-        
-        self.splitViewController?.delegate = self.viewModel;
-        self.searchBar.autocapitalizationType = UITextAutocapitalizationType.None
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -73,24 +82,36 @@ class ListViewController: UIViewController {
 
 extension ListViewController: UITableViewDataSource {
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let viewModel = self.viewModel {
-            return viewModel.filteredCellViewModels.count
+            return viewModel.sectionViewModels.count
         }
         
         return 0
     }
 
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if let viewModel = self.viewModel {
+            return viewModel.sectionViewModels[section].cellViewModels.count
+        }
+        
+        return 0
+    }
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return self.viewModel.sectionViewModels[section].title
+    }
+
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cellViewModel = self.viewModel.filteredCellViewModels[indexPath.row]
+        let cellViewModel = self.viewModel.sectionViewModels[indexPath.section].cellViewModels[indexPath.row]
         let cell = tableView.dequeueReusableCellWithIdentifier(cellViewModel.cellIdentifier, forIndexPath: indexPath)
         if let baseCell = cell as? BaseCell {
             baseCell.configure(cellViewModel)
         }
         return cell
+    }
+    
+    func sectionIndexTitlesForTableView(tableView: UITableView) -> [String]? {
+        return self.viewModel.sectionIndexes
     }
 }
 
@@ -107,7 +128,12 @@ extension ListViewController: UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 50;
+        return 50
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        // don't show sections
+        return 0
     }
 }
 

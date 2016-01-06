@@ -75,11 +75,11 @@ class DetailViewController: UIViewController {
     }
     
     private func doConfigureView() {
-        var htmlString: String?;
+        var htmlString: String?
         var message: NSAttributedString?
         var loading: Bool = false
         var buttonTitle: String?
-        var sceneTitle: String;
+        var sceneTitle: String
         var showSegmentedControl = false
 
         if let viewModel = self.viewModel, let platformViewModel = viewModel.selectedPlatform {
@@ -134,7 +134,7 @@ class DetailViewController: UIViewController {
             self.webView.hidden = true
         }
         
-        self.title = sceneTitle;
+        self.title = sceneTitle
         self.doShowOrHideSegmentedControl(showSegmentedControl)
     }
     

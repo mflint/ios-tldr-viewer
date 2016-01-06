@@ -15,7 +15,7 @@ class TLDRRequest: NSObject, NSURLSessionTaskDelegate {
         let url = NSURL(string: urlString)
         let request = NSURLRequest(URL: url!)
         
-        let session = NSURLSession(configuration: NSURLSessionConfiguration.TLDRSessionConfiguration());
+        let session = NSURLSession(configuration: NSURLSessionConfiguration.TLDRSessionConfiguration())
         
         let task = session.dataTaskWithRequest(request) {
             data, response, sessionError in

@@ -40,6 +40,7 @@
 		34FD9AB91C388A15001DB968 /* TextCellRightDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FD9AB81C388A15001DB968 /* TextCellRightDetail.swift */; };
 		34FD9ABB1C388A1E001DB968 /* TextCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FD9ABA1C388A1E001DB968 /* TextCellViewModel.swift */; };
 		34FD9ABD1C388C83001DB968 /* GroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FD9ABC1C388C83001DB968 /* GroupViewModel.swift */; };
+		34FDB18A1C3C8FCA00587386 /* SectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FDB1891C3C8FCA00587386 /* SectionViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,6 +79,7 @@
 		34FD9AB81C388A15001DB968 /* TextCellRightDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextCellRightDetail.swift; sourceTree = "<group>"; };
 		34FD9ABA1C388A1E001DB968 /* TextCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextCellViewModel.swift; sourceTree = "<group>"; };
 		34FD9ABC1C388C83001DB968 /* GroupViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupViewModel.swift; sourceTree = "<group>"; };
+		34FDB1891C3C8FCA00587386 /* SectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +174,7 @@
 				34358AEE1C357B7C00BB7DDB /* Markdown.swift */,
 				34048D1B1C36CF8800E91EE7 /* Platform.swift */,
 				34FD9ABC1C388C83001DB968 /* GroupViewModel.swift */,
+				34FDB1891C3C8FCA00587386 /* SectionViewModel.swift */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -274,6 +277,7 @@
 				342514881C349D96001D31F4 /* DetailViewController.swift in Sources */,
 				342514861C349D96001D31F4 /* ListViewController.swift in Sources */,
 				34048D241C36E4DD00E91EE7 /* LoadingCellViewModel.swift in Sources */,
+				34FDB18A1C3C8FCA00587386 /* SectionViewModel.swift in Sources */,
 				342514A11C34AE5E001D31F4 /* CommandCellViewModel.swift in Sources */,
 				342514A31C34B01F001D31F4 /* CommandCell.swift in Sources */,
 				34048D291C37402500E91EE7 /* DetailPlatformViewModel.swift in Sources */,

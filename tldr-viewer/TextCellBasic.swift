@@ -13,8 +13,8 @@ class TextCellBasic: UITableViewCell, BaseCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.textView.textContainer.lineFragmentPadding = 0;
-        self.textView.textContainerInset = UIEdgeInsetsMake(0, 0, 0, 0);
+        self.textView.textContainer.lineFragmentPadding = 0
+        self.textView.textContainerInset = UIEdgeInsetsMake(0, 0, 0, 0)
         self.textView.tintColor = UIColor.tldrTeal()
     }
     
