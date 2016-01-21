@@ -16,7 +16,7 @@ struct TLDRResponse {
     var responseJSON: AnyObject? {
         if let data = data {
             do {
-                if let jsonResult = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? NSDictionary {
+                if let jsonResult = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? NSArray {
                     return jsonResult
                 }
             }  catch let error as NSError {

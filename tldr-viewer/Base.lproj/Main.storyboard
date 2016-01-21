@@ -255,7 +255,7 @@
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" title="Commands" id="Zdf-7t-Un8">
-                        <barButtonItem key="rightBarButtonItem" image="cog" id="vAU-JJ-Euy">
+                        <barButtonItem key="rightBarButtonItem" image="info" id="vAU-JJ-Euy">
                             <connections>
                                 <segue destination="87T-K0-dVu" kind="popoverPresentation" identifier="showInfoPopover" popoverAnchorBarButtonItem="vAU-JJ-Euy" id="GRx-RL-cg6">
                                     <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
@@ -424,7 +424,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="cog" width="22" height="22"/>
+        <image name="info" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="hyL-FJ-xxQ"/>

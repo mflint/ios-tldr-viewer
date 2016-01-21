@@ -34,7 +34,7 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
     private func loadIndex() {
         self.loading = true
         
-        TLDRRequest.requestWithURL("https://raw.githubusercontent.com/tldr-pages/tldr-pages.github.io/master/assets/index.json") { response in
+        TLDRRequest.requestWithURL("https://tldr-pages.github.io/assets/index.json") { response in
             self.processResponse(response)
         }
         
@@ -46,8 +46,8 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
         
         if let error = response.error {
             self.handleError(error)
-        } else if let jsonDict = response.responseJSON as? Dictionary<String, Array<Dictionary<String, AnyObject>>> {
-            self.handleSuccess(jsonDict)
+        } else if let jsonArray = response.responseJSON as? Array<Dictionary<String, AnyObject>> {
+            self.handleSuccess(jsonArray)
         }
     }
     
@@ -58,10 +58,10 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
         self.updateCellViewModels()
     }
     
-    private func handleSuccess(jsonDict: Dictionary<String, Array<Dictionary<String, AnyObject>>>) {
+    private func handleSuccess(jsonArray: Array<Dictionary<String, AnyObject>>) {
         var commands = [Command]()
         
-        for commandJSON in jsonDict["commands"]! {
+        for commandJSON in jsonArray {
             let name = commandJSON["name"] as! String
             var platforms = [Platform]()
             for platformName in commandJSON["platform"] as! Array<String> {
