@@ -34,6 +34,7 @@
 		34358AF51C3589D200BB7DDB /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34358AF41C3589D200BB7DDB /* WebKit.framework */; };
 		34358AF71C3592CC00BB7DDB /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34358AF61C3592CC00BB7DDB /* Theme.swift */; };
 		34358AFA1C35D81F00BB7DDB /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = 34358AF91C35D81F00BB7DDB /* style.css */; };
+		34D06BBA1C519C1100D30041 /* Zip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34D06BB91C519C1100D30041 /* Zip.framework */; };
 		34FBC0CF1C38A189008AD2C0 /* TextCellBasic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FBC0CE1C38A189008AD2C0 /* TextCellBasic.swift */; };
 		34FD9AB51C3885C6001DB968 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FD9AB41C3885C6001DB968 /* InfoViewController.swift */; };
 		34FD9AB71C3885CE001DB968 /* InfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FD9AB61C3885CE001DB968 /* InfoViewModel.swift */; };
@@ -73,6 +74,7 @@
 		34358AF41C3589D200BB7DDB /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		34358AF61C3592CC00BB7DDB /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		34358AF91C35D81F00BB7DDB /* style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
+		34D06BB91C519C1100D30041 /* Zip.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Zip.framework; path = Carthage/Build/iOS/Zip.framework; sourceTree = "<group>"; };
 		34FBC0CE1C38A189008AD2C0 /* TextCellBasic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextCellBasic.swift; sourceTree = "<group>"; };
 		34FD9AB41C3885C6001DB968 /* InfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		34FD9AB61C3885CE001DB968 /* InfoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewModel.swift; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				34358AF51C3589D200BB7DDB /* WebKit.framework in Frameworks */,
+				34D06BBA1C519C1100D30041 /* Zip.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,6 +108,7 @@
 		342514771C349D96001D31F4 = {
 			isa = PBXGroup;
 			children = (
+				34D06BB91C519C1100D30041 /* Zip.framework */,
 				34358AF41C3589D200BB7DDB /* WebKit.framework */,
 				342514821C349D96001D31F4 /* tldr-viewer */,
 				342514811C349D96001D31F4 /* Products */,
@@ -210,6 +214,7 @@
 				3425147C1C349D96001D31F4 /* Sources */,
 				3425147D1C349D96001D31F4 /* Frameworks */,
 				3425147E1C349D96001D31F4 /* Resources */,
+				34D06BBB1C519C2100D30041 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -266,6 +271,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		34D06BBB1C519C2100D30041 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Zip.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		3425147C1C349D96001D31F4 /* Sources */ = {
@@ -416,6 +438,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "tldr-viewer/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -432,6 +455,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "tldr-viewer/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
