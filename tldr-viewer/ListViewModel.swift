@@ -19,6 +19,8 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
     
     internal var itemSelected: Bool = false
     
+    internal var requesting: Bool = false
+    
     private let dataSource = DataSource()
     private var cellViewModels = [BaseCellViewModel]()
     
@@ -27,19 +29,25 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
     
     override init() {
         super.init()
-        self.dataSource.updateSignal = {
-            self.updateCellViewModels()
+        dataSource.updateSignal = {
+            self.update()
         }
         
-        self.updateCellViewModels()
+        update()
     }
     
-    private func updateCellViewModels() {
+    func refreshData() {
+        dataSource.beginRequest()
+    }
+    
+    private func update() {
+        requesting = dataSource.requesting
+        
         var vms = [BaseCellViewModel]()
         
         let commands = dataSource.commands
         
-        if dataSource.requesting {
+        if dataSource.requesting && commands.count == 0 {
             let cellViewModel = LoadingCellViewModel()
             vms.append(cellViewModel)
         }
@@ -59,15 +67,15 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
             vms.append(cellViewModel)
         }
         
-        self.cellViewModels = vms
-        self.makeFilteredSectionsAndCells()
-        self.updateSignal()
+        cellViewModels = vms
+        makeFilteredSectionsAndCells()
+        updateSignal()
     }
     
     private func makeFilteredSectionsAndCells() {
-        let filteredCellViewModels = self.cellViewModels.filter{ cellViewModel in
+        let filteredCellViewModels = cellViewModels.filter{ cellViewModel in
             // if the search string is empty, return everything
-            if self.searchText.characters.count == 0 {
+            if searchText.characters.count == 0 {
                 return true
             }
             
@@ -92,30 +100,30 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
             }
         }
         
-        self.sectionViewModels = SectionViewModel.sort(sections)
-        self.sectionIndexes = self.sectionViewModels.map({ section in section.title })
+        sectionViewModels = SectionViewModel.sort(sections)
+        sectionIndexes = sectionViewModels.map({ section in section.title })
     }
     
     func didSelectRowAtIndexPath(indexPath: NSIndexPath) {
-        self.itemSelected = true
-        self.sectionViewModels[indexPath.section].cellViewModels[indexPath.row].performAction()
-        self.cancelSearchSignal()
+        itemSelected = true
+        sectionViewModels[indexPath.section].cellViewModels[indexPath.row].performAction()
+        cancelSearchSignal()
     }
     
     func filterTextDidChange(text: String) {
-        self.searchText = text
-        self.makeFilteredSectionsAndCells()
-        self.updateSignal()
+        searchText = text
+        makeFilteredSectionsAndCells()
+        updateSignal()
     }
     
     // MARK: - Split view
     
     // not called for iPhone 6+ or iPad
     func splitViewController(splitViewController: UISplitViewController, collapseSecondaryViewController secondaryViewController: UIViewController, ontoPrimaryViewController primaryViewController: UIViewController) -> Bool {
-        return !self.itemSelected
+        return !itemSelected
     }
     
     func splitViewController(svc: UISplitViewController, shouldHideViewController vc: UIViewController, inOrientation orientation: UIInterfaceOrientation) -> Bool {
-        return self.itemSelected && UIInterfaceOrientationIsPortrait(orientation)
+        return itemSelected && UIInterfaceOrientationIsPortrait(orientation)
     }
 }

@@ -268,6 +268,12 @@
                             <outlet property="delegate" destination="KVq-bc-a3X" id="Te7-PJ-5h1"/>
                         </connections>
                     </tableView>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="ZMS-m5-2Wo">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <connections>
+                            <action selector="onPullToRefresh:" destination="KVq-bc-a3X" eventType="valueChanged" id="U4o-YO-0SD"/>
+                        </connections>
+                    </refreshControl>
                     <connections>
                         <segue destination="vC3-pB-5Vb" kind="showDetail" identifier="showDetail" id="BFu-YO-M7a"/>
                     </connections>

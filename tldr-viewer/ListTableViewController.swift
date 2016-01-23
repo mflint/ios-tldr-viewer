@@ -19,6 +19,14 @@ class ListTableViewController: UITableViewController {
         didSet {
             self.viewModel.updateSignal = {
                 dispatch_async(dispatch_get_main_queue(), {
+                    if let refreshControl = self.refreshControl {
+                        if self.viewModel.requesting {
+                            refreshControl.beginRefreshing()
+                        } else {
+                            refreshControl.endRefreshing()
+                        }
+                    }
+                    
                     self.tableView.reloadData()
                 })
             }
@@ -46,6 +54,10 @@ class ListTableViewController: UITableViewController {
                 self.tableView.deselectRowAtIndexPath(selectedRow, animated: true)
             }
         }
+    }
+    
+    @IBAction func onPullToRefresh(sender: AnyObject) {
+        self.viewModel.refreshData()
     }
     
     // MARK: - Segues
