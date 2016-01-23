@@ -15,10 +15,10 @@ struct ErrorCellViewModel: BaseCellViewModel {
     var errorText: NSAttributedString!
     var buttonText: String!
     
-    init(buttonAction:ViewModelAction) {
+    init(errorText: String, buttonAction: ViewModelAction) {
         self.cellIdentifier = "ErrorCell"
         self.action = buttonAction
-        self.errorText = Theme.detailAttributed("Could not fetch the commands")
+        self.errorText = Theme.detailAttributed(errorText)
         self.buttonText = "Try again"
     }
     

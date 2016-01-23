@@ -18,63 +18,17 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
     
     internal var itemSelected: Bool = false
     
-    private var commands = [Command]()
+    private let dataSource = DataSource()
     private var cellViewModels = [BaseCellViewModel]()
-    private var errorState = false
-    private var loading = false
     
     internal var sectionViewModels = [SectionViewModel]()
     internal var sectionIndexes = [String]()
     
     override init() {
         super.init()
-        self.loadIndex()
-    }
-    
-    private func loadIndex() {
-        self.loading = true
-        
-        TLDRRequest.requestWithURL("https://tldr-pages.github.io/assets/index.json") { response in
-            self.processResponse(response)
+        self.dataSource.updateSignal = {
+            self.updateCellViewModels()
         }
-        
-        self.updateCellViewModels()
-    }
-    
-    private func processResponse(response: TLDRResponse) {
-        self.loading = false
-        
-        if let error = response.error {
-            self.handleError(error)
-        } else if let jsonArray = response.responseJSON as? Array<Dictionary<String, AnyObject>> {
-            self.handleSuccess(jsonArray)
-        }
-    }
-    
-    private func handleError(error: NSError) {
-        self.commands = []
-        self.errorState = true
-        
-        self.updateCellViewModels()
-    }
-    
-    private func handleSuccess(jsonArray: Array<Dictionary<String, AnyObject>>) {
-        var commands = [Command]()
-        
-        for commandJSON in jsonArray {
-            let name = commandJSON["name"] as! String
-            var platforms = [Platform]()
-            for platformName in commandJSON["platform"] as! Array<String> {
-                let platform = Platform.get(platformName)
-                platforms.append(platform)
-            }
-            let command = Command(name: name , platforms: Platform.sort(platforms))
-            
-            commands.append(command)
-        }
-        
-        self.commands = Command.sort(commands)
-        self.errorState = false
         
         self.updateCellViewModels()
     }
@@ -82,24 +36,26 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
     private func updateCellViewModels() {
         var vms = [BaseCellViewModel]()
         
-        if (self.loading) {
+        let commands = dataSource.commands
+        
+        if dataSource.requesting {
             let cellViewModel = LoadingCellViewModel()
             vms.append(cellViewModel)
-        } else {
-            if (self.errorState) {
-                let cellViewModel = ErrorCellViewModel(buttonAction: {
-                    self.loadIndex()
-                })
-                vms.append(cellViewModel)
-            }
-            
-            for command in self.commands {
-                let cellViewModel = CommandCellViewModel(command: command, action: {
-                    let detailViewModel = DetailViewModel(command: command)
-                    self.showDetail(detailViewModel: detailViewModel)
-                })
-                vms.append(cellViewModel)
-            }
+        }
+        
+        if let errorText = dataSource.requestError {
+            let cellViewModel = ErrorCellViewModel(errorText: errorText, buttonAction: {
+                self.dataSource.beginRequest()
+            })
+            vms.append(cellViewModel)
+        }
+        
+        for command in commands {
+            let cellViewModel = CommandCellViewModel(command: command, action: {
+                let detailViewModel = DetailViewModel(command: command)
+                self.showDetail(detailViewModel: detailViewModel)
+            })
+            vms.append(cellViewModel)
         }
         
         self.cellViewModels = vms

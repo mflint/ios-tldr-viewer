@@ -34,7 +34,9 @@
 		34358AF51C3589D200BB7DDB /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34358AF41C3589D200BB7DDB /* WebKit.framework */; };
 		34358AF71C3592CC00BB7DDB /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34358AF61C3592CC00BB7DDB /* Theme.swift */; };
 		34358AFA1C35D81F00BB7DDB /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = 34358AF91C35D81F00BB7DDB /* style.css */; };
-		34D06BBA1C519C1100D30041 /* Zip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34D06BB91C519C1100D30041 /* Zip.framework */; };
+		34D06BBD1C537CC100D30041 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D06BBC1C537CC100D30041 /* DataSource.swift */; };
+		34D06BBE1C5386DF00D30041 /* Zip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34D06BB91C519C1100D30041 /* Zip.framework */; };
+		34D06BC41C54203300D30041 /* DetailDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D06BC31C54203300D30041 /* DetailDataSource.swift */; };
 		34FBC0CF1C38A189008AD2C0 /* TextCellBasic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FBC0CE1C38A189008AD2C0 /* TextCellBasic.swift */; };
 		34FD9AB51C3885C6001DB968 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FD9AB41C3885C6001DB968 /* InfoViewController.swift */; };
 		34FD9AB71C3885CE001DB968 /* InfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FD9AB61C3885CE001DB968 /* InfoViewModel.swift */; };
@@ -75,6 +77,8 @@
 		34358AF61C3592CC00BB7DDB /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		34358AF91C35D81F00BB7DDB /* style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
 		34D06BB91C519C1100D30041 /* Zip.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Zip.framework; path = Carthage/Build/iOS/Zip.framework; sourceTree = "<group>"; };
+		34D06BBC1C537CC100D30041 /* DataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
+		34D06BC31C54203300D30041 /* DetailDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailDataSource.swift; sourceTree = "<group>"; };
 		34FBC0CE1C38A189008AD2C0 /* TextCellBasic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextCellBasic.swift; sourceTree = "<group>"; };
 		34FD9AB41C3885C6001DB968 /* InfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		34FD9AB61C3885CE001DB968 /* InfoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewModel.swift; sourceTree = "<group>"; };
@@ -90,7 +94,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				34358AF51C3589D200BB7DDB /* WebKit.framework in Frameworks */,
-				34D06BBA1C519C1100D30041 /* Zip.framework in Frameworks */,
+				34D06BBE1C5386DF00D30041 /* Zip.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -179,6 +183,8 @@
 				34048D1B1C36CF8800E91EE7 /* Platform.swift */,
 				34FD9ABC1C388C83001DB968 /* GroupViewModel.swift */,
 				34FDB1891C3C8FCA00587386 /* SectionViewModel.swift */,
+				34D06BBC1C537CC100D30041 /* DataSource.swift */,
+				34D06BC31C54203300D30041 /* DetailDataSource.swift */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -286,6 +292,7 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "/usr/local/bin/carthage copy-frameworks";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -313,7 +320,9 @@
 				3425149F1C34AA9F001D31F4 /* BaseCell.swift in Sources */,
 				34FD9AB71C3885CE001DB968 /* InfoViewModel.swift in Sources */,
 				34358AF71C3592CC00BB7DDB /* Theme.swift in Sources */,
+				34D06BC41C54203300D30041 /* DetailDataSource.swift in Sources */,
 				3425149D1C34A4CC001D31F4 /* BaseCellViewModel.swift in Sources */,
+				34D06BBD1C537CC100D30041 /* DataSource.swift in Sources */,
 				34048D201C36DF0200E91EE7 /* ErrorCell.swift in Sources */,
 				34048D1C1C36CF8800E91EE7 /* Platform.swift in Sources */,
 				34FBC0CF1C38A189008AD2C0 /* TextCellBasic.swift in Sources */,

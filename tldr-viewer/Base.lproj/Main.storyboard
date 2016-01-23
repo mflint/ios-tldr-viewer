@@ -48,47 +48,25 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iNu-dr-Hwu">
-                                        <rect key="frame" x="279" y="218" width="42" height="21"/>
+                                        <rect key="frame" x="279" y="258" width="42" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="bYb-sm-vhq">
-                                        <rect key="frame" x="290" y="247" width="20" height="20"/>
-                                    </activityIndicatorView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yhy-ep-H9I" customClass="ActionButton" customModule="tldr_viewer" customModuleProvider="target">
-                                        <rect key="frame" x="277" y="247" width="46" height="30"/>
-                                        <state key="normal" title="Button"/>
-                                        <connections>
-                                            <action selector="buttonTapped:" destination="JEX-9P-axG" eventType="touchUpInside" id="7K7-1M-vE3"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="iNu-dr-Hwu" firstAttribute="top" secondItem="KMC-Te-eDT" secondAttribute="top" id="5hu-fk-NER"/>
                                     <constraint firstItem="iNu-dr-Hwu" firstAttribute="centerX" secondItem="KMC-Te-eDT" secondAttribute="centerX" id="8Am-FA-Rih"/>
-                                    <constraint firstItem="yhy-ep-H9I" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="KMC-Te-eDT" secondAttribute="leading" id="BAR-mH-Ac1"/>
-                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="bYb-sm-vhq" secondAttribute="bottom" id="KUH-uB-JSq"/>
-                                    <constraint firstItem="bYb-sm-vhq" firstAttribute="top" secondItem="iNu-dr-Hwu" secondAttribute="bottom" constant="8" id="TwX-Q6-7ED"/>
-                                    <constraint firstItem="bYb-sm-vhq" firstAttribute="centerX" secondItem="KMC-Te-eDT" secondAttribute="centerX" id="WOM-UB-EFk"/>
-                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="yhy-ep-H9I" secondAttribute="bottom" id="bR9-Cg-fWG"/>
-                                    <constraint firstItem="iNu-dr-Hwu" firstAttribute="centerY" secondItem="KMC-Te-eDT" secondAttribute="centerY" constant="-40" id="gfv-jI-aSB"/>
+                                    <constraint firstItem="iNu-dr-Hwu" firstAttribute="centerY" secondItem="KMC-Te-eDT" secondAttribute="centerY" id="gfv-jI-aSB"/>
                                     <constraint firstItem="iNu-dr-Hwu" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="KMC-Te-eDT" secondAttribute="leading" id="j7Z-bw-pDS"/>
-                                    <constraint firstItem="yhy-ep-H9I" firstAttribute="top" secondItem="iNu-dr-Hwu" secondAttribute="bottom" constant="8" id="lGn-dF-80D"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="iNu-dr-Hwu" secondAttribute="trailing" id="oGB-vC-jer"/>
-                                    <constraint firstItem="yhy-ep-H9I" firstAttribute="centerX" secondItem="KMC-Te-eDT" secondAttribute="centerX" id="oeW-Kh-d7K"/>
-                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="yhy-ep-H9I" secondAttribute="trailing" id="zp0-8q-Ebq"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="5hu-fk-NER"/>
                                         <exclude reference="j7Z-bw-pDS"/>
                                         <exclude reference="oGB-vC-jer"/>
-                                        <exclude reference="BAR-mH-Ac1"/>
-                                        <exclude reference="bR9-Cg-fWG"/>
-                                        <exclude reference="zp0-8q-Ebq"/>
-                                        <exclude reference="KUH-uB-JSq"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -107,8 +85,6 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="mOI-FS-AaM"/>
                     <connections>
-                        <outlet property="loadingIndicator" destination="bYb-sm-vhq" id="acC-iK-Gvl"/>
-                        <outlet property="messageButton" destination="yhy-ep-H9I" id="Vfh-JZ-ral"/>
                         <outlet property="messageLabel" destination="iNu-dr-Hwu" id="ALB-hf-meM"/>
                         <outlet property="messageView" destination="KMC-Te-eDT" id="crU-Da-mXL"/>
                         <outlet property="platformsSegmentedControl" destination="mvg-5A-6xc" id="1OK-Vd-USi"/>
@@ -187,7 +163,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="107"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qlS-pa-0x3">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qlS-pa-0x3">
                                                     <rect key="frame" x="279" y="12" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -206,7 +182,8 @@
                                                 <constraint firstItem="0JY-vo-1CC" firstAttribute="centerX" secondItem="tMq-Ae-sJL" secondAttribute="centerX" id="e8g-St-5PT"/>
                                                 <constraint firstItem="0JY-vo-1CC" firstAttribute="top" secondItem="qlS-pa-0x3" secondAttribute="bottom" constant="5" id="fR4-xD-0sA"/>
                                                 <constraint firstItem="qlS-pa-0x3" firstAttribute="top" secondItem="tMq-Ae-sJL" secondAttribute="top" constant="12" id="on4-vB-mne"/>
-                                                <constraint firstItem="qlS-pa-0x3" firstAttribute="centerX" secondItem="tMq-Ae-sJL" secondAttribute="centerX" id="xEz-r4-WrV"/>
+                                                <constraint firstItem="qlS-pa-0x3" firstAttribute="leading" secondItem="tMq-Ae-sJL" secondAttribute="leadingMargin" constant="10" id="rqh-Gq-C38"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="qlS-pa-0x3" secondAttribute="trailing" constant="10" id="zVl-0Y-AbV"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
