@@ -13,6 +13,7 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
     // no-op closures until the ViewController provides its own
     var updateSignal: () -> Void = {}
     var showDetail: (detailViewModel: DetailViewModel) -> Void = {(vm) in}
+    var cancelSearchSignal: () -> Void = {}
     
     internal var searchText: String = ""
     
@@ -98,6 +99,7 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
     func didSelectRowAtIndexPath(indexPath: NSIndexPath) {
         self.itemSelected = true
         self.sectionViewModels[indexPath.section].cellViewModels[indexPath.row].performAction()
+        self.cancelSearchSignal()
     }
     
     func filterTextDidChange(text: String) {
