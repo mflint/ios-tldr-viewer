@@ -15,20 +15,23 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
     var showDetail: (detailViewModel: DetailViewModel) -> Void = {(vm) in}
     var cancelSearchSignal: () -> Void = {}
     
-    internal var searchText: String = ""
+    var lastUpdatedString: String!
+    var searchText: String = ""
+    var itemSelected: Bool = false
+    var requesting: Bool = false
+    var sectionViewModels = [SectionViewModel]()
+    var sectionIndexes = [String]()
     
-    internal var itemSelected: Bool = false
-    
-    internal var requesting: Bool = false
-    
+    private let dateFormatter = NSDateFormatter()
     private let dataSource = DataSource()
     private var cellViewModels = [BaseCellViewModel]()
     
-    internal var sectionViewModels = [SectionViewModel]()
-    internal var sectionIndexes = [String]()
-    
     override init() {
         super.init()
+        
+        dateFormatter.dateStyle = .MediumStyle
+        dateFormatter.timeStyle = .ShortStyle
+        
         dataSource.updateSignal = {
             self.update()
         }
@@ -42,6 +45,12 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
     
     private func update() {
         requesting = dataSource.requesting
+        if let lastUpdateTime = dataSource.lastUpdateTime() {
+            let lastUpdatedDateTime = dateFormatter.stringFromDate(lastUpdateTime)
+            lastUpdatedString = "Updated \(lastUpdatedDateTime)"
+        } else {
+            lastUpdatedString = ""
+        }
         
         var vms = [BaseCellViewModel]()
         

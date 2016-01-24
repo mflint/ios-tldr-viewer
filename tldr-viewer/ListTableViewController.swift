@@ -27,7 +27,7 @@ class ListTableViewController: UITableViewController {
                         }
                     }
                     
-                    self.tableView.reloadData()
+                    self.update()
                 })
             }
             
@@ -42,11 +42,19 @@ class ListTableViewController: UITableViewController {
                 }         }
             
             self.splitViewController?.delegate = self.viewModel
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                self.update()
+            })
         }
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        // calling "beginRefreshing" / "endRefreshing" here forces the UIRefreshControl to properly layout subviews
+        refreshControl?.beginRefreshing()
+        refreshControl?.endRefreshing()
         
         // iPhone 6 or smaller: deselect the selected row when this ViewController reappears
         if self.splitViewController!.collapsed {
@@ -57,7 +65,13 @@ class ListTableViewController: UITableViewController {
     }
     
     @IBAction func onPullToRefresh(sender: AnyObject) {
-        self.viewModel.refreshData()
+        viewModel.refreshData()
+    }
+    
+    private func update() {
+        refreshControl?.attributedTitle = NSAttributedString(string: viewModel.lastUpdatedString)
+        
+        tableView.reloadData()
     }
     
     // MARK: - Segues
