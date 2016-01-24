@@ -8,17 +8,17 @@
 
 import Foundation
 
-struct ErrorCellViewModel: BaseCellViewModel {
+struct ErrorCellViewModel: BaseCellViewModel, MessageAndButtonCellViewModel {
     var cellIdentifier: String!
     var action: ViewModelAction = {}
     
-    var errorText: NSAttributedString!
+    var labelText: NSAttributedString!
     var buttonText: String!
     
     init(errorText: String, buttonAction: ViewModelAction) {
-        self.cellIdentifier = "ErrorCell"
+        self.cellIdentifier = "MessageAndButtonCell"
         self.action = buttonAction
-        self.errorText = Theme.detailAttributed(errorText)
+        self.labelText = Theme.detailAttributed(errorText)
         self.buttonText = "Try again"
     }
     

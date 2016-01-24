@@ -206,7 +206,7 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ErrorCell" rowHeight="108" id="eIi-j4-Fbh" customClass="ErrorCell" customModule="tldr_viewer" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="MessageAndButtonCell" rowHeight="108" id="eIi-j4-Fbh" userLabel="MessageAndButtonCell" customClass="MessageAndButtonCell" customModule="tldr_viewer" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="116" width="600" height="108"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eIi-j4-Fbh" id="tMq-Ae-sJL">
@@ -238,7 +238,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="button" destination="0JY-vo-1CC" id="y2K-Dw-bjn"/>
-                                    <outlet property="errorLabel" destination="qlS-pa-0x3" id="df4-GU-Dtc"/>
+                                    <outlet property="messageLabel" destination="qlS-pa-0x3" id="nfO-fc-1OK"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LoadingCell" rowHeight="63" id="yjV-rt-wqv" customClass="LoadingCell" customModule="tldr_viewer" customModuleProvider="target">

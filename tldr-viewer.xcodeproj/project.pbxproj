@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		34048D1C1C36CF8800E91EE7 /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34048D1B1C36CF8800E91EE7 /* Platform.swift */; };
 		34048D1E1C36DC6200E91EE7 /* ErrorCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34048D1D1C36DC6200E91EE7 /* ErrorCellViewModel.swift */; };
-		34048D201C36DF0200E91EE7 /* ErrorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34048D1F1C36DF0200E91EE7 /* ErrorCell.swift */; };
+		34048D201C36DF0200E91EE7 /* MessageAndButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34048D1F1C36DF0200E91EE7 /* MessageAndButtonCell.swift */; };
 		34048D221C36E4CF00E91EE7 /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34048D211C36E4CF00E91EE7 /* LoadingCell.swift */; };
 		34048D241C36E4DD00E91EE7 /* LoadingCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34048D231C36E4DD00E91EE7 /* LoadingCellViewModel.swift */; };
 		34048D271C37212A00E91EE7 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34048D261C37212A00E91EE7 /* ActionButton.swift */; };
@@ -50,7 +50,7 @@
 /* Begin PBXFileReference section */
 		34048D1B1C36CF8800E91EE7 /* Platform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Platform.swift; sourceTree = "<group>"; };
 		34048D1D1C36DC6200E91EE7 /* ErrorCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorCellViewModel.swift; sourceTree = "<group>"; };
-		34048D1F1C36DF0200E91EE7 /* ErrorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorCell.swift; sourceTree = "<group>"; };
+		34048D1F1C36DF0200E91EE7 /* MessageAndButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageAndButtonCell.swift; sourceTree = "<group>"; };
 		34048D211C36E4CF00E91EE7 /* LoadingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
 		34048D231C36E4DD00E91EE7 /* LoadingCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingCellViewModel.swift; sourceTree = "<group>"; };
 		34048D261C37212A00E91EE7 /* ActionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
@@ -153,7 +153,7 @@
 				342514A01C34AE5E001D31F4 /* CommandCellViewModel.swift */,
 				342514A21C34B01F001D31F4 /* CommandCell.swift */,
 				34048D1D1C36DC6200E91EE7 /* ErrorCellViewModel.swift */,
-				34048D1F1C36DF0200E91EE7 /* ErrorCell.swift */,
+				34048D1F1C36DF0200E91EE7 /* MessageAndButtonCell.swift */,
 				34048D211C36E4CF00E91EE7 /* LoadingCell.swift */,
 				34048D231C36E4DD00E91EE7 /* LoadingCellViewModel.swift */,
 				34D06BC51C5428D800D30041 /* ListTableViewController.swift */,
@@ -326,7 +326,7 @@
 				34D06BC41C54203300D30041 /* DetailDataSource.swift in Sources */,
 				3425149D1C34A4CC001D31F4 /* BaseCellViewModel.swift in Sources */,
 				34D06BBD1C537CC100D30041 /* DataSource.swift in Sources */,
-				34048D201C36DF0200E91EE7 /* ErrorCell.swift in Sources */,
+				34048D201C36DF0200E91EE7 /* MessageAndButtonCell.swift in Sources */,
 				34048D1C1C36CF8800E91EE7 /* Platform.swift in Sources */,
 				34FBC0CF1C38A189008AD2C0 /* TextCellBasic.swift in Sources */,
 				342514AB1C34C5D8001D31F4 /* Command.swift in Sources */,
