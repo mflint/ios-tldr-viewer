@@ -57,6 +57,8 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
                 self.dataSource.beginRequest()
             })
             vms.append(cellViewModel)
+        } else if let oldIndexCell = OldIndexCellViewModel.create(dataSource) {
+            vms.append(oldIndexCell)
         }
         
         for command in commands {

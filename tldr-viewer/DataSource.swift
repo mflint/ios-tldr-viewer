@@ -45,6 +45,19 @@ public class DataSource {
         updateSignal()
     }
     
+    func lastUpdateTime() -> NSDate? {
+        guard let path = indexFileURL.path else {
+            return nil
+        }
+        
+        do {
+            let fileAttributes = try NSFileManager.defaultManager().attributesOfItemAtPath(path)
+            return fileAttributes[NSFileModificationDate] as? NSDate
+        } catch {
+            return nil
+        }
+    }
+    
     private func processResponse(response: TLDRResponse) {
         if let error = response.error {
             handleError(error)
@@ -114,8 +127,16 @@ public class DataSource {
         }
         
         do {
-            if let jsonResult = try NSJSONSerialization.JSONObjectWithData(indexData, options: []) as? Array<Dictionary<String, AnyObject>> {
+            let jsonResult = try NSJSONSerialization.JSONObjectWithData(indexData, options: [])
+            
+            // sometimes we get an array as the top level object...
+            if let jsonResult = jsonResult as? Array<Dictionary<String, AnyObject>> {
                 return jsonResult
+            }
+            
+            // ... sometimes that array is inside a map ¯\_(ツ)_/¯
+            if let jsonResult = jsonResult as? Dictionary<String, Array<Dictionary<String, AnyObject>>> {
+                return jsonResult["commands"]
             }
         }  catch let error as NSError {
             requestError = "Could not read index file"

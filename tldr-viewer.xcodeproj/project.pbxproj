@@ -38,6 +38,8 @@
 		34D06BBE1C5386DF00D30041 /* Zip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34D06BB91C519C1100D30041 /* Zip.framework */; };
 		34D06BC41C54203300D30041 /* DetailDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D06BC31C54203300D30041 /* DetailDataSource.swift */; };
 		34D06BC61C5428D800D30041 /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D06BC51C5428D800D30041 /* ListTableViewController.swift */; };
+		34D06BC81C54C60C00D30041 /* OldIndexCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D06BC71C54C60C00D30041 /* OldIndexCellViewModel.swift */; };
+		34D06BCB1C54CA6100D30041 /* NSDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D06BCA1C54CA6100D30041 /* NSDateExtension.swift */; };
 		34FBC0CF1C38A189008AD2C0 /* TextCellBasic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FBC0CE1C38A189008AD2C0 /* TextCellBasic.swift */; };
 		34FD9AB51C3885C6001DB968 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FD9AB41C3885C6001DB968 /* InfoViewController.swift */; };
 		34FD9AB71C3885CE001DB968 /* InfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FD9AB61C3885CE001DB968 /* InfoViewModel.swift */; };
@@ -81,6 +83,8 @@
 		34D06BBC1C537CC100D30041 /* DataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 		34D06BC31C54203300D30041 /* DetailDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailDataSource.swift; sourceTree = "<group>"; };
 		34D06BC51C5428D800D30041 /* ListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
+		34D06BC71C54C60C00D30041 /* OldIndexCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OldIndexCellViewModel.swift; sourceTree = "<group>"; };
+		34D06BCA1C54CA6100D30041 /* NSDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateExtension.swift; sourceTree = "<group>"; };
 		34FBC0CE1C38A189008AD2C0 /* TextCellBasic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextCellBasic.swift; sourceTree = "<group>"; };
 		34FD9AB41C3885C6001DB968 /* InfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		34FD9AB61C3885CE001DB968 /* InfoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewModel.swift; sourceTree = "<group>"; };
@@ -157,6 +161,7 @@
 				34048D211C36E4CF00E91EE7 /* LoadingCell.swift */,
 				34048D231C36E4DD00E91EE7 /* LoadingCellViewModel.swift */,
 				34D06BC51C5428D800D30041 /* ListTableViewController.swift */,
+				34D06BC71C54C60C00D30041 /* OldIndexCellViewModel.swift */,
 			);
 			name = List;
 			sourceTree = "<group>";
@@ -174,6 +179,7 @@
 		3425149B1C34A459001D31F4 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				34D06BC91C54CA4900D30041 /* Extensions */,
 				34048D251C37211200E91EE7 /* Views */,
 				34358AF81C35D80000BB7DDB /* Style */,
 				3425149C1C34A4CC001D31F4 /* BaseCellViewModel.swift */,
@@ -199,6 +205,14 @@
 				34358AF91C35D81F00BB7DDB /* style.css */,
 			);
 			name = Style;
+			sourceTree = "<group>";
+		};
+		34D06BC91C54CA4900D30041 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				34D06BCA1C54CA6100D30041 /* NSDateExtension.swift */,
+			);
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 		34FD9AB31C3885B6001DB968 /* Info */ = {
@@ -311,6 +325,7 @@
 				34048D241C36E4DD00E91EE7 /* LoadingCellViewModel.swift in Sources */,
 				34FDB18A1C3C8FCA00587386 /* SectionViewModel.swift in Sources */,
 				342514A11C34AE5E001D31F4 /* CommandCellViewModel.swift in Sources */,
+				34D06BC81C54C60C00D30041 /* OldIndexCellViewModel.swift in Sources */,
 				342514A31C34B01F001D31F4 /* CommandCell.swift in Sources */,
 				34048D291C37402500E91EE7 /* DetailPlatformViewModel.swift in Sources */,
 				3425149A1C34A31E001D31F4 /* ListViewModel.swift in Sources */,
@@ -331,6 +346,7 @@
 				34FBC0CF1C38A189008AD2C0 /* TextCellBasic.swift in Sources */,
 				342514AB1C34C5D8001D31F4 /* Command.swift in Sources */,
 				34FD9ABB1C388A1E001DB968 /* TextCellViewModel.swift in Sources */,
+				34D06BCB1C54CA6100D30041 /* NSDateExtension.swift in Sources */,
 				34D06BC61C5428D800D30041 /* ListTableViewController.swift in Sources */,
 				34048D1E1C36DC6200E91EE7 /* ErrorCellViewModel.swift in Sources */,
 				34048D221C36E4CF00E91EE7 /* LoadingCell.swift in Sources */,
