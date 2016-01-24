@@ -12,22 +12,22 @@ class InfoViewModel {
     var groupViewModels = [GroupViewModel]()
     
     init() {
-        self.updateCellViewModels()
+        updateCellViewModels()
     }
     
     private func updateCellViewModels() {
         var groups = [GroupViewModel]()
         
-        groups.append(GroupViewModel(groupTitle: "About", cellViewModels:[self.aboutCell(), self.versionCell()]))
-        groups.append(GroupViewModel(groupTitle: "Contact", cellViewModels: [self.contactCell()]))
-        groups.append(GroupViewModel(groupTitle: "Thanks to", cellViewModels: [self.thanks1(), self.thanks2(), self.thanks3()]))
-        groups.append(GroupViewModel(groupTitle: "Open Source app", cellViewModels: [self.forkMe()]))
+        groups.append(GroupViewModel(groupTitle: "About", cellViewModels:[aboutCell(), versionCell()]))
+        groups.append(GroupViewModel(groupTitle: "Contact", cellViewModels: [bugReports(), contactCell()]))
+        groups.append(GroupViewModel(groupTitle: "Thanks to", cellViewModels: [thanks1(), thanks2(), thanks3(), thanks4()]))
+        groups.append(GroupViewModel(groupTitle: "Open Source app", cellViewModels: [forkMe()]))
         
-        self.groupViewModels = groups
+        groupViewModels = groups
     }
     
     private func aboutCell() -> BaseCellViewModel {
-        let message = self.attributedString("An iOS client for tldr-pages - simplified and community-driven man pages.", anchors: ["tldr-pages"], urls: ["http://tldr-pages.github.io"])
+        let message = attributedString("An iOS client for tldr-pages - simplified and community-driven man pages.", anchors: ["tldr-pages"], urls: ["http://tldr-pages.github.io"])
         return TextCellViewModel(attributedText: message)
     }
     
@@ -36,28 +36,38 @@ class InfoViewModel {
         return TextCellViewModel(text: "Version", detailText: version)
     }
     
+    private func bugReports() -> BaseCellViewModel {
+        let message = attributedString("Bug reports, requests, pull requests welcome at the GitHub Issues page.", anchors: ["GitHub Issues"], urls: ["https://github.com/mflint/ios-tldr-viewer/issues"])
+        return TextCellViewModel(attributedText: message)
+    }
+    
     private func contactCell() -> BaseCellViewModel {
-        let message = self.attributedString("Contact via email or Twitter.", anchors: ["email", "Twitter"], urls: [NSURL(string: "mailto:tldr@greenlightapps.co.uk")!, "https://twitter.com/intent/tweet?text=@mkflint%20"])
+        let message = attributedString("Contact via email or Twitter.", anchors: ["email", "Twitter"], urls: [NSURL(string: "mailto:tldr@greenlightapps.co.uk")!, "https://twitter.com/intent/tweet?text=@mkflint%20"])
         return TextCellViewModel(attributedText: message)
     }
     
     private func thanks1() -> BaseCellViewModel {
-        let message = self.attributedString("Romain Prieto and all other contributors to TLDR-pages.", anchors: ["TLDR-pages"], urls: ["https://github.com/tldr-pages/tldr"])
+        let message = attributedString("Romain Prieto and all other contributors to TLDR-pages.", anchors: ["TLDR-pages"], urls: ["https://github.com/tldr-pages/tldr"])
         return TextCellViewModel(attributedText: message)
     }
     
     private func thanks2() -> BaseCellViewModel {
-        let message = self.attributedString("Kristopher Johnson for Markingbird, a Markdown processor in Swift.", anchors: ["Markingbird"], urls: ["https://github.com/kristopherjohnson/Markingbird"])
+        let message = attributedString("Kristopher Johnson for Markingbird, a Markdown processor in Swift.", anchors: ["Markingbird"], urls: ["https://github.com/kristopherjohnson/Markingbird"])
         return TextCellViewModel(attributedText: message)
     }
     
     private func thanks3() -> BaseCellViewModel {
-        let message = self.attributedString("'Arabidopsis' for the gorgeous teal-deer artwork, found on DeviantArt. It's available on a shirt via Redbubble. (All profits go to the artist)", anchors: ["DeviantArt", "Redbubble"], urls: ["http://arabidopsis.deviantart.com/art/Teal-Deer-II-158802763", "http://www.redbubble.com/people/arabidopsis/works/5386340-1-teal-deer-too-long-didnt-read"])
+        let message = attributedString("'Arabidopsis' for the gorgeous teal-deer artwork, found on DeviantArt. It's available on a shirt via Redbubble. (All profits go to the artist)", anchors: ["DeviantArt", "Redbubble"], urls: ["http://arabidopsis.deviantart.com/art/Teal-Deer-II-158802763", "http://www.redbubble.com/people/arabidopsis/works/5386340-1-teal-deer-too-long-didnt-read"])
+        return TextCellViewModel(attributedText: message)
+    }
+    
+    private func thanks4() -> BaseCellViewModel {
+        let message = attributedString("All our beta testers. Contact us to join the group.", anchors: ["Contact us"], urls: [NSURL(string: "mailto:tldr@greenlightapps.co.uk")!])
         return TextCellViewModel(attributedText: message)
     }
     
     private func forkMe() -> BaseCellViewModel {
-        let message = self.attributedString("Fork me on GitHub!", anchors: ["GitHub"], urls: ["https://github.com/mflint/ios-tldr-viewer"])
+        let message = attributedString("Fork me on GitHub!", anchors: ["GitHub"], urls: ["https://github.com/mflint/ios-tldr-viewer"])
         return TextCellViewModel(attributedText: message)
     }
     
