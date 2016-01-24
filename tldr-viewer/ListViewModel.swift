@@ -13,104 +13,71 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
     // no-op closures until the ViewController provides its own
     var updateSignal: () -> Void = {}
     var showDetail: (detailViewModel: DetailViewModel) -> Void = {(vm) in}
+    var cancelSearchSignal: () -> Void = {}
     
     internal var searchText: String = ""
     
     internal var itemSelected: Bool = false
     
-    private var commands = [Command]()
+    internal var requesting: Bool = false
+    
+    private let dataSource = DataSource()
     private var cellViewModels = [BaseCellViewModel]()
-    private var errorState = false
-    private var loading = false
     
     internal var sectionViewModels = [SectionViewModel]()
     internal var sectionIndexes = [String]()
     
     override init() {
         super.init()
-        self.loadIndex()
-    }
-    
-    private func loadIndex() {
-        self.loading = true
-        
-        TLDRRequest.requestWithURL("https://tldr-pages.github.io/assets/index.json") { response in
-            self.processResponse(response)
+        dataSource.updateSignal = {
+            self.update()
         }
         
-        self.updateCellViewModels()
+        update()
     }
     
-    private func processResponse(response: TLDRResponse) {
-        self.loading = false
-        
-        if let error = response.error {
-            self.handleError(error)
-        } else if let jsonArray = response.responseJSON as? Array<Dictionary<String, AnyObject>> {
-            self.handleSuccess(jsonArray)
-        }
+    func refreshData() {
+        dataSource.beginRequest()
     }
     
-    private func handleError(error: NSError) {
-        self.commands = []
-        self.errorState = true
+    private func update() {
+        requesting = dataSource.requesting
         
-        self.updateCellViewModels()
-    }
-    
-    private func handleSuccess(jsonArray: Array<Dictionary<String, AnyObject>>) {
-        var commands = [Command]()
-        
-        for commandJSON in jsonArray {
-            let name = commandJSON["name"] as! String
-            var platforms = [Platform]()
-            for platformName in commandJSON["platform"] as! Array<String> {
-                let platform = Platform.get(platformName)
-                platforms.append(platform)
-            }
-            let command = Command(name: name , platforms: Platform.sort(platforms))
-            
-            commands.append(command)
-        }
-        
-        self.commands = Command.sort(commands)
-        self.errorState = false
-        
-        self.updateCellViewModels()
-    }
-    
-    private func updateCellViewModels() {
         var vms = [BaseCellViewModel]()
         
-        if (self.loading) {
+        let commands = dataSource.commands
+        
+        if dataSource.requesting && commands.count == 0 {
             let cellViewModel = LoadingCellViewModel()
             vms.append(cellViewModel)
-        } else {
-            if (self.errorState) {
-                let cellViewModel = ErrorCellViewModel(buttonAction: {
-                    self.loadIndex()
-                })
-                vms.append(cellViewModel)
-            }
-            
-            for command in self.commands {
-                let cellViewModel = CommandCellViewModel(command: command, action: {
-                    let detailViewModel = DetailViewModel(command: command)
-                    self.showDetail(detailViewModel: detailViewModel)
-                })
-                vms.append(cellViewModel)
-            }
         }
         
-        self.cellViewModels = vms
-        self.makeFilteredSectionsAndCells()
-        self.updateSignal()
+        if let errorText = dataSource.requestError {
+            let cellViewModel = ErrorCellViewModel(errorText: errorText, buttonAction: {
+                self.dataSource.beginRequest()
+            })
+            vms.append(cellViewModel)
+        } else if let oldIndexCell = OldIndexCellViewModel.create(dataSource) {
+            vms.append(oldIndexCell)
+        }
+        
+        for command in commands {
+            let cellViewModel = CommandCellViewModel(command: command, action: {
+                let detailViewModel = DetailViewModel(command: command)
+                self.showDetail(detailViewModel: detailViewModel)
+            })
+            vms.append(cellViewModel)
+        }
+        
+        cellViewModels = vms
+        makeFilteredSectionsAndCells()
+        updateSignal()
     }
     
     private func makeFilteredSectionsAndCells() {
-        let filteredCellViewModels = self.cellViewModels.filter{ cellViewModel in
+        let filteredCellViewModels = cellViewModels.filter{ cellViewModel in
             // if the search string is empty, return everything
-            if self.searchText.characters.count == 0 {
+            if searchText.characters.count == 0 {
                 return true
             }
             
@@ -135,29 +102,30 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
             }
         }
         
-        self.sectionViewModels = SectionViewModel.sort(sections)
-        self.sectionIndexes = self.sectionViewModels.map({ section in section.title })
+        sectionViewModels = SectionViewModel.sort(sections)
+        sectionIndexes = sectionViewModels.map({ section in section.title })
     }
     
     func didSelectRowAtIndexPath(indexPath: NSIndexPath) {
-        self.itemSelected = true
-        self.sectionViewModels[indexPath.section].cellViewModels[indexPath.row].performAction()
+        itemSelected = true
+        sectionViewModels[indexPath.section].cellViewModels[indexPath.row].performAction()
+        cancelSearchSignal()
     }
     
     func filterTextDidChange(text: String) {
-        self.searchText = text
-        self.makeFilteredSectionsAndCells()
-        self.updateSignal()
+        searchText = text
+        makeFilteredSectionsAndCells()
+        updateSignal()
     }
     
     // MARK: - Split view
     
     // not called for iPhone 6+ or iPad
     func splitViewController(splitViewController: UISplitViewController, collapseSecondaryViewController secondaryViewController: UIViewController, ontoPrimaryViewController primaryViewController: UIViewController) -> Bool {
-        return !self.itemSelected
+        return !itemSelected
     }
     
     func splitViewController(svc: UISplitViewController, shouldHideViewController vc: UIViewController, inOrientation orientation: UIInterfaceOrientation) -> Bool {
-        return self.itemSelected && UIInterfaceOrientationIsPortrait(orientation)
+        return itemSelected && UIInterfaceOrientationIsPortrait(orientation)
     }
 }

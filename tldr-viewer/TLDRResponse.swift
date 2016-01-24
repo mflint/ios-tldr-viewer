@@ -13,6 +13,7 @@ struct TLDRResponse {
     let response: NSURLResponse!
     var error: NSError?
     
+    /*
     var responseJSON: AnyObject? {
         if let data = data {
             do {
@@ -35,4 +36,5 @@ struct TLDRResponse {
             return nil
         }
     }
+*/
 }

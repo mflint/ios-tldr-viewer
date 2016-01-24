@@ -14,8 +14,6 @@ class DetailViewController: UIViewController {
 
     @IBOutlet weak var messageView: UIView!
     @IBOutlet weak var messageLabel: UILabel!
-    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var messageButton: UIButton!
     
     var webView: WKWebView!
     
@@ -49,7 +47,6 @@ class DetailViewController: UIViewController {
         self.webViewToTopAnchorConstraint = self.webView.topAnchor.constraintEqualToAnchor(self.view.topAnchor)
         self.webViewToSegmentedControlConstraint = self.webView.topAnchor.constraintEqualToAnchor(self.platformsSegmentedControl.bottomAnchor, constant: 3)
         
-        self.loadingIndicator.color = UIColor.tldrTeal()
         self.messageView.hidden = true
         
         self.configureView()
@@ -64,10 +61,6 @@ class DetailViewController: UIViewController {
         self.viewModel.selectPlatform(self.platformsSegmentedControl.selectedSegmentIndex)
     }
     
-    @IBAction func buttonTapped(sender: AnyObject) {
-        self.viewModel.selectedPlatform.loadDetailIfRequired()
-    }
-    
     private func configureView() {
         dispatch_async(dispatch_get_main_queue(), {
             self.doConfigureView()
@@ -77,16 +70,12 @@ class DetailViewController: UIViewController {
     private func doConfigureView() {
         var htmlString: String?
         var message: NSAttributedString?
-        var loading: Bool = false
-        var buttonTitle: String?
         var sceneTitle: String
         var showSegmentedControl = false
 
         if let viewModel = self.viewModel, let platformViewModel = viewModel.selectedPlatform {
             if (platformViewModel.message != nil) {
                 message = platformViewModel.message
-                loading = platformViewModel.loading
-                buttonTitle = platformViewModel.buttonTitle
                 htmlString = nil
             } else {
                 message = nil
@@ -107,20 +96,6 @@ class DetailViewController: UIViewController {
         if let messageToShow = message {
             self.messageLabel.attributedText = messageToShow
             self.messageView.hidden = false
-            
-            if (loading) {
-                self.loadingIndicator.hidden = false
-                self.loadingIndicator.startAnimating()
-            } else {
-                self.loadingIndicator.hidden = true
-            }
-            
-            if let buttonTitleToShow = buttonTitle {
-                self.messageButton.setTitle(buttonTitleToShow, forState: .Normal)
-                self.messageButton.hidden = false
-            } else {
-                self.messageButton.hidden = true
-            }
             
             self.messageView.setNeedsLayout()
         } else {
