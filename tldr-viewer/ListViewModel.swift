@@ -54,7 +54,7 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
         
         var vms = [BaseCellViewModel]()
         
-        let commands = dataSource.commands
+        let commands = dataSource.commandsWithFilter(searchText)
         
         if dataSource.requesting && commands.count == 0 {
             let cellViewModel = LoadingCellViewModel()
@@ -79,32 +79,18 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
         }
         
         cellViewModels = vms
-        makeFilteredSectionsAndCells()
+        makeSectionsAndCells()
         updateSignal()
     }
     
-    private func makeFilteredSectionsAndCells() {
-        let filteredCellViewModels = cellViewModels.filter{ cellViewModel in
-            // if the search string is empty, return everything
-            if searchText.characters.count == 0 {
-                return true
-            }
-            
-            // otherwise 
-            if let commandCellViewModel = cellViewModel as? CommandCellViewModel {
-                return commandCellViewModel.command.name.lowercaseString.containsString(self.searchText.lowercaseString)
-            }
-            
-            return true
-        }
-        
+    private func makeSectionsAndCells() {
         // all sections
         var sections = [SectionViewModel]()
         
         // current section
         var currentSection: SectionViewModel?
         
-        for cellViewModel in filteredCellViewModels {
+        for cellViewModel in cellViewModels {
             if currentSection == nil || !currentSection!.accept(cellViewModel) {
                 currentSection = SectionViewModel(firstCellViewModel: cellViewModel)
                 sections.append(currentSection!)
@@ -123,8 +109,7 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
     
     func filterTextDidChange(text: String) {
         searchText = text
-        makeFilteredSectionsAndCells()
-        updateSignal()
+        update()
     }
     
     // MARK: - Split view

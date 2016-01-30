@@ -18,7 +18,7 @@ public class DataSource {
     var updateSignal: () -> Void = {}
     var requesting = false
     var requestError: String?
-    var commands = [Command]()
+    private var commands = [Command]()
     
     init() {
         documentsDirectory = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0] as NSURL
@@ -55,6 +55,17 @@ public class DataSource {
             return fileAttributes[NSFileModificationDate] as? NSDate
         } catch {
             return nil
+        }
+    }
+    
+    func commandsWithFilter(filter: String) -> [Command] {
+        // if the search string is empty, return everything
+        if filter.characters.count == 0 {
+            return commands
+        }
+        
+        return commands.filter{ command in
+            return command.name.lowercaseString.containsString(filter)
         }
     }
     
@@ -114,7 +125,7 @@ public class DataSource {
             return true
         }
         catch {
-            requestError = "Could not unzip the dwnload"
+            requestError = "Could not unzip the download"
             return false
         }
     }
