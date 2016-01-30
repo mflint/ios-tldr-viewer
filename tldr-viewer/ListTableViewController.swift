@@ -39,7 +39,8 @@ class ListTableViewController: UITableViewController {
                 if (self.splitViewController?.displayMode == .PrimaryOverlay){
                     self.splitViewController?.preferredDisplayMode = .PrimaryHidden
                     self.splitViewController?.preferredDisplayMode = .Automatic
-                }         }
+                }
+            }
             
             self.splitViewController?.delegate = self.viewModel
             

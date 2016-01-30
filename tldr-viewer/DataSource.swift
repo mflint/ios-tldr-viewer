@@ -94,6 +94,18 @@ public class DataSource {
         }
         
         loadCommandsFromIndexFile()
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
+            self.addToSpotlightIndex()
+        }
+    }
+    
+    private func addToSpotlightIndex() {
+        let spotlightSearch = SpotlightSearch()
+        
+        for command in self.commands {
+            spotlightSearch.addToIndex(command)
+        }
     }
     
     private func loadCommandsFromIndexFile() -> Bool {

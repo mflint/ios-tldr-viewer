@@ -62,6 +62,10 @@ class DetailViewController: UIViewController {
     }
     
     private func configureView() {
+        if viewIfLoaded == nil {
+            return
+        }
+        
         dispatch_async(dispatch_get_main_queue(), {
             self.doConfigureView()
         })

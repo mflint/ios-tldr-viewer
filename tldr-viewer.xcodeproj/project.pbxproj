@@ -40,6 +40,9 @@
 		34D06BC61C5428D800D30041 /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D06BC51C5428D800D30041 /* ListTableViewController.swift */; };
 		34D06BC81C54C60C00D30041 /* OldIndexCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D06BC71C54C60C00D30041 /* OldIndexCellViewModel.swift */; };
 		34D06BCB1C54CA6100D30041 /* NSDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D06BCA1C54CA6100D30041 /* NSDateExtension.swift */; };
+		34D06BCF1C5CC93700D30041 /* SpotlightSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D06BCE1C5CC93700D30041 /* SpotlightSearch.swift */; };
+		34D06BD11C5CC9A000D30041 /* CoreSpotlight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34D06BD01C5CC9A000D30041 /* CoreSpotlight.framework */; };
+		34D06BD31C5CCAF500D30041 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34D06BD21C5CCAF500D30041 /* MobileCoreServices.framework */; };
 		34FBC0CF1C38A189008AD2C0 /* TextCellBasic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FBC0CE1C38A189008AD2C0 /* TextCellBasic.swift */; };
 		34FD9AB51C3885C6001DB968 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FD9AB41C3885C6001DB968 /* InfoViewController.swift */; };
 		34FD9AB71C3885CE001DB968 /* InfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FD9AB61C3885CE001DB968 /* InfoViewModel.swift */; };
@@ -85,6 +88,9 @@
 		34D06BC51C5428D800D30041 /* ListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
 		34D06BC71C54C60C00D30041 /* OldIndexCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OldIndexCellViewModel.swift; sourceTree = "<group>"; };
 		34D06BCA1C54CA6100D30041 /* NSDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateExtension.swift; sourceTree = "<group>"; };
+		34D06BCE1C5CC93700D30041 /* SpotlightSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotlightSearch.swift; sourceTree = "<group>"; };
+		34D06BD01C5CC9A000D30041 /* CoreSpotlight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreSpotlight.framework; path = System/Library/Frameworks/CoreSpotlight.framework; sourceTree = SDKROOT; };
+		34D06BD21C5CCAF500D30041 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		34FBC0CE1C38A189008AD2C0 /* TextCellBasic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextCellBasic.swift; sourceTree = "<group>"; };
 		34FD9AB41C3885C6001DB968 /* InfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		34FD9AB61C3885CE001DB968 /* InfoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewModel.swift; sourceTree = "<group>"; };
@@ -99,6 +105,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				34D06BD31C5CCAF500D30041 /* MobileCoreServices.framework in Frameworks */,
+				34D06BD11C5CC9A000D30041 /* CoreSpotlight.framework in Frameworks */,
 				34358AF51C3589D200BB7DDB /* WebKit.framework in Frameworks */,
 				34D06BBE1C5386DF00D30041 /* Zip.framework in Frameworks */,
 			);
@@ -118,6 +126,8 @@
 		342514771C349D96001D31F4 = {
 			isa = PBXGroup;
 			children = (
+				34D06BD21C5CCAF500D30041 /* MobileCoreServices.framework */,
+				34D06BD01C5CC9A000D30041 /* CoreSpotlight.framework */,
 				34D06BB91C519C1100D30041 /* Zip.framework */,
 				34358AF41C3589D200BB7DDB /* WebKit.framework */,
 				342514821C349D96001D31F4 /* tldr-viewer */,
@@ -194,6 +204,7 @@
 				34FDB1891C3C8FCA00587386 /* SectionViewModel.swift */,
 				34D06BBC1C537CC100D30041 /* DataSource.swift */,
 				34D06BC31C54203300D30041 /* DetailDataSource.swift */,
+				34D06BCE1C5CC93700D30041 /* SpotlightSearch.swift */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -345,6 +356,7 @@
 				34048D1C1C36CF8800E91EE7 /* Platform.swift in Sources */,
 				34FBC0CF1C38A189008AD2C0 /* TextCellBasic.swift in Sources */,
 				342514AB1C34C5D8001D31F4 /* Command.swift in Sources */,
+				34D06BCF1C5CC93700D30041 /* SpotlightSearch.swift in Sources */,
 				34FD9ABB1C388A1E001DB968 /* TextCellViewModel.swift in Sources */,
 				34D06BCB1C54CA6100D30041 /* NSDateExtension.swift in Sources */,
 				34D06BC61C5428D800D30041 /* ListTableViewController.swift in Sources */,

@@ -112,6 +112,10 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
         update()
     }
     
+    func didReceiveUserActivityToShowCommand(commandName: String) {
+        print("-> \(commandName)")
+    }
+    
     // MARK: - Split view
     
     // not called for iPhone 6+ or iPad

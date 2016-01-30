@@ -24,6 +24,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         splitViewController.delegate = self
         return true
     }
+    
+    // MARK: - NSUserActivity stuff
+    func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity, restorationHandler: ([AnyObject]?) -> Void) -> Bool {
+        let splitController = self.window?.rootViewController as! UISplitViewController
+        let navigationController = splitController.viewControllers.first as! UINavigationController
+        if let topViewController = navigationController.topViewController {
+            // topViewController is a ListViewController
+            topViewController.restoreUserActivityState(userActivity)
+        }
+        
+        return true
+    }
 
     // MARK: - Split view
 

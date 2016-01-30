@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreSpotlight
 
 class ListViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar! {
@@ -29,6 +30,13 @@ class ListViewController: UIViewController {
         self.viewModel = ListViewModel()
     }
 
+    // MARK: - NSUserActivity stuff
+    override func restoreUserActivityState(activity: NSUserActivity) {
+        if let uniqueIdentifier = activity.userInfo?[CSSearchableItemActivityIdentifier] as? String {
+            viewModel.didReceiveUserActivityToShowCommand(uniqueIdentifier)
+        }
+    }
+    
     // MARK: - Segues
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
