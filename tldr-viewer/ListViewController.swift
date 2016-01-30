@@ -20,6 +20,7 @@ class ListViewController: UIViewController {
         didSet {
             self.viewModel.cancelSearchSignal = {
                 self.searchBar.resignFirstResponder()
+                self.searchBar.text = self.viewModel.searchText
             }
         }
     }
@@ -31,6 +32,7 @@ class ListViewController: UIViewController {
     }
 
     // MARK: - NSUserActivity stuff
+    
     override func restoreUserActivityState(activity: NSUserActivity) {
         if let uniqueIdentifier = activity.userInfo?[CSSearchableItemActivityIdentifier] as? String {
             viewModel.didReceiveUserActivityToShowCommand(uniqueIdentifier)

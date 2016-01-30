@@ -11,7 +11,7 @@ import UIKit
 
 class ListViewModel: NSObject, UISplitViewControllerDelegate {
     // no-op closures until the ViewController provides its own
-    var updateSignal: () -> Void = {}
+    var updateSignal: (indexPath: NSIndexPath?) -> Void = {(indexPath) in}
     var showDetail: (detailViewModel: DetailViewModel) -> Void = {(vm) in}
     var cancelSearchSignal: () -> Void = {}
     
@@ -80,7 +80,7 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
         
         cellViewModels = vms
         makeSectionsAndCells()
-        updateSignal()
+        updateSignal(indexPath: nil)
     }
     
     private func makeSectionsAndCells() {
@@ -102,9 +102,13 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
     }
     
     func didSelectRowAtIndexPath(indexPath: NSIndexPath) {
+        selectRow(indexPath)
+        cancelSearchSignal()
+    }
+    
+    private func selectRow(indexPath: NSIndexPath) {
         itemSelected = true
         sectionViewModels[indexPath.section].cellViewModels[indexPath.row].performAction()
-        cancelSearchSignal()
     }
     
     func filterTextDidChange(text: String) {
@@ -113,7 +117,29 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
     }
     
     func didReceiveUserActivityToShowCommand(commandName: String) {
-        print("-> \(commandName)")
+        // kill any search
+        searchText = ""
+        cancelSearchSignal()
+        
+        // update the results (to show all cells)
+        update()
+        
+        // now find the NSIndexPath for the CommandCellViewModel for this command name
+        var indexPath: NSIndexPath?
+        for (sectionIndex, sectionViewModel) in sectionViewModels.enumerate() {
+            for (cellIndex, cellViewModel) in sectionViewModel.cellViewModels.enumerate() {
+                if let commandCellViewModel = cellViewModel as? CommandCellViewModel {
+                    if commandCellViewModel.command.name == commandName {
+                        indexPath = NSIndexPath(forItem: cellIndex, inSection: sectionIndex)
+                    }
+                }
+            }
+        }
+        
+        if let indexPath = indexPath {
+            selectRow(indexPath)
+            updateSignal(indexPath: indexPath)
+        }
     }
     
     // MARK: - Split view

@@ -17,18 +17,8 @@ class ListTableViewController: UITableViewController {
     
     var viewModel: ListViewModel! {
         didSet {
-            self.viewModel.updateSignal = {
-                dispatch_async(dispatch_get_main_queue(), {
-                    if let refreshControl = self.refreshControl {
-                        if self.viewModel.requesting {
-                            refreshControl.beginRefreshing()
-                        } else {
-                            refreshControl.endRefreshing()
-                        }
-                    }
-                    
-                    self.update()
-                })
+            self.viewModel.updateSignal = {(indexPath) -> Void in
+                self.update(indexPath)
             }
             
             self.viewModel.showDetail = {(detailViewModel) -> Void in
@@ -44,9 +34,7 @@ class ListTableViewController: UITableViewController {
             
             self.splitViewController?.delegate = self.viewModel
             
-            dispatch_async(dispatch_get_main_queue(), {
-                self.update()
-            })
+            self.update(nil)
         }
     }
     
@@ -69,10 +57,25 @@ class ListTableViewController: UITableViewController {
         viewModel.refreshData()
     }
     
-    private func update() {
-        refreshControl?.attributedTitle = NSAttributedString(string: viewModel.lastUpdatedString)
-        
-        tableView.reloadData()
+    private func update(indexPath: NSIndexPath?) -> Void {
+        dispatch_async(dispatch_get_main_queue(), {
+            if let refreshControl = self.refreshControl {
+                if self.viewModel.requesting {
+                    refreshControl.beginRefreshing()
+                } else {
+                    refreshControl.endRefreshing()
+                }
+            }
+            
+            self.refreshControl?.attributedTitle = NSAttributedString(string: self.viewModel.lastUpdatedString)
+            
+            self.tableView.reloadData()
+            
+            if let indexPath = indexPath {
+                self.tableView.layoutIfNeeded()
+                self.tableView.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: .Middle)
+            }
+        })
     }
     
     // MARK: - Segues
