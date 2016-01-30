@@ -434,6 +434,10 @@
         <scene sceneID="YYG-Vk-oqh">
             <objects>
                 <viewController id="vPm-py-zm6" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="tFr-cN-KXK"/>
+                        <viewControllerLayoutGuide type="bottom" id="RXp-GU-KPB"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="TSw-WM-Su4">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
