@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "347E3A731C1DFFB500A11FD3"
+               BlueprintIdentifier = "3425458C1CE525B200336074"
                BuildableName = "Zip.framework"
-               BlueprintName = "Zip"
+               BlueprintName = "Zip tvOS"
                ReferencedContainer = "container:Zip.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -28,26 +28,7 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "347E3A7D1C1DFFB500A11FD3"
-               BuildableName = "ZipTests.xctest"
-               BlueprintName = "ZipTests"
-               ReferencedContainer = "container:Zip.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "347E3A731C1DFFB500A11FD3"
-            BuildableName = "Zip.framework"
-            BlueprintName = "Zip"
-            ReferencedContainer = "container:Zip.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -64,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "347E3A731C1DFFB500A11FD3"
+            BlueprintIdentifier = "3425458C1CE525B200336074"
             BuildableName = "Zip.framework"
-            BlueprintName = "Zip"
+            BlueprintName = "Zip tvOS"
             ReferencedContainer = "container:Zip.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -82,9 +63,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "347E3A731C1DFFB500A11FD3"
+            BlueprintIdentifier = "3425458C1CE525B200336074"
             BuildableName = "Zip.framework"
-            BlueprintName = "Zip"
+            BlueprintName = "Zip tvOS"
             ReferencedContainer = "container:Zip.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "347E3A731C1DFFB500A11FD3"
+               BlueprintIdentifier = "343F50FE1C8DAEEC0028C434"
                BuildableName = "Zip.framework"
-               BlueprintName = "Zip"
+               BlueprintName = "Zip OSX"
                ReferencedContainer = "container:Zip.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,9 +32,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "347E3A7D1C1DFFB500A11FD3"
-               BuildableName = "ZipTests.xctest"
-               BlueprintName = "ZipTests"
+               BlueprintIdentifier = "343F51071C8DAEEC0028C434"
+               BuildableName = "Zip OSXTests.xctest"
+               BlueprintName = "Zip OSXTests"
                ReferencedContainer = "container:Zip.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -42,9 +42,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "347E3A731C1DFFB500A11FD3"
+            BlueprintIdentifier = "343F50FE1C8DAEEC0028C434"
             BuildableName = "Zip.framework"
-            BlueprintName = "Zip"
+            BlueprintName = "Zip OSX"
             ReferencedContainer = "container:Zip.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -64,9 +64,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "347E3A731C1DFFB500A11FD3"
+            BlueprintIdentifier = "343F50FE1C8DAEEC0028C434"
             BuildableName = "Zip.framework"
-            BlueprintName = "Zip"
+            BlueprintName = "Zip OSX"
             ReferencedContainer = "container:Zip.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -82,9 +82,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "347E3A731C1DFFB500A11FD3"
+            BlueprintIdentifier = "343F50FE1C8DAEEC0028C434"
             BuildableName = "Zip.framework"
-            BlueprintName = "Zip"
+            BlueprintName = "Zip OSX"
             ReferencedContainer = "container:Zip.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
