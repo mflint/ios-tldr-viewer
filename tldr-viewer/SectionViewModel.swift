@@ -20,12 +20,14 @@ class SectionViewModel {
         self.cellViewModels.append(firstCellViewModel)
     }
     
-    private func titleForCommandCellViewModel(commandCellViewModel: CommandCellViewModel) -> String {
-        let commandName = commandCellViewModel.command.name.lowercaseString
-        let firstCharacter = commandName[commandName.startIndex.advancedBy(0)]
+    private func titleForCommandCellViewModel(_ commandCellViewModel: CommandCellViewModel) -> String {
+        let commandName = commandCellViewModel.command.name.lowercased()
+        let firstCharacter = commandName.characters.first
         
-        if firstCharacter >= "a" && firstCharacter <= "z" {
-            return String(firstCharacter)
+        guard let first = firstCharacter else { return "#" }
+        
+        if first >= "a" && first <= "z" {
+            return String(first)
         }
         
         return "#"
@@ -46,12 +48,12 @@ class SectionViewModel {
     }
     
     class func sort(sections: [SectionViewModel]) -> [SectionViewModel] {
-        return sections.sort({ (first, second) -> Bool in
+        return sections.sorted(by: { (first, second) -> Bool in
             switch(second.title) {
             case "#":
                 return true
             default:
-                return first.title.compare(second.title) == NSComparisonResult.OrderedAscending
+                return first.title.compare(second.title) == ComparisonResult.orderedAscending
             }
         })
     }

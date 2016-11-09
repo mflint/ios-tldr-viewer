@@ -15,10 +15,10 @@ struct ErrorCellViewModel: BaseCellViewModel, MessageAndButtonCellViewModel {
     var labelText: NSAttributedString!
     var buttonText: String!
     
-    init(errorText: String, buttonAction: ViewModelAction) {
+    init(errorText: String, buttonAction: @escaping ViewModelAction) {
         self.cellIdentifier = "MessageAndButtonCell"
         self.action = buttonAction
-        self.labelText = Theme.detailAttributed(errorText)
+        self.labelText = Theme.detailAttributed(string: errorText)
         self.buttonText = "Try again"
     }
     

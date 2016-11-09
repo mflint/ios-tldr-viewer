@@ -26,7 +26,7 @@ class Platform {
         if let mapped = Platform.platformMapping[name] {
             self.displayName = mapped
         } else {
-            self.displayName = name.capitalizedString
+            self.displayName = name.capitalized
         }
     }
     
@@ -42,14 +42,14 @@ class Platform {
     
     // in the API, the platforms are in alphabetic order so "linux" comes before "osx". I'm setting a different order here ("common" first, followed by "osx", then alphabetic afterwards) to appease the AppStore Review Gods
     class func sort(platforms: [Platform]) -> [Platform] {
-        return platforms.sort({ (first, second) -> Bool in
+        return platforms.sorted(by: { (first, second) -> Bool in
             switch(first.name) {
             case "common":
                 return true
             case "osx":
                 return true
             default:
-                return first.name.compare(second.name) == NSComparisonResult.OrderedAscending
+                return first.name.compare(second.name) == ComparisonResult.orderedAscending
             }
         })
     }

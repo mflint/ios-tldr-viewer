@@ -13,7 +13,7 @@ class ActionButton: UIButton {
         self.backgroundColor = UIColor.tldrActionBackground()
         self.layer.cornerRadius = 2
         self.titleLabel?.font = UIFont.tldrBody()
-        self.setTitleColor(UIColor.tldrActionForeground(), forState: .Normal)
+        self.setTitleColor(UIColor.tldrActionForeground(), for: .normal)
         self.contentEdgeInsets = UIEdgeInsetsMake(5, 10, 5, 10)
     }
 }

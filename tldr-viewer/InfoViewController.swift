@@ -11,7 +11,7 @@ import UIKit
 class InfoViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
-    private var viewModel: InfoViewModel!
+    internal var viewModel: InfoViewModel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,15 +22,15 @@ class InfoViewController: UIViewController {
         self.viewModel = InfoViewModel()
     }
     
-    @IBAction func doneTapped(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func doneTapped(_ sender: UIBarButtonItem) {
+        self.dismiss(animated: true, completion: nil)
     }
 }
 
 // MARK: - UITableViewDataSource
 
 extension InfoViewController: UITableViewDataSource {
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         guard let viewModel = self.viewModel else {
             return 0
         }
@@ -38,7 +38,7 @@ extension InfoViewController: UITableViewDataSource {
         return viewModel.groupViewModels.count
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let viewModel = self.viewModel else {
             return 0
         }
@@ -46,16 +46,16 @@ extension InfoViewController: UITableViewDataSource {
         return viewModel.groupViewModels[section].cellViewModels.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellViewModel = self.viewModel!.groupViewModels[indexPath.section].cellViewModels[indexPath.row]
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellViewModel.cellIdentifier, forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellViewModel.cellIdentifier, for: indexPath)
         if let baseCell = cell as? BaseCell {
-            baseCell.configure(cellViewModel)
+            baseCell.configure(cellViewModel: cellViewModel)
         }
         return cell
     }
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return self.viewModel!.groupViewModels[section].groupTitle
     }
 }

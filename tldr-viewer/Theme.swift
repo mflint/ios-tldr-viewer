@@ -15,23 +15,27 @@ class Theme {
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.tldrLightBody(), NSFontAttributeName: UIFont.tldrBody()]
         UINavigationBar.appearance().barTintColor = UIColor.tldrTeal()
         UINavigationBar.appearance().tintColor = UIColor.tldrLightBody()
-        UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: UIFont.tldrBody()], forState: .Normal)
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: UIFont.tldrBody()], for: .normal)
         
         // segmented control
         UISegmentedControl.appearance().tintColor = UIColor.tldrTeal()
         
         // UISearchBar text field
-        UITextField.appearanceWhenContainedInInstancesOfClasses([UISearchBar.self]).font = UIFont.tldrBody()
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).font = UIFont.tldrBody()
     }
     
     static func css() -> String {
-        let filePath = NSBundle.mainBundle().URLForResource("style", withExtension: "css")
-        let data = NSData(contentsOfURL: filePath!)
-        let cssString = String(data: data!, encoding: NSUTF8StringEncoding)
-        return cssString!
+        let filePath = Bundle.main.url(forResource: "style", withExtension: "css")
+        do {
+            let data = try Data(contentsOf: filePath!)
+            let cssString = String(data: data, encoding: String.Encoding.utf8)
+            return cssString!
+        } catch {
+            return ""
+        }
     }
 
-    static func pageFromHTMLSnippet(htmlSnippet: String) -> String {
+    static func pageFrom(htmlSnippet: String) -> String {
         let result = "<html><head><style>" + css() + "</style></head><body>" + htmlSnippet + "</body></html>"
         return result
     }
@@ -65,7 +69,7 @@ extension UIColor {
     }
     
     class func tldrDetail() -> UIColor {
-        return UIColor.darkGrayColor()
+        return UIColor.darkGray
     }
     
     class func tldrTeal() -> UIColor {
@@ -77,10 +81,10 @@ extension UIColor {
     }
     
     class func tldrActionForeground() -> UIColor {
-        return UIColor.darkGrayColor()
+        return UIColor.darkGray
     }
     
     class func tldrLightBody() -> UIColor {
-        return UIColor.whiteColor()
+        return UIColor.white
     }
 }

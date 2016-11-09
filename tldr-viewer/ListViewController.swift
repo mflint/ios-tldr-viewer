@@ -12,16 +12,18 @@ import CoreSpotlight
 class ListViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar! {
         didSet {
-            self.searchBar.autocapitalizationType = UITextAutocapitalizationType.None
+            self.searchBar.autocapitalizationType = UITextAutocapitalizationType.none
         }
     }
     
-    private var viewModel: ListViewModel! {
+    internal var viewModel: ListViewModel! {
         didSet {
             self.viewModel.cancelSearchSignal = {
                 self.searchBar.resignFirstResponder()
                 self.searchBar.text = self.viewModel.searchText
             }
+            
+            self.splitViewController?.delegate = self.viewModel
         }
     }
     
@@ -33,21 +35,21 @@ class ListViewController: UIViewController {
 
     // MARK: - NSUserActivity stuff
     
-    override func restoreUserActivityState(activity: NSUserActivity) {
+    override func restoreUserActivityState(_ activity: NSUserActivity) {
         if let uniqueIdentifier = activity.userInfo?[CSSearchableItemActivityIdentifier] as? String {
-            viewModel.didReceiveUserActivityToShowCommand(uniqueIdentifier)
+            viewModel.didReceiveUserActivityToShowCommand(commandName: uniqueIdentifier)
         }
     }
     
     // MARK: - Segues
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showInfoPopover" {
             // this sets the color of the popover arrow on iPad, to match the UINavigationBar color of the destination VC
-            segue.destinationViewController.popoverPresentationController?.backgroundColor = UIColor.tldrTeal()
+            segue.destination.popoverPresentationController?.backgroundColor = UIColor.tldrTeal()
         } else if segue.identifier == "embed" {
             // the embedded UITableViewController
-            if let embeddedVC = segue.destinationViewController as? ListTableViewController {
+            if let embeddedVC = segue.destination as? ListTableViewController {
                 embeddedVC.viewModel = viewModel
             }
         }
@@ -57,11 +59,11 @@ class ListViewController: UIViewController {
 // MARK: - UISearchBarDelegate
 
 extension ListViewController: UISearchBarDelegate {
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        self.viewModel.filterTextDidChange(searchText)
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        self.viewModel.filterTextDidChange(text: searchText)
     }
     
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }
 }

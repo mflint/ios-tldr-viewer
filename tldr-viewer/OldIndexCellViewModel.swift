@@ -22,22 +22,22 @@ struct OldIndexCellViewModel: BaseCellViewModel, MessageAndButtonCellViewModel {
             return nil
         }
         
-        let age = NSDate().timeIntervalSinceDate(lastUpdateTime)
-        if age > NSDate.timeIntervalForDays(5) {
+        let age = Date().timeIntervalSince(lastUpdateTime)
+        if age > Date.timeIntervalForDays(5) {
             return OldIndexCellViewModel(dataSource: dataSource, age:age)
         }
         
         return nil
     }
     
-    init(dataSource: DataSource, age: NSTimeInterval) {
+    init(dataSource: DataSource, age: TimeInterval) {
         self.dataSource = dataSource
         
-        let days = NSDate.daysForTimeInterval(age)
+        let days = Date.daysForTimeInterval(age)
         let messageText = "The index is \(days) days old."
         
         cellIdentifier = "MessageAndButtonCell"
-        labelText = Theme.detailAttributed(messageText)
+        labelText = Theme.detailAttributed(string: messageText)
         buttonText = "Update index now"
     }
     

@@ -16,7 +16,7 @@ struct SpotlightSearch {
         let attributeSet = CSSearchableItemAttributeSet(itemContentType: kUTTypeText as String)
         // Add metadata that supplies details about the item.
         attributeSet.title = command.name
-        attributeSet.contentDescription = description(command)
+        attributeSet.contentDescription = description(command: command)
         
         if let image = UIImage(named: "AppIcon") {
             attributeSet.thumbnailData = UIImagePNGRepresentation(image)
@@ -24,12 +24,12 @@ struct SpotlightSearch {
         
         // Create an item with a unique identifier, a domain identifier, and the attribute set you created earlier.
         let item = CSSearchableItem(uniqueIdentifier: command.name, domainIdentifier: "uk.co.greenlightapps.tldr-viewer", attributeSet: attributeSet)
-        item.expirationDate = NSDate.distantFuture()
+        item.expirationDate = Date.distantFuture
         
         // Add the item to the on-device index.
-        CSSearchableIndex.defaultSearchableIndex().indexSearchableItems([item]) { error in
+        CSSearchableIndex.default().indexSearchableItems([item]) { error in
             if error != nil {
-                print(error?.localizedDescription)
+                print(error!.localizedDescription)
             }
             else {
                 print("Item indexed.")
@@ -52,7 +52,7 @@ struct SpotlightSearch {
         var result = ""
         var stop = false
         
-        let lines = markdown.componentsSeparatedByString("\n")
+        let lines = markdown.components(separatedBy: "\n")
         
         for line in lines {
             if !stop && line.hasPrefix("> ") {
@@ -60,7 +60,8 @@ struct SpotlightSearch {
                     result += " "
                 }
                 
-                result += line.substringFromIndex(line.startIndex.advancedBy(2))
+                let index = line.characters.index(line.startIndex, offsetBy: 2)
+                result += line.substring(from:index)
             } else if !result.isEmpty {
                 stop = true
             }

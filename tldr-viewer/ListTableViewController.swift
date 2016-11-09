@@ -18,27 +18,25 @@ class ListTableViewController: UITableViewController {
     var viewModel: ListViewModel! {
         didSet {
             self.viewModel.updateSignal = {(indexPath) -> Void in
-                self.update(indexPath)
+                self.update(indexPath: indexPath)
             }
             
             self.viewModel.showDetail = {(detailViewModel) -> Void in
                 // show the detail
-                self.performSegueWithIdentifier("showDetail", sender: detailViewModel)
+                self.performSegue(withIdentifier: "showDetail", sender: detailViewModel)
                 
                 // and dismiss the primary overlay VC if necessary (iPad only)
-                if (self.splitViewController?.displayMode == .PrimaryOverlay){
-                    self.splitViewController?.preferredDisplayMode = .PrimaryHidden
-                    self.splitViewController?.preferredDisplayMode = .Automatic
+                if (self.splitViewController?.displayMode == .primaryOverlay){
+                    self.splitViewController?.preferredDisplayMode = .primaryHidden
+                    self.splitViewController?.preferredDisplayMode = .automatic
                 }
             }
             
-            self.splitViewController?.delegate = self.viewModel
-            
-            self.update(nil)
+            self.update(indexPath: nil)
         }
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         // calling "beginRefreshing" / "endRefreshing" here forces the UIRefreshControl to properly layout subviews
@@ -46,19 +44,19 @@ class ListTableViewController: UITableViewController {
         refreshControl?.endRefreshing()
         
         // iPhone 6 or smaller: deselect the selected row when this ViewController reappears
-        if self.splitViewController!.collapsed {
+        if self.splitViewController!.isCollapsed {
             if let selectedRow = self.tableView.indexPathForSelectedRow {
-                self.tableView.deselectRowAtIndexPath(selectedRow, animated: true)
+                self.tableView.deselectRow(at: selectedRow, animated: true)
             }
         }
     }
     
-    @IBAction func onPullToRefresh(sender: AnyObject) {
+    @IBAction func onPullToRefresh(_ sender: AnyObject) {
         viewModel.refreshData()
     }
     
-    private func update(indexPath: NSIndexPath?) -> Void {
-        dispatch_async(dispatch_get_main_queue(), {
+    private func update(indexPath: IndexPath?) -> Void {
+        DispatchQueue.main.async {
             if let refreshControl = self.refreshControl {
                 if self.viewModel.requesting {
                     refreshControl.beginRefreshing()
@@ -73,21 +71,21 @@ class ListTableViewController: UITableViewController {
             
             if let indexPath = indexPath {
                 self.tableView.layoutIfNeeded()
-                self.tableView.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: .Middle)
+                self.tableView.selectRow(at: indexPath as IndexPath, animated: true, scrollPosition: .middle)
             }
-        })
+        }
     }
     
     // MARK: - Segues
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
-            let detailVC = (segue.destinationViewController as! UINavigationController).topViewController as! DetailViewController
+            let detailVC = (segue.destination as! UINavigationController).topViewController as! DetailViewController
             
             if let detailViewModel = sender as? DetailViewModel {
                 detailVC.viewModel = detailViewModel
             }
             
-            detailVC.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
+            detailVC.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
             detailVC.navigationItem.leftItemsSupplementBackButton = true
         }
     }
@@ -96,7 +94,7 @@ class ListTableViewController: UITableViewController {
 // MARK: - UITableViewDataSource
 
 extension ListTableViewController {
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in: UITableView) -> Int {
         if let viewModel = self.viewModel {
             return viewModel.sectionViewModels.count
         }
@@ -104,7 +102,7 @@ extension ListTableViewController {
         return 0
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let viewModel = self.viewModel {
             return viewModel.sectionViewModels[section].cellViewModels.count
         }
@@ -112,20 +110,20 @@ extension ListTableViewController {
         return 0
     }
     
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return self.viewModel.sectionViewModels[section].title
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellViewModel = self.viewModel.sectionViewModels[indexPath.section].cellViewModels[indexPath.row]
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellViewModel.cellIdentifier, forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellViewModel.cellIdentifier, for: indexPath)
         if let baseCell = cell as? BaseCell {
-            baseCell.configure(cellViewModel)
+            baseCell.configure(cellViewModel: cellViewModel)
         }
         return cell
     }
     
-    override func sectionIndexTitlesForTableView(tableView: UITableView) -> [String]? {
+    override func sectionIndexTitles(for: UITableView) -> [String]? {
         return self.viewModel.sectionIndexes
     }
 }
@@ -133,19 +131,19 @@ extension ListTableViewController {
 // MARK: - UITableViewDelegate
 
 extension ListTableViewController {
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.viewModel.didSelectRowAtIndexPath(indexPath)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.viewModel.didSelectRow(at: indexPath)
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
     
-    override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
     
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         // don't show sections
         return 0
     }

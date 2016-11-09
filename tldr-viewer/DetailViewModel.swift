@@ -28,14 +28,14 @@ class DetailViewModel {
         self.navigationBarTitle = self.command.name
         self.showPlatforms = self.command.platforms.count > 1
         
-        for (index, platform) in self.command.platforms.enumerate() {
+        for (index, platform) in self.command.platforms.enumerated() {
             let platformVM = DetailPlatformViewModel(command: self.command, platform: platform, platformIndex: index)
             self.platforms.append(platformVM)
         }
         self.selectedPlatform = self.platforms[0]
     }
     
-    func selectPlatform(platformIndex: Int) {
+    func select(platformIndex: Int) {
         if (platformIndex >= 0 && platformIndex <= self.platforms.count-1) {
             self.selectedPlatform = self.platforms[platformIndex]
             updateSignal()

@@ -38,14 +38,14 @@ class DetailPlatformViewModel {
         handleSuccess(markdown)
     }
     
-    private func handleError(error: String?) {
-        self.message = Theme.detailAttributed(error)
+    private func handleError(_ error: String?) {
+        self.message = Theme.detailAttributed(string: error)
     }
     
-    private func handleSuccess(markdownString: String) {
+    private func handleSuccess(_ markdownString: String) {
         var markdown = Markdown()
         let html = markdown.transform(markdownString)
-        self.detailHTML = Theme.pageFromHTMLSnippet(html)
+        self.detailHTML = Theme.pageFrom(htmlSnippet: html)
         self.message = nil
     }
 }

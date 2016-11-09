@@ -17,23 +17,23 @@ struct CommandCellViewModel: BaseCellViewModel {
     var commandText: NSAttributedString!
     var platforms: NSAttributedString!
     
-    init(command: Command, action: ViewModelAction) {
+    init(command: Command, action: @escaping ViewModelAction) {
         self.command = command
         
         self.cellIdentifier = "CommandCell"
         self.action = action
         
-        self.commandText = Theme.bodyAttributed(command.name)
+        self.commandText = Theme.bodyAttributed(string: command.name)
         
         var platforms = ""
-        for (index, platform) in command.platforms.enumerate() {
+        for (index, platform) in command.platforms.enumerated() {
             platforms += platform.displayName
             if (index < command.platforms.count - 1) {
                 platforms += ", "
             }
         }
         
-        self.platforms = Theme.detailAttributed(platforms)
+        self.platforms = Theme.detailAttributed(string: platforms)
     }
     
     func performAction() {

@@ -9,9 +9,9 @@
 import Foundation
 
 struct TLDRResponse {
-    let data: NSData!
-    let response: NSURLResponse!
-    var error: NSError?
+    let data: Data!
+    let response: URLResponse!
+    var error: Error?
     
     /*
     var responseJSON: AnyObject? {
