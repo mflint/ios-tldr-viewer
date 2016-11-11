@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class ListViewModel: NSObject, UISplitViewControllerDelegate {
+class ListViewModel: NSObject {
     // no-op closures until the ViewController provides its own
     var updateSignal: (_ indexPath: IndexPath?) -> Void = {(indexPath) in}
     var showDetail: (_ detailViewModel: DetailViewModel) -> Void = {(vm) in}
@@ -142,14 +142,11 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
         }
     }
     
-    // MARK: - Split view
-    
-    // not called for iPhone 6+ or iPad
-    func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
-        return !itemSelected
+    func showDetailWhenHorizontallyCompact() -> Bool {
+        return itemSelected
     }
     
-    func splitViewController(_ svc: UISplitViewController, shouldHide vc: UIViewController, in orientation: UIInterfaceOrientation) -> Bool {
-        return itemSelected && UIInterfaceOrientationIsPortrait(orientation)
+    func showDetail(when portrait: Bool) -> Bool {
+        return !itemSelected || !portrait
     }
 }

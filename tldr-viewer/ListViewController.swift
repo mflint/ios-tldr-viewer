@@ -22,8 +22,6 @@ class ListViewController: UIViewController {
                 self.searchBar.resignFirstResponder()
                 self.searchBar.text = self.viewModel.searchText
             }
-            
-            self.splitViewController?.delegate = self.viewModel
         }
     }
     
@@ -31,6 +29,8 @@ class ListViewController: UIViewController {
         super.awakeFromNib()
         
         self.viewModel = ListViewModel()
+        
+        self.splitViewController?.delegate = self
     }
 
     // MARK: - NSUserActivity stuff
@@ -65,5 +65,18 @@ extension ListViewController: UISearchBarDelegate {
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
+    }
+}
+
+// MARK: - Split view
+
+extension ListViewController: UISplitViewControllerDelegate {
+    // not called for iPhone 6+ or iPad
+    func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
+        return !self.viewModel.showDetailWhenHorizontallyCompact()
+    }
+    
+    func splitViewController(_ svc: UISplitViewController, shouldHide vc: UIViewController, in orientation: UIInterfaceOrientation) -> Bool {
+        return self.viewModel.showDetail(when: UIInterfaceOrientationIsPortrait(orientation))
     }
 }
