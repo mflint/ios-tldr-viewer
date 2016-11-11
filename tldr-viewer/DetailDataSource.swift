@@ -13,15 +13,15 @@ struct DetailDataSource {
     let errorString: String?
     
     init(command: Command, platform: Platform) {
-        let documentsDirectory = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0] as NSURL
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0] 
         let fileURL = documentsDirectory
-            .URLByAppendingPathComponent("pages")
-            .URLByAppendingPathComponent(platform.name)
-            .URLByAppendingPathComponent(command.name)
-            .URLByAppendingPathExtension("md")
+            .appendingPathComponent("pages")
+            .appendingPathComponent(platform.name)
+            .appendingPathComponent(command.name)
+            .appendingPathExtension("md")
         
         do {
-            let content = try String(contentsOfURL:fileURL, encoding: NSUTF8StringEncoding)
+            let content = try String(contentsOf: fileURL, encoding: .utf8)
             markdown = content
             errorString = nil
         } catch {

@@ -9,10 +9,10 @@
 import Foundation
 import UIKit
 
-class ListViewModel: NSObject, UISplitViewControllerDelegate {
+class ListViewModel: NSObject {
     // no-op closures until the ViewController provides its own
-    var updateSignal: (indexPath: NSIndexPath?) -> Void = {(indexPath) in}
-    var showDetail: (detailViewModel: DetailViewModel) -> Void = {(vm) in}
+    var updateSignal: (_ indexPath: IndexPath?) -> Void = {(indexPath) in}
+    var showDetail: (_ detailViewModel: DetailViewModel) -> Void = {(vm) in}
     var cancelSearchSignal: () -> Void = {}
     
     var lastUpdatedString: String!
@@ -22,15 +22,15 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
     var sectionViewModels = [SectionViewModel]()
     var sectionIndexes = [String]()
     
-    private let dateFormatter = NSDateFormatter()
+    private let dateFormatter = DateFormatter()
     private let dataSource = DataSource()
     private var cellViewModels = [BaseCellViewModel]()
     
     override init() {
         super.init()
         
-        dateFormatter.dateStyle = .MediumStyle
-        dateFormatter.timeStyle = .ShortStyle
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .short
         
         dataSource.updateSignal = {
             self.update()
@@ -46,7 +46,7 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
     private func update() {
         requesting = dataSource.requesting
         if let lastUpdateTime = dataSource.lastUpdateTime() {
-            let lastUpdatedDateTime = dateFormatter.stringFromDate(lastUpdateTime)
+            let lastUpdatedDateTime = dateFormatter.string(from: lastUpdateTime)
             lastUpdatedString = "Updated \(lastUpdatedDateTime)"
         } else {
             lastUpdatedString = ""
@@ -54,7 +54,7 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
         
         var vms = [BaseCellViewModel]()
         
-        let commands = dataSource.commandsWithFilter(searchText)
+        let commands = dataSource.commandsWith(filter: searchText)
         
         if dataSource.requesting && commands.count == 0 {
             let cellViewModel = LoadingCellViewModel()
@@ -66,21 +66,21 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
                 self.dataSource.beginRequest()
             })
             vms.append(cellViewModel)
-        } else if let oldIndexCell = OldIndexCellViewModel.create(dataSource) {
+        } else if let oldIndexCell = OldIndexCellViewModel.create(dataSource: dataSource) {
             vms.append(oldIndexCell)
         }
         
         for command in commands {
             let cellViewModel = CommandCellViewModel(command: command, action: {
                 let detailViewModel = DetailViewModel(command: command)
-                self.showDetail(detailViewModel: detailViewModel)
+                self.showDetail(detailViewModel)
             })
             vms.append(cellViewModel)
         }
         
         cellViewModels = vms
         makeSectionsAndCells()
-        updateSignal(indexPath: nil)
+        updateSignal(nil)
     }
     
     private func makeSectionsAndCells() {
@@ -91,22 +91,22 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
         var currentSection: SectionViewModel?
         
         for cellViewModel in cellViewModels {
-            if currentSection == nil || !currentSection!.accept(cellViewModel) {
+            if currentSection == nil || !currentSection!.accept(cellViewModel: cellViewModel) {
                 currentSection = SectionViewModel(firstCellViewModel: cellViewModel)
                 sections.append(currentSection!)
             }
         }
         
-        sectionViewModels = SectionViewModel.sort(sections)
+        sectionViewModels = SectionViewModel.sort(sections: sections)
         sectionIndexes = sectionViewModels.map({ section in section.title })
     }
     
-    func didSelectRowAtIndexPath(indexPath: NSIndexPath) {
-        selectRow(indexPath)
+    func didSelectRow(at indexPath: IndexPath) {
+        selectRow(indexPath: indexPath)
         cancelSearchSignal()
     }
     
-    private func selectRow(indexPath: NSIndexPath) {
+    private func selectRow(indexPath: IndexPath) {
         itemSelected = true
         sectionViewModels[indexPath.section].cellViewModels[indexPath.row].performAction()
     }
@@ -125,31 +125,28 @@ class ListViewModel: NSObject, UISplitViewControllerDelegate {
         update()
         
         // now find the NSIndexPath for the CommandCellViewModel for this command name
-        var indexPath: NSIndexPath?
-        for (sectionIndex, sectionViewModel) in sectionViewModels.enumerate() {
-            for (cellIndex, cellViewModel) in sectionViewModel.cellViewModels.enumerate() {
+        var indexPath: IndexPath?
+        for (sectionIndex, sectionViewModel) in sectionViewModels.enumerated() {
+            for (cellIndex, cellViewModel) in sectionViewModel.cellViewModels.enumerated() {
                 if let commandCellViewModel = cellViewModel as? CommandCellViewModel {
                     if commandCellViewModel.command.name == commandName {
-                        indexPath = NSIndexPath(forItem: cellIndex, inSection: sectionIndex)
+                        indexPath = IndexPath(row: cellIndex, section: sectionIndex)
                     }
                 }
             }
         }
         
         if let indexPath = indexPath {
-            selectRow(indexPath)
-            updateSignal(indexPath: indexPath)
+            selectRow(indexPath: indexPath)
+            updateSignal(indexPath)
         }
     }
     
-    // MARK: - Split view
-    
-    // not called for iPhone 6+ or iPad
-    func splitViewController(splitViewController: UISplitViewController, collapseSecondaryViewController secondaryViewController: UIViewController, ontoPrimaryViewController primaryViewController: UIViewController) -> Bool {
-        return !itemSelected
+    func showDetailWhenHorizontallyCompact() -> Bool {
+        return itemSelected
     }
     
-    func splitViewController(svc: UISplitViewController, shouldHideViewController vc: UIViewController, inOrientation orientation: UIInterfaceOrientation) -> Bool {
-        return itemSelected && UIInterfaceOrientationIsPortrait(orientation)
+    func showDetail(when portrait: Bool) -> Bool {
+        return !itemSelected || !portrait
     }
 }

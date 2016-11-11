@@ -32,11 +32,11 @@ class MessageAndButtonCell: UITableViewCell, BaseCell {
         }
         
         if let button = self.button {
-            button.setTitle(vm.buttonText, forState: .Normal)
+            button.setTitle(vm.buttonText, for: .normal)
         }
     }
     
-    @IBAction func buttonTapped(sender: AnyObject) {
+    @IBAction func buttonTapped(_ sender: AnyObject) {
         self.viewModel.performButtonAction()
     }
 }

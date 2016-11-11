@@ -34,31 +34,31 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         
         let configuration = WKWebViewConfiguration()
-        self.webView = WKWebView(frame: CGRectZero, configuration: configuration)
+        self.webView = WKWebView(frame: .zero, configuration: configuration)
         
         self.webView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.webView)
         
-        self.webView.leadingAnchor.constraintEqualToAnchor(self.view.leadingAnchor).active = true
-        self.webView.trailingAnchor.constraintEqualToAnchor(self.view.trailingAnchor).active = true
-        self.webView.bottomAnchor.constraintEqualToAnchor(self.view.bottomAnchor).active = true
+        self.webView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        self.webView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        self.webView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
 
         // two top constraints for the web view
-        self.webViewToTopAnchorConstraint = self.webView.topAnchor.constraintEqualToAnchor(self.view.topAnchor)
-        self.webViewToSegmentedControlConstraint = self.webView.topAnchor.constraintEqualToAnchor(self.platformsSegmentedControl.bottomAnchor, constant: 3)
+        self.webViewToTopAnchorConstraint = self.webView.topAnchor.constraint(equalTo: self.view.topAnchor)
+        self.webViewToSegmentedControlConstraint = self.webView.topAnchor.constraint(equalTo: self.platformsSegmentedControl.bottomAnchor, constant: 3)
         
-        self.messageView.hidden = true
+        self.messageView.isHidden = true
         
         self.configureView()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.configureView()
     }
     
-    @IBAction func platformSegmentDidChange(sender: AnyObject) {
-        self.viewModel.selectPlatform(self.platformsSegmentedControl.selectedSegmentIndex)
+    @IBAction func platformSegmentDidChange(_ sender: AnyObject) {
+        self.viewModel.select(platformIndex: self.platformsSegmentedControl.selectedSegmentIndex)
     }
     
     private func configureView() {
@@ -66,9 +66,9 @@ class DetailViewController: UIViewController {
             return
         }
         
-        dispatch_async(dispatch_get_main_queue(), {
+        DispatchQueue.main.async {
             self.doConfigureView()
-        })
+        }
     }
     
     private func doConfigureView() {
@@ -92,47 +92,47 @@ class DetailViewController: UIViewController {
                 self.doConfigureSegmentedControl(viewModel)
             }
         } else {
-            message = Theme.detailAttributed("Nothing selected")
+            message = Theme.detailAttributed(string: "Nothing selected")
             htmlString = nil
             sceneTitle = ""
         }
         
         if let messageToShow = message {
             self.messageLabel.attributedText = messageToShow
-            self.messageView.hidden = false
+            self.messageView.isHidden = false
             
             self.messageView.setNeedsLayout()
         } else {
-            self.messageView.hidden = true
+            self.messageView.isHidden = true
         }
         
         if let htmlStringToShow = htmlString {
             self.webView.loadHTMLString(htmlStringToShow, baseURL: nil)
-            self.webView.hidden = false
+            self.webView.isHidden = false
         } else {
-            self.webView.hidden = true
+            self.webView.isHidden = true
         }
         
         self.title = sceneTitle
         self.doShowOrHideSegmentedControl(showSegmentedControl)
     }
     
-    private func doConfigureSegmentedControl(viewModel: DetailViewModel) {
+    private func doConfigureSegmentedControl(_ viewModel: DetailViewModel) {
         self.platformsSegmentedControl.removeAllSegments()
         
-        for (index, platform) in viewModel.platforms.enumerate() {
-            self.platformsSegmentedControl.insertSegmentWithTitle(platform.platformName, atIndex: index, animated: false)
+        for (index, platform) in viewModel.platforms.enumerated() {
+            self.platformsSegmentedControl.insertSegment(withTitle: platform.platformName, at: index, animated: false)
         }
         
         self.platformsSegmentedControl.selectedSegmentIndex = viewModel.selectedPlatform.platformIndex
     }
     
-    private func doShowOrHideSegmentedControl(show: Bool) {
-        self.webViewToSegmentedControlConstraint.active = false
-        self.webViewToTopAnchorConstraint.active = false
+    private func doShowOrHideSegmentedControl(_ show: Bool) {
+        self.webViewToSegmentedControlConstraint.isActive = false
+        self.webViewToTopAnchorConstraint.isActive = false
         
-        self.platformsSegmentedControl.hidden = !show
-        self.webViewToSegmentedControlConstraint.active = show
-        self.webViewToTopAnchorConstraint.active = !show
+        self.platformsSegmentedControl.isHidden = !show
+        self.webViewToSegmentedControlConstraint.isActive = show
+        self.webViewToTopAnchorConstraint.isActive = !show
     }
 }

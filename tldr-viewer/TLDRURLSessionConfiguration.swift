@@ -8,9 +8,9 @@
 
 import Foundation
 
-extension NSURLSessionConfiguration {
-    class func TLDRSessionConfiguration() -> NSURLSessionConfiguration {
-        let config = defaultSessionConfiguration()
+extension URLSessionConfiguration {
+    class func TLDRSessionConfiguration() -> URLSessionConfiguration {
+        let config = URLSessionConfiguration.default
         config.timeoutIntervalForRequest = 10
         return config
     }

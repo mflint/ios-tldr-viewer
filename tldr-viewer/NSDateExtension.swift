@@ -8,12 +8,12 @@
 
 import Foundation
 
-extension NSDate {
-    static func timeIntervalForDays(days: Int) -> NSTimeInterval {
-        return NSTimeInterval(days * 60 * 60 * 24)
+extension Date {
+    static func timeIntervalForDays(_ days: Int) -> TimeInterval {
+        return TimeInterval(days * 60 * 60 * 24)
     }
     
-    static func daysForTimeInterval(timeInterval: NSTimeInterval) -> Int {
+    static func daysForTimeInterval(_ timeInterval: TimeInterval) -> Int {
         return Int(timeInterval / (60 * 60 * 24))
     }
 }

@@ -8,16 +8,16 @@
 
 import Foundation
 
-class TLDRRequest: NSObject, NSURLSessionTaskDelegate {
-    typealias NetworkingCompletion = TLDRResponse -> Void
+class TLDRRequest: NSObject, URLSessionTaskDelegate {
+    typealias NetworkingCompletion = (TLDRResponse) -> Void
     
-    class func requestWithURL(urlString: String, completion:NetworkingCompletion) {
-        let url = NSURL(string: urlString)
-        let request = NSURLRequest(URL: url!)
+    class func requestWithURL(urlString: String, completion:@escaping NetworkingCompletion) {
+        let url = URL(string: urlString)
+        let request = URLRequest(url: url! as URL)
         
-        let session = NSURLSession(configuration: NSURLSessionConfiguration.TLDRSessionConfiguration())
+        let session = URLSession(configuration: URLSessionConfiguration.TLDRSessionConfiguration())
         
-        let task = session.dataTaskWithRequest(request) {
+        let task = session.dataTask(with: request) {
             data, response, sessionError in
             let wrappedResponse = TLDRResponse(data: data, response: response, error: sessionError)
             completion(wrappedResponse)

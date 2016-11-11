@@ -10,9 +10,9 @@ import Foundation
 import Zip
 
 public class DataSource {
-    private let documentsDirectory : NSURL!
-    private let zipFileURL : NSURL!
-    private let indexFileURL : NSURL!
+    private let documentsDirectory : URL!
+    private let zipFileURL : URL!
+    private let indexFileURL : URL!
     
     // no-op closures until the ViewModel provides its own
     var updateSignal: () -> Void = {}
@@ -21,9 +21,9 @@ public class DataSource {
     private var commands = [Command]()
     
     init() {
-        documentsDirectory = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0] as NSURL
-        zipFileURL = documentsDirectory.URLByAppendingPathComponent("tldr.zip")
-        indexFileURL = documentsDirectory.URLByAppendingPathComponent("pages").URLByAppendingPathComponent("index.json")
+        documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        zipFileURL = documentsDirectory.appendingPathComponent("tldr.zip")
+        indexFileURL = documentsDirectory.appendingPathComponent("pages").appendingPathComponent("index.json")
         
         if !loadCommandsFromIndexFile() {
             beginRequest()
@@ -38,54 +38,50 @@ public class DataSource {
         requesting = true
         requestError = nil
         
-        TLDRRequest.requestWithURL("https://tldr-pages.github.io/assets/tldr.zip") { response in
-            self.processResponse(response)
+        TLDRRequest.requestWithURL(urlString: "https://tldr-pages.github.io/assets/tldr.zip") { response in
+            self.processResponse(response: response)
         }
         
         updateSignal()
     }
     
-    func lastUpdateTime() -> NSDate? {
-        guard let path = indexFileURL.path else {
-            return nil
-        }
-        
+    func lastUpdateTime() -> Date? {
         do {
-            let fileAttributes = try NSFileManager.defaultManager().attributesOfItemAtPath(path)
-            return fileAttributes[NSFileModificationDate] as? NSDate
+            let fileAttributes = try FileManager.default.attributesOfItem(atPath: indexFileURL.path)
+            return fileAttributes[FileAttributeKey.modificationDate] as? Date
         } catch {
             return nil
         }
     }
     
-    func commandsWithFilter(filter: String) -> [Command] {
+    func commandsWith(filter: String) -> [Command] {
         // if the search string is empty, return everything
         if filter.characters.count == 0 {
             return commands
         }
         
         return commands.filter{ command in
-            return command.name.lowercaseString.containsString(filter)
+            return command.name.lowercased().contains(filter)
         }
     }
     
     private func processResponse(response: TLDRResponse) {
         if let error = response.error {
-            handleError(error)
+            handle(error: error)
         } else {
-            handleSuccess(response.data)
+            handleSuccess(data: response.data)
         }
         
         requesting = false
         updateSignal()
     }
     
-    private func handleError(error: NSError) {
+    private func handle(error: Error) {
         requestError = "Could not download tl;dr file"
     }
     
-    private func handleSuccess(data: NSData) {
-        if !saveZipData(data) {
+    private func handleSuccess(data: Data) {
+        if !save(zipData:data) {
             return
         }
         
@@ -93,10 +89,10 @@ public class DataSource {
             return
         }
         
-        loadCommandsFromIndexFile()
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
-            self.addToSpotlightIndex()
+        if loadCommandsFromIndexFile() {
+            DispatchQueue.global(qos: .background).async {
+                self.addToSpotlightIndex()
+            }
         }
     }
     
@@ -104,7 +100,7 @@ public class DataSource {
         let spotlightSearch = SpotlightSearch()
         
         for command in self.commands {
-            spotlightSearch.addToIndex(command)
+            spotlightSearch.addToIndex(command: command)
         }
     }
     
@@ -117,13 +113,15 @@ public class DataSource {
             return false
         }
         
-        self.commands = commandsFromIndexFile(indexFileContents)
+        self.commands = commandsFrom(indexFile: indexFileContents)
         
         return true
     }
     
-    private func saveZipData(data: NSData) -> Bool {
-        if !data.writeToURL(zipFileURL, atomically: true) {
+    private func save(zipData: Data) -> Bool {
+        do {
+            try zipData.write(to: zipFileURL, options: (.atomic))
+        } catch {
             requestError = "Could not save the download"
             return false
         }
@@ -143,14 +141,10 @@ public class DataSource {
     }
     
     private func indexFileContents() -> Array<Dictionary<String, AnyObject>>? {
-        let indexDataOptional = NSData(contentsOfURL: indexFileURL)
-        guard let indexData = indexDataOptional else {
-            requestError = "Could not find index file"
-            return nil
-        }
         
         do {
-            let jsonResult = try NSJSONSerialization.JSONObjectWithData(indexData, options: [])
+            let indexData = try Data(contentsOf: indexFileURL)
+            let jsonResult = try JSONSerialization.jsonObject(with: indexData, options: [])
             
             // sometimes we get an array as the top level object...
             if let jsonResult = jsonResult as? Array<Dictionary<String, AnyObject>> {
@@ -169,17 +163,17 @@ public class DataSource {
         return nil
     }
     
-    private func commandsFromIndexFile(jsonArray: Array<Dictionary<String, AnyObject>>) -> [Command] {
+    private func commandsFrom(indexFile: Array<Dictionary<String, AnyObject>>) -> [Command] {
         var commands = [Command]()
         
-        for commandJSON in jsonArray {
+        for commandJSON in indexFile {
             let name = commandJSON["name"] as! String
             var platforms = [Platform]()
             for platformName in commandJSON["platform"] as! Array<String> {
-                let platform = Platform.get(platformName)
+                let platform = Platform.get(name: platformName)
                 platforms.append(platform)
             }
-            let command = Command(name: name , platforms: Platform.sort(platforms))
+            let command = Command(name: name , platforms: Platform.sort(platforms: platforms))
             
             commands.append(command)
         }

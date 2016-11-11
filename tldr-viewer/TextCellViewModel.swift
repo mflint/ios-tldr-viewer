@@ -27,7 +27,7 @@ class TextCellViewModel: BaseCellViewModel {
     }
     
     convenience init(text: String?, detailText: String?) {
-        self.init(attributedText: Theme.bodyAttributed(text), detailAttributedText: Theme.detailAttributed(detailText))
+        self.init(attributedText: Theme.bodyAttributed(string: text), detailAttributedText: Theme.detailAttributed(string: detailText))
     }
 
     convenience init(attributedText: NSAttributedString?) {
@@ -35,7 +35,7 @@ class TextCellViewModel: BaseCellViewModel {
     }
     
     convenience init(text: String?) {
-        self.init(attributedText: Theme.bodyAttributed(text))
+        self.init(attributedText: Theme.bodyAttributed(string: text))
     }
     
     func performAction() {

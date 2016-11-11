@@ -13,8 +13,8 @@ struct Command {
     let platforms: [Platform]!
     
     static func sort(commands: [Command]) -> [Command] {
-        return commands.sort({ (first, second) -> Bool in
-            return first.name.compare(second.name) == NSComparisonResult.OrderedAscending
+        return commands.sorted(by: { (first, second) -> Bool in
+            return first.name.compare(second.name) == ComparisonResult.orderedAscending
         })
     }
 }
