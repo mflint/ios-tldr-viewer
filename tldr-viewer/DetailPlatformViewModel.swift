@@ -44,7 +44,7 @@ class DetailPlatformViewModel {
     
     private func handleSuccess(_ markdownString: String) {
         var markdown = Markdown()
-        let html = markdown.transform(markdownString)
+        let html = markdown.transform(markdownString).replacingOccurrences(of: "{{", with: "<span class='parameter'>").replacingOccurrences(of: "}}", with: "</span>")
         self.detailHTML = Theme.pageFrom(htmlSnippet: html)
         self.message = nil
     }

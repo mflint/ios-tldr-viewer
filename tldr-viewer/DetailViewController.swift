@@ -36,6 +36,9 @@ class DetailViewController: UIViewController {
         let configuration = WKWebViewConfiguration()
         self.webView = WKWebView(frame: .zero, configuration: configuration)
         
+        // disable webview magnification
+        self.webView.scrollView.delegate = self
+        
         self.webView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.webView)
         
@@ -134,5 +137,11 @@ class DetailViewController: UIViewController {
         self.platformsSegmentedControl.isHidden = !show
         self.webViewToSegmentedControlConstraint.isActive = show
         self.webViewToTopAnchorConstraint.isActive = !show
+    }
+}
+
+extension DetailViewController: UIScrollViewDelegate {
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return nil
     }
 }

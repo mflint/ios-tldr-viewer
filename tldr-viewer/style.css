@@ -1,32 +1,32 @@
 body {
     font-family: 'Avenir-Book';
-    font-size: 22pt;
+    font-size: 10.5pt;
     margin: 1em;
     word-wrap: break-word;
     color: #313131;
 }
 
 p {
-    margin: 0em;
+    margin: 0em 0em 0em 0em;
 }
 
 h1 {
-    font-size: 28pt;
+    font-size: 13pt;
     margin: 0em;
 }
 
 blockquote {
     font-family: 'Avenir-Book';
-    margin: 0em;
+    margin: 0em 0em 1em 0em;
 }
 
 code {
     font-family: 'Menlo-Regular';
     background-color: #f2f2f2;
-    color: #212121;
+    color: #111111;
     display: block;
-    padding: 0.55em 1.8em;
-    margin: 0em;
+    padding: 0.55em 0.8em;
+    margin: 0em 0em 0em 0em;
 }
 
 ul {
@@ -37,11 +37,15 @@ ul {
 }
 
 li {
-    padding: 0.5em 0.55em;
+    padding: 0.5em 0em;
     line-height: 1.1;
 }
 
 li:before {
-    content: "*";
-    padding: 0 12px;
+    padding: 0 0px;
+}
+
+.parameter {
+    font-style: oblique;
+    color: #008080;
 }

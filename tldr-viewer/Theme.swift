@@ -36,7 +36,7 @@ class Theme {
     }
 
     static func pageFrom(htmlSnippet: String) -> String {
-        let result = "<html><head><style>" + css() + "</style></head><body>" + htmlSnippet + "</body></html>"
+        let result = "<html><head><meta name=\"viewport\" content=\"initial-scale=1.0\" /><style>" + css() + "</style></head><body>" + htmlSnippet + "</body></html>"
         return result
     }
     
