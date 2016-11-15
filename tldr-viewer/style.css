@@ -22,11 +22,12 @@ blockquote {
 
 code {
     font-family: 'Menlo-Regular';
-    background-color: #f2f2f2;
+    background-color: #e2e2e2;
     color: #111111;
-    display: block;
-    padding: 0.55em 0.8em;
-    margin: 0em 0em 0em 0em;
+    display: inline-block;
+    vertical-align: +6%;
+    padding: 0.20em 0.6em;
+    margin: 0.1em 0.1em 0.1em 0.1em;
 }
 
 ul {
@@ -46,6 +47,5 @@ li:before {
 }
 
 .parameter {
-    font-style: oblique;
     color: #008080;
 }
