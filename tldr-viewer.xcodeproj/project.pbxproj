@@ -43,6 +43,10 @@
 		34D06BCF1C5CC93700D30041 /* SpotlightSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D06BCE1C5CC93700D30041 /* SpotlightSearch.swift */; };
 		34D06BD11C5CC9A000D30041 /* CoreSpotlight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34D06BD01C5CC9A000D30041 /* CoreSpotlight.framework */; };
 		34D06BD31C5CCAF500D30041 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34D06BD21C5CCAF500D30041 /* MobileCoreServices.framework */; };
+		34D5B6501E350DA500C6AB64 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D5B64F1E350DA500C6AB64 /* Preferences.swift */; };
+		34D5B6521E350EF500C6AB64 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D5B6511E350EF500C6AB64 /* Constants.swift */; };
+		34D5B6541E35168700C6AB64 /* Shortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D5B6531E35168700C6AB64 /* Shortcuts.swift */; };
+		34D5B6561E351D4000C6AB64 /* ShortcutHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D5B6551E351D4000C6AB64 /* ShortcutHandler.swift */; };
 		34FBC0CF1C38A189008AD2C0 /* TextCellBasic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FBC0CE1C38A189008AD2C0 /* TextCellBasic.swift */; };
 		34FD9AB51C3885C6001DB968 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FD9AB41C3885C6001DB968 /* InfoViewController.swift */; };
 		34FD9AB71C3885CE001DB968 /* InfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FD9AB61C3885CE001DB968 /* InfoViewModel.swift */; };
@@ -91,6 +95,10 @@
 		34D06BCE1C5CC93700D30041 /* SpotlightSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotlightSearch.swift; sourceTree = "<group>"; };
 		34D06BD01C5CC9A000D30041 /* CoreSpotlight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreSpotlight.framework; path = System/Library/Frameworks/CoreSpotlight.framework; sourceTree = SDKROOT; };
 		34D06BD21C5CCAF500D30041 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		34D5B64F1E350DA500C6AB64 /* Preferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
+		34D5B6511E350EF500C6AB64 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		34D5B6531E35168700C6AB64 /* Shortcuts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shortcuts.swift; sourceTree = "<group>"; };
+		34D5B6551E351D4000C6AB64 /* ShortcutHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortcutHandler.swift; sourceTree = "<group>"; };
 		34FBC0CE1C38A189008AD2C0 /* TextCellBasic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextCellBasic.swift; sourceTree = "<group>"; };
 		34FD9AB41C3885C6001DB968 /* InfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		34FD9AB61C3885CE001DB968 /* InfoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewModel.swift; sourceTree = "<group>"; };
@@ -205,6 +213,10 @@
 				34D06BBC1C537CC100D30041 /* DataSource.swift */,
 				34D06BC31C54203300D30041 /* DetailDataSource.swift */,
 				34D06BCE1C5CC93700D30041 /* SpotlightSearch.swift */,
+				34D5B64F1E350DA500C6AB64 /* Preferences.swift */,
+				34D5B6511E350EF500C6AB64 /* Constants.swift */,
+				34D5B6531E35168700C6AB64 /* Shortcuts.swift */,
+				34D5B6551E351D4000C6AB64 /* ShortcutHandler.swift */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -340,11 +352,13 @@
 				34FDB18A1C3C8FCA00587386 /* SectionViewModel.swift in Sources */,
 				342514A11C34AE5E001D31F4 /* CommandCellViewModel.swift in Sources */,
 				34D06BC81C54C60C00D30041 /* OldIndexCellViewModel.swift in Sources */,
+				34D5B6561E351D4000C6AB64 /* ShortcutHandler.swift in Sources */,
 				342514A31C34B01F001D31F4 /* CommandCell.swift in Sources */,
 				34048D291C37402500E91EE7 /* DetailPlatformViewModel.swift in Sources */,
 				3425149A1C34A31E001D31F4 /* ListViewModel.swift in Sources */,
 				342514A51C34BA05001D31F4 /* TLDRURLSessionConfiguration.swift in Sources */,
 				342514A71C34BCEF001D31F4 /* TLDRRequest.swift in Sources */,
+				34D5B6541E35168700C6AB64 /* Shortcuts.swift in Sources */,
 				34FD9ABD1C388C83001DB968 /* GroupViewModel.swift in Sources */,
 				342514841C349D96001D31F4 /* AppDelegate.swift in Sources */,
 				342514AF1C353FD3001D31F4 /* DetailViewModel.swift in Sources */,
@@ -358,6 +372,7 @@
 				34048D201C36DF0200E91EE7 /* MessageAndButtonCell.swift in Sources */,
 				34048D1C1C36CF8800E91EE7 /* Platform.swift in Sources */,
 				34FBC0CF1C38A189008AD2C0 /* TextCellBasic.swift in Sources */,
+				34D5B6501E350DA500C6AB64 /* Preferences.swift in Sources */,
 				342514AB1C34C5D8001D31F4 /* Command.swift in Sources */,
 				34D06BCF1C5CC93700D30041 /* SpotlightSearch.swift in Sources */,
 				34FD9ABB1C388A1E001DB968 /* TextCellViewModel.swift in Sources */,
@@ -366,6 +381,7 @@
 				34048D1E1C36DC6200E91EE7 /* ErrorCellViewModel.swift in Sources */,
 				34048D221C36E4CF00E91EE7 /* LoadingCell.swift in Sources */,
 				34048D271C37212A00E91EE7 /* ActionButton.swift in Sources */,
+				34D5B6521E350EF500C6AB64 /* Constants.swift in Sources */,
 				34FD9AB51C3885C6001DB968 /* InfoViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

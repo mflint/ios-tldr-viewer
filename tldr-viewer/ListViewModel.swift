@@ -23,7 +23,7 @@ class ListViewModel: NSObject {
     var sectionIndexes = [String]()
     
     private let dateFormatter = DateFormatter()
-    private let dataSource = DataSource()
+    private let dataSource = DataSource.sharedInstance
     private var cellViewModels = [BaseCellViewModel]()
     
     override init() {
@@ -116,7 +116,7 @@ class ListViewModel: NSObject {
         update()
     }
     
-    func didReceiveUserActivityToShowCommand(commandName: String) {
+    func showCommand(commandName: String) {
         // kill any search
         searchText = ""
         cancelSearchSignal()

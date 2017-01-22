@@ -9,7 +9,7 @@
 import UIKit
 import CoreSpotlight
 
-class ListViewController: UIViewController {
+class ListViewController: UIViewController, ShortcutHandler {
     @IBOutlet weak var searchBar: UISearchBar! {
         didSet {
             self.searchBar.autocapitalizationType = UITextAutocapitalizationType.none
@@ -37,8 +37,16 @@ class ListViewController: UIViewController {
     
     override func restoreUserActivityState(_ activity: NSUserActivity) {
         if let uniqueIdentifier = activity.userInfo?[CSSearchableItemActivityIdentifier] as? String {
-            viewModel.didReceiveUserActivityToShowCommand(commandName: uniqueIdentifier)
+            viewModel.showCommand(commandName: uniqueIdentifier)
         }
+    }
+    
+    // MARK: - ShortcutItem handling
+    
+    func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem) {
+        guard let userInfo = shortcutItem.userInfo else { return }
+        guard let commandName = userInfo[Constant.Shortcut.commandNameKey] as? String else { return}
+        viewModel.showCommand(commandName: commandName)
     }
     
     // MARK: - Segues

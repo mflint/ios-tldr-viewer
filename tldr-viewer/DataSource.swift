@@ -14,13 +14,15 @@ public class DataSource {
     private let zipFileURL : URL!
     private let indexFileURL : URL!
     
+    static let sharedInstance = DataSource()
+    
     // no-op closures until the ViewModel provides its own
     var updateSignal: () -> Void = {}
     var requesting = false
     var requestError: String?
     private var commands = [Command]()
     
-    init() {
+    private init() {
         documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         zipFileURL = documentsDirectory.appendingPathComponent("tldr.zip")
         indexFileURL = documentsDirectory.appendingPathComponent("pages").appendingPathComponent("index.json")
@@ -63,6 +65,14 @@ public class DataSource {
         return commands.filter{ command in
             return command.name.lowercased().contains(filter)
         }
+    }
+    
+    func commandWith(name: String) -> Command? {
+        let foundCommands = commands.filter{ command in
+            return command.name == name
+        }
+        
+        return foundCommands.count > 0 ? foundCommands[0] : nil
     }
     
     private func processResponse(response: TLDRResponse) {

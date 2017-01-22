@@ -22,14 +22,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: - NSUserActivity stuff
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
-        let splitController = self.window?.rootViewController as! UISplitViewController
-        let navigationController = splitController.viewControllers.first as! UINavigationController
-        if let topViewController = navigationController.topViewController {
+        if let topViewController = topViewController() {
             // topViewController is a ListViewController
             topViewController.restoreUserActivityState(userActivity)
         }
         
         return true
+    }
+    
+    func topViewController() -> UIViewController? {
+        let splitController = self.window?.rootViewController as! UISplitViewController
+        let navigationController = splitController.viewControllers.first as! UINavigationController
+        var topViewController = navigationController.topViewController
+        if let nav = topViewController as? UINavigationController {
+            topViewController = nav.topViewController
+        }
+        return topViewController
+    }
+    
+    func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+        if let topViewController = topViewController() as? ShortcutHandler {
+            topViewController.handleShortcutItem(shortcutItem)
+        }
     }
 }
 

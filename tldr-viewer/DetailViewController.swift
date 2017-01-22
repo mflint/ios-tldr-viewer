@@ -8,8 +8,9 @@
 
 import UIKit
 import WebKit
+import CoreSpotlight
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController, ShortcutHandler {
     @IBOutlet weak var platformsSegmentedControl: UISegmentedControl!
 
     @IBOutlet weak var messageView: UIView!
@@ -51,13 +52,16 @@ class DetailViewController: UIViewController {
         self.webViewToSegmentedControlConstraint = self.webView.topAnchor.constraint(equalTo: self.platformsSegmentedControl.bottomAnchor, constant: 3)
         
         self.messageView.isHidden = true
-        
-        self.configureView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.configureView()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        viewModel.onCommandDisplayed()
     }
     
     @IBAction func platformSegmentDidChange(_ sender: AnyObject) {
@@ -137,6 +141,26 @@ class DetailViewController: UIViewController {
         self.platformsSegmentedControl.isHidden = !show
         self.webViewToSegmentedControlConstraint.isActive = show
         self.webViewToTopAnchorConstraint.isActive = !show
+    }
+    
+    // MARK: - NSUserActivity stuff
+    
+    override func restoreUserActivityState(_ activity: NSUserActivity) {
+        if let uniqueIdentifier = activity.userInfo?[CSSearchableItemActivityIdentifier] as? String {
+            viewModel.showCommand(commandName: uniqueIdentifier)
+            configureView()
+            viewModel.onCommandDisplayed()
+        }
+    }
+    
+    // MARK: - ShortcutItem handling
+    
+    func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem) {
+        guard let userInfo = shortcutItem.userInfo else { return }
+        guard let commandName = userInfo[Constant.Shortcut.commandNameKey] as? String else { return}
+        viewModel.showCommand(commandName: commandName)
+        configureView()
+        viewModel.onCommandDisplayed()
     }
 }
 
