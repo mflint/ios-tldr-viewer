@@ -37,7 +37,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func postNotification(_ commandName: String) {
-        NotificationCenter.default.post(name: Constant.ExternalCommandChangeNotification.name, object: nil, userInfo: [Constant.ExternalCommandChangeNotification.commandNameKey : commandName as NSSecureCoding])
+        // yuck!
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            NotificationCenter.default.post(name: Constant.ExternalCommandChangeNotification.name, object: nil, userInfo: [Constant.ExternalCommandChangeNotification.commandNameKey : commandName as NSSecureCoding])
+        }
     }
 }
 

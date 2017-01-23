@@ -10,17 +10,17 @@ import UIKit
 import CoreSpotlight
 
 class ListViewController: UIViewController {
-    @IBOutlet weak var searchBar: UISearchBar! {
+    @IBOutlet weak var searchBar: UISearchBar? {
         didSet {
-            self.searchBar.autocapitalizationType = UITextAutocapitalizationType.none
+            self.searchBar?.autocapitalizationType = UITextAutocapitalizationType.none
         }
     }
     
     internal var viewModel: ListViewModel! {
         didSet {
             self.viewModel.cancelSearchSignal = {
-                self.searchBar.resignFirstResponder()
-                self.searchBar.text = self.viewModel.searchText
+                self.searchBar?.resignFirstResponder()
+                self.searchBar?.text = self.viewModel.searchText
             }
         }
     }
