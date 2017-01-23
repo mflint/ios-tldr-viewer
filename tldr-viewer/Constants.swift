@@ -18,4 +18,9 @@ struct Constant {
         static let count = 4
         static let commandNameKey = "commandName"
     }
+    
+    struct CommandChangeNotification {
+        static let name = Notification.Name("commandChangeNotification")
+        static let commandNameKey = "commandName"
+    }
 }

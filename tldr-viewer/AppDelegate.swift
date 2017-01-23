@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreSpotlight
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,30 +21,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    // MARK: - NSUserActivity stuff
+    // MARK: - NSUserActivity (Spotlight) stuff
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
-        if let topViewController = topViewController() {
-            // topViewController is a ListViewController
-            topViewController.restoreUserActivityState(userActivity)
-        }
+        guard let commandName = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String else { return false }
+        postNotification(commandName)
         
         return true
     }
     
-    func topViewController() -> UIViewController? {
-        let splitController = self.window?.rootViewController as! UISplitViewController
-        let navigationController = splitController.viewControllers.first as! UINavigationController
-        var topViewController = navigationController.topViewController
-        if let nav = topViewController as? UINavigationController {
-            topViewController = nav.topViewController
-        }
-        return topViewController
+    func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+        guard let userInfo = shortcutItem.userInfo else { return }
+        guard let commandName = userInfo[Constant.Shortcut.commandNameKey] as? String else { return }
+        postNotification(commandName)
+        // TODO: completionHandler?
     }
     
-    func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
-        if let topViewController = topViewController() as? ShortcutHandler {
-            topViewController.handleShortcutItem(shortcutItem)
-        }
+    func postNotification(_ commandName: String) {
+        NotificationCenter.default.post(name: Constant.CommandChangeNotification.name, object: nil, userInfo: [Constant.CommandChangeNotification.commandNameKey : commandName as NSSecureCoding])
     }
 }
 

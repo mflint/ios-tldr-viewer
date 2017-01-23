@@ -40,9 +40,15 @@ class DetailViewModel {
     }
     
     init(command: Command) {
+        NotificationCenter.default.addObserver(self, selector: #selector(DetailViewModel.externalCommandChange(notification:)), name: Constant.CommandChangeNotification.name, object: nil)
+        
         defer {
             self.command = command
         }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     func select(platformIndex: Int) {
@@ -57,9 +63,14 @@ class DetailViewModel {
         Shortcuts.recreate()
     }
     
-    func showCommand(commandName: String) {
+    @objc func externalCommandChange(notification: Notification) {
+        guard let userInfo = notification.userInfo else { return }
+        guard let commandName = userInfo[Constant.CommandChangeNotification.commandNameKey] as? String else { return }
+        
         if let command = DataSource.sharedInstance.commandWith(name: commandName) {
             self.command = command
+            updateSignal()
+            onCommandDisplayed()
         }
     }
 }

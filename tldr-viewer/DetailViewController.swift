@@ -10,7 +10,7 @@ import UIKit
 import WebKit
 import CoreSpotlight
 
-class DetailViewController: UIViewController, ShortcutHandler {
+class DetailViewController: UIViewController {
     @IBOutlet weak var platformsSegmentedControl: UISegmentedControl!
 
     @IBOutlet weak var messageView: UIView!
@@ -22,10 +22,12 @@ class DetailViewController: UIViewController, ShortcutHandler {
     var webViewToTopAnchorConstraint: NSLayoutConstraint!
     var webViewToSegmentedControlConstraint: NSLayoutConstraint!
 
-    var viewModel: DetailViewModel! {
+    var viewModel: DetailViewModel? {
         didSet {
-            self.viewModel.updateSignal = {
-                self.configureView()
+            if viewModel != nil {
+                viewModel!.updateSignal = {
+                    self.configureView()
+                }
             }
             self.configureView()
         }
@@ -61,11 +63,16 @@ class DetailViewController: UIViewController, ShortcutHandler {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        guard let viewModel = viewModel else { return }
+        
         viewModel.onCommandDisplayed()
     }
     
     @IBAction func platformSegmentDidChange(_ sender: AnyObject) {
-        self.viewModel.select(platformIndex: self.platformsSegmentedControl.selectedSegmentIndex)
+        guard let viewModel = viewModel else { return }
+        
+        viewModel.select(platformIndex: self.platformsSegmentedControl.selectedSegmentIndex)
     }
     
     private func configureView() {
@@ -141,26 +148,6 @@ class DetailViewController: UIViewController, ShortcutHandler {
         self.platformsSegmentedControl.isHidden = !show
         self.webViewToSegmentedControlConstraint.isActive = show
         self.webViewToTopAnchorConstraint.isActive = !show
-    }
-    
-    // MARK: - NSUserActivity stuff
-    
-    override func restoreUserActivityState(_ activity: NSUserActivity) {
-        if let uniqueIdentifier = activity.userInfo?[CSSearchableItemActivityIdentifier] as? String {
-            viewModel.showCommand(commandName: uniqueIdentifier)
-            configureView()
-            viewModel.onCommandDisplayed()
-        }
-    }
-    
-    // MARK: - ShortcutItem handling
-    
-    func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem) {
-        guard let userInfo = shortcutItem.userInfo else { return }
-        guard let commandName = userInfo[Constant.Shortcut.commandNameKey] as? String else { return}
-        viewModel.showCommand(commandName: commandName)
-        configureView()
-        viewModel.onCommandDisplayed()
     }
 }
 

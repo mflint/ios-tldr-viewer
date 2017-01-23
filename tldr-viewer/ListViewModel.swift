@@ -36,7 +36,22 @@ class ListViewModel: NSObject {
             self.update()
         }
         
+        NotificationCenter.default.addObserver(self, selector: #selector(DetailViewModel.externalCommandChange(notification:)), name: Constant.CommandChangeNotification.name, object: nil)
+        
         update()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc func externalCommandChange(notification: Notification) {
+        guard let userInfo = notification.userInfo else { return }
+        guard let commandName = userInfo[Constant.CommandChangeNotification.commandNameKey] as? String else { return }
+        
+        if let command = DataSource.sharedInstance.commandWith(name: commandName) {
+            showCommand(commandName: command.name)
+        }
     }
     
     func refreshData() {
@@ -137,7 +152,6 @@ class ListViewModel: NSObject {
         }
         
         if let indexPath = indexPath {
-            selectRow(indexPath: indexPath)
             updateSignal(indexPath)
         }
     }
