@@ -24,10 +24,8 @@ class DetailViewController: UIViewController {
 
     var viewModel: DetailViewModel? {
         didSet {
-            if viewModel != nil {
-                viewModel!.updateSignal = {
-                    self.configureView()
-                }
+            viewModel?.updateSignal = {
+                self.configureView()
             }
             self.configureView()
         }
@@ -67,6 +65,12 @@ class DetailViewController: UIViewController {
         guard let viewModel = viewModel else { return }
         
         viewModel.onCommandDisplayed()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        viewModel?.onCommandHidden()
     }
     
     @IBAction func platformSegmentDidChange(_ sender: AnyObject) {

@@ -69,6 +69,6 @@ extension ListViewController: UISplitViewControllerDelegate {
     }
     
     func splitViewController(_ svc: UISplitViewController, shouldHide vc: UIViewController, in orientation: UIInterfaceOrientation) -> Bool {
-        return self.viewModel.showDetail(when: UIInterfaceOrientationIsPortrait(orientation))
+        return false;
     }
 }

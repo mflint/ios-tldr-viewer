@@ -22,6 +22,8 @@ class ListViewModel: NSObject {
     var sectionViewModels = [SectionViewModel]()
     var sectionIndexes = [String]()
     
+    var detailVisible: Bool = false
+    
     private let dateFormatter = DateFormatter()
     private let dataSource = DataSource.sharedInstance
     private var cellViewModels = [BaseCellViewModel]()
@@ -36,7 +38,9 @@ class ListViewModel: NSObject {
             self.update()
         }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(DetailViewModel.externalCommandChange(notification:)), name: Constant.CommandChangeNotification.name, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ListViewModel.externalCommandChange(notification:)), name: Constant.ExternalCommandChangeNotification.name, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ListViewModel.detailShown(notification:)), name: Constant.DetailViewPresence.shownNotificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ListViewModel.detailHidden(notification:)), name: Constant.DetailViewPresence.hiddenNotificationName, object: nil)
         
         update()
     }
@@ -47,11 +51,19 @@ class ListViewModel: NSObject {
     
     @objc func externalCommandChange(notification: Notification) {
         guard let userInfo = notification.userInfo else { return }
-        guard let commandName = userInfo[Constant.CommandChangeNotification.commandNameKey] as? String else { return }
+        guard let commandName = userInfo[Constant.ExternalCommandChangeNotification.commandNameKey] as? String else { return }
         
         if let command = DataSource.sharedInstance.commandWith(name: commandName) {
             showCommand(commandName: command.name)
         }
+    }
+    
+    @objc func detailShown(notification: Notification) {
+        detailVisible = true
+    }
+    
+    @objc func detailHidden(notification: Notification) {
+        detailVisible = false
     }
     
     func refreshData() {
@@ -152,15 +164,15 @@ class ListViewModel: NSObject {
         }
         
         if let indexPath = indexPath {
+            if (!detailVisible) {
+                // this will trigger the segue. If detail already visible, the detail viewmodel will handle it
+                selectRow(indexPath: indexPath)
+            }
             updateSignal(indexPath)
         }
     }
     
     func showDetailWhenHorizontallyCompact() -> Bool {
         return itemSelected
-    }
-    
-    func showDetail(when portrait: Bool) -> Bool {
-        return !itemSelected || !portrait
     }
 }

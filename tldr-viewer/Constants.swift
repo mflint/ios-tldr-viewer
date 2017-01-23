@@ -19,8 +19,13 @@ struct Constant {
         static let commandNameKey = "commandName"
     }
     
-    struct CommandChangeNotification {
+    struct ExternalCommandChangeNotification {
         static let name = Notification.Name("commandChangeNotification")
         static let commandNameKey = "commandName"
+    }
+    
+    struct DetailViewPresence {
+        static let shownNotificationName = Notification.Name("detailViewShown")
+        static let hiddenNotificationName = Notification.Name("detailViewHidden")
     }
 }

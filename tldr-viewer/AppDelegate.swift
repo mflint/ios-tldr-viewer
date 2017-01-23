@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func postNotification(_ commandName: String) {
-        NotificationCenter.default.post(name: Constant.CommandChangeNotification.name, object: nil, userInfo: [Constant.CommandChangeNotification.commandNameKey : commandName as NSSecureCoding])
+        NotificationCenter.default.post(name: Constant.ExternalCommandChangeNotification.name, object: nil, userInfo: [Constant.ExternalCommandChangeNotification.commandNameKey : commandName as NSSecureCoding])
     }
 }
 
