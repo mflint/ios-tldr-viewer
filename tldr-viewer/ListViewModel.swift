@@ -83,9 +83,18 @@ class ListViewModel: NSObject {
         
         let commands = dataSource.commandsWith(filter: searchText)
         
-        if dataSource.requesting && commands.count == 0 {
-            let cellViewModel = LoadingCellViewModel()
-            vms.append(cellViewModel)
+        if commands.count == 0 {
+            if dataSource.requesting {
+                let cellViewModel = LoadingCellViewModel()
+                vms.append(cellViewModel)
+            } else if searchText.characters.count > 0 {
+                // search had no results
+                let cellViewModel = NoResultsCellViewModel(buttonAction: {
+                    let url = URL(string: "https://github.com/tldr-pages/tldr/blob/master/CONTRIBUTING.md")!
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                })
+                vms.append(cellViewModel)
+            }
         }
         
         if let errorText = dataSource.requestError {
