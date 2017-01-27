@@ -89,7 +89,7 @@ class ListViewModel: NSObject {
                 vms.append(cellViewModel)
             } else if searchText.characters.count > 0 {
                 // search had no results
-                let cellViewModel = NoResultsCellViewModel(buttonAction: {
+                let cellViewModel = NoResultsCellViewModel(searchTerm: searchText, buttonAction: {
                     let url = URL(string: "https://github.com/tldr-pages/tldr/blob/master/CONTRIBUTING.md")!
                     UIApplication.shared.open(url, options: [:], completionHandler: nil)
                 })

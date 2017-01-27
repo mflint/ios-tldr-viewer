@@ -15,11 +15,11 @@ struct NoResultsCellViewModel: BaseCellViewModel, MessageAndButtonCellViewModel 
     var labelText: NSAttributedString!
     var buttonText: String!
     
-    init(buttonAction: @escaping ViewModelAction) {
+    init(searchTerm: String, buttonAction: @escaping ViewModelAction) {
         self.cellIdentifier = "MessageAndButtonCell"
         self.action = buttonAction
         
-        let labelText = NSMutableAttributedString(attributedString: Theme.detailAttributed(string: "Nothing found!\n\n")!)
+        let labelText = NSMutableAttributedString(attributedString: Theme.detailAttributed(string: "Nothing found for '\(searchTerm)'.\n\n")!)
         labelText.append(Theme.bodyAttributed(string: "tldr")!)
         labelText.append(Theme.detailAttributed(string: " is a community effort, and relies on people like you to contribute content.\n")!)
         
