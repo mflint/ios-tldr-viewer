@@ -6,7 +6,7 @@ An iOS client for "TLDR-pages".
 Changelog
 ---------
 
-* 1.0.3: added 3D Touch shortcuts to recently-viewed pages
+* 1.1.0: added 3D Touch shortcuts to recently-viewed pages
 * 1.0.2: improved formatting and style of the tldr pages; upgraded to Swift 3
 * 1.0.1: Added spotlight search
 * 1.0.0: First release
