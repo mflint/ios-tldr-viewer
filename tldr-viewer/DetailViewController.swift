@@ -133,6 +133,17 @@ class DetailViewController: UIViewController {
         
         self.title = sceneTitle
         self.doShowOrHideSegmentedControl(showSegmentedControl)
+        
+        if let viewModel = viewModel {
+            let imageLarge = UIImage(imageLiteralResourceName: viewModel.favouriteButtonIconLarge)
+            let imageSmall = UIImage(imageLiteralResourceName: viewModel.favouriteButtonIconSmall)
+            let favouriteButton = UIBarButtonItem(image: imageLarge, landscapeImagePhone: imageSmall, style: .plain, target: self, action: #selector(DetailViewController.onFavouriteToggled))
+            navigationItem.rightBarButtonItem = favouriteButton
+        }
+    }
+    
+    @objc private func onFavouriteToggled() {
+        viewModel?.onFavouriteToggled()
     }
     
     private func doConfigureSegmentedControl(_ viewModel: DetailViewModel) {

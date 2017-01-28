@@ -59,7 +59,7 @@ class Preferences {
     }
     
     func favouriteCommandNames() -> [String] {
-        guard let result = userDefaults.stringArray(forKey: Constant.PreferenceKey.favouriteCommandNames) else { return ["ack", "grep"] }
+        guard let result = userDefaults.stringArray(forKey: Constant.PreferenceKey.favouriteCommandNames) else { return [] }
         return result
     }
     

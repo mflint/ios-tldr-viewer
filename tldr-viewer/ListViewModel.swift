@@ -64,7 +64,7 @@ class ListViewModel: NSObject {
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .short
         
-        dataSources = [DataSource.sharedInstance, FavouriteDataSource()]
+        dataSources = [DataSource.sharedInstance, FavouriteDataSource.sharedInstance]
         dataSourceNames = []
         for dataSource in dataSources {
             dataSourceNames.append(dataSource.name)
@@ -73,6 +73,7 @@ class ListViewModel: NSObject {
         NotificationCenter.default.addObserver(self, selector: #selector(ListViewModel.externalCommandChange(notification:)), name: Constant.ExternalCommandChangeNotification.name, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(ListViewModel.detailShown(notification:)), name: Constant.DetailViewPresence.shownNotificationName, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(ListViewModel.detailHidden(notification:)), name: Constant.DetailViewPresence.hiddenNotificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(DetailViewModel.favouriteChange(notification:)), name: Constant.FavouriteChangeNotification.name, object: nil)
         
         defer {
             let currentDataSourceType = Preferences.sharedInstance.currentDataSource()
@@ -107,6 +108,10 @@ class ListViewModel: NSObject {
     
     @objc func detailHidden(notification: Notification) {
         detailVisible = false
+    }
+    
+    @objc func favouriteChange(notification: Notification) {
+        update()
     }
     
     func refreshData() {
