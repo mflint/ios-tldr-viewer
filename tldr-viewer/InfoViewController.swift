@@ -25,6 +25,15 @@ class InfoViewController: UIViewController {
     @IBAction func doneTapped(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: nil)
     }
+    
+    override var preferredContentSize: CGSize {
+        get {
+            return CGSize(width: 500, height: 800)
+        }
+        set {
+            super.preferredContentSize = newValue
+        }
+    }
 }
 
 // MARK: - UITableViewDataSource
