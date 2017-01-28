@@ -43,6 +43,8 @@
 		3459C6911E3BA21600DD6053 /* SegmentedControlWhite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3459C6901E3BA21600DD6053 /* SegmentedControlWhite.swift */; };
 		3459C6931E3BA25400DD6053 /* SegmentedControlTeal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3459C6921E3BA25400DD6053 /* SegmentedControlTeal.swift */; };
 		3459C6971E3C002100DD6053 /* SearchableDataSourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3459C6961E3C002100DD6053 /* SearchableDataSourceType.swift */; };
+		34C800551E3D5C4C00164493 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 34C800541E3D5C4C00164493 /* Localizable.strings */; };
+		34C800571E3D5CB000164493 /* Localizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C800561E3D5CB000164493 /* Localizations.swift */; };
 		34D06BBD1C537CC100D30041 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D06BBC1C537CC100D30041 /* DataSource.swift */; };
 		34D06BBE1C5386DF00D30041 /* Zip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34D06BB91C519C1100D30041 /* Zip.framework */; };
 		34D06BC41C54203300D30041 /* DetailDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D06BC31C54203300D30041 /* DetailDataSource.swift */; };
@@ -105,6 +107,8 @@
 		3459C6901E3BA21600DD6053 /* SegmentedControlWhite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlWhite.swift; sourceTree = "<group>"; };
 		3459C6921E3BA25400DD6053 /* SegmentedControlTeal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlTeal.swift; sourceTree = "<group>"; };
 		3459C6961E3C002100DD6053 /* SearchableDataSourceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchableDataSourceType.swift; sourceTree = "<group>"; };
+		34C800541E3D5C4C00164493 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		34C800561E3D5CB000164493 /* Localizations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localizations.swift; sourceTree = "<group>"; };
 		34D06BB91C519C1100D30041 /* Zip.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Zip.framework; path = Carthage/Build/iOS/Zip.framework; sourceTree = "<group>"; };
 		34D06BBC1C537CC100D30041 /* DataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 		34D06BC31C54203300D30041 /* DetailDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailDataSource.swift; sourceTree = "<group>"; };
@@ -187,6 +191,7 @@
 				3425148C1C349D96001D31F4 /* Assets.xcassets */,
 				3425148E1C349D96001D31F4 /* LaunchScreen.storyboard */,
 				342514911C349D96001D31F4 /* Info.plist */,
+				34C800541E3D5C4C00164493 /* Localizable.strings */,
 			);
 			path = "tldr-viewer";
 			sourceTree = "<group>";
@@ -224,6 +229,7 @@
 		3425149B1C34A459001D31F4 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				34C800561E3D5CB000164493 /* Localizations.swift */,
 				34D06BC91C54CA4900D30041 /* Extensions */,
 				34048D251C37211200E91EE7 /* Views */,
 				34358AF81C35D80000BB7DDB /* Style */,
@@ -288,6 +294,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 342514941C349D96001D31F4 /* Build configuration list for PBXNativeTarget "tldr-viewer" */;
 			buildPhases = (
+				34C800531E3D5B5900164493 /* Run Script (Laurine) */,
 				3425147C1C349D96001D31F4 /* Sources */,
 				3425147D1C349D96001D31F4 /* Frameworks */,
 				3425147E1C349D96001D31F4 /* Resources */,
@@ -348,6 +355,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				34C800551E3D5C4C00164493 /* Localizable.strings in Resources */,
 				342514901C349D96001D31F4 /* LaunchScreen.storyboard in Resources */,
 				34358AFA1C35D81F00BB7DDB /* style.css in Resources */,
 				3425148D1C349D96001D31F4 /* Assets.xcassets in Resources */,
@@ -358,6 +366,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		34C800531E3D5B5900164493 /* Run Script (Laurine) */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script (Laurine)";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -x\n\n# Get base path to project\nBASE_PATH=\"$PROJECT_DIR/$PROJECT_NAME\"\n\n#--------- START OF YOUR CONFIGURATION (change Path_To_.. to fit)\n\n# Get path to Laurine Generator script\nLAURINE_PATH=\"$BASE_PATH/../scripts/LaurineGenerator.swift\"\n\n# Get path to main localization file (usually english).\nSOURCE_PATH=\"$BASE_PATH/Localizable.strings\"\n\n# Get path to output. If you use ObjC version of output, set implementation file (.m), as header will be generated automatically\nOUTPUT_PATH=\"$BASE_PATH/Localizations.swift\"\n\n#--------- END OF YOUR CONFIGURATION\n\n# Add permission to generator for script execution\nchmod 755 \"$LAURINE_PATH\"\n\n# Actually generate output. -- CUSTOMIZE -- parameters to your needs (see documentation).\n# Will only re-generate script if something changed\nif [ \"$OUTPUT_PATH\" -ot \"$SOURCE_PATH\" ]; then\n\"$LAURINE_PATH\" -i \"$SOURCE_PATH\" -c -o \"$OUTPUT_PATH\"\nfi";
+		};
 		34D06BBB1C519C2100D30041 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -384,6 +406,7 @@
 				34474FE51E3D33DE00CBA95D /* MessageCell.swift in Sources */,
 				3459C6911E3BA21600DD6053 /* SegmentedControlWhite.swift in Sources */,
 				34FD9AB91C388A15001DB968 /* TextCellRightDetail.swift in Sources */,
+				34C800571E3D5CB000164493 /* Localizations.swift in Sources */,
 				342514A91C34BD82001D31F4 /* TLDRResponse.swift in Sources */,
 				342514881C349D96001D31F4 /* DetailViewController.swift in Sources */,
 				3459C68F1E3B735700DD6053 /* RefreshableDataSourceType.swift in Sources */,

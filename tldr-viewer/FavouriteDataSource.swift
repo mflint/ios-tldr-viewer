@@ -13,7 +13,7 @@ public class FavouriteDataSource: DataSourceType {
     var updateSignal: () -> Void = {}
 
     static let sharedInstance = FavouriteDataSource()
-    let name = "Favourites"
+    let name = Localizations.CommandList.DataSources.Favourites
     let type = Preferences.DataSourceEnumType.favourites
     
     private let dataSource = DataSource.sharedInstance

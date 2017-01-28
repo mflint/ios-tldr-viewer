@@ -17,7 +17,7 @@ struct NoFavouritesCellViewModel: BaseCellViewModel, MessageCellViewModel {
     init() {
         self.cellIdentifier = "MessageCell"
         
-        let labelText = NSMutableAttributedString(attributedString: Theme.detailAttributed(string: "No favourites yet!\n\nTap the ♡ button to favourite a command.")!)
+        let labelText = NSMutableAttributedString(attributedString: Theme.detailAttributed(string: Localizations.CommandList.Favourites.None)!)
         
         self.labelText = labelText
     }
