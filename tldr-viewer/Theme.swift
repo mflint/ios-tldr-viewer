@@ -16,12 +16,35 @@ class Theme {
         UINavigationBar.appearance().barTintColor = UIColor.tldrTeal()
         UINavigationBar.appearance().tintColor = UIColor.tldrLightBody()
         UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: UIFont.tldrBody()], for: .normal)
+
+        // set the background image for UINavigationBar, which removes the ugly black shadow
+        if let backgroundImage = imageWith(color: .tldrTeal()) {
+            UINavigationBar.appearance().setBackgroundImage(backgroundImage, for: .any, barMetrics: .default)
+            UINavigationBar.appearance().shadowImage = backgroundImage
+            UINavigationBar.appearance().backgroundColor = .tldrTeal()
+        }
         
         // segmented control
-        UISegmentedControl.appearance().tintColor = UIColor.tldrTeal()
+        SegmentedControlWhite.appearance().tintColor = UIColor.tldrLightBody()
+        SegmentedControlTeal.appearance().tintColor = UIColor.tldrTeal()
         
         // UISearchBar text field
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).font = UIFont.tldrBody()
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = UIColor.tldrLightBody()
+        UILabel.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = UIColor.tldrMidBody() // placeholder
+        UISearchBar.appearance().tintColor = .white // cursor and cancel button
+    }
+    
+    static func imageWith(color: UIColor, size: CGSize = CGSize(width: 1, height: 1)) -> UIImage? {
+        let rect = CGRect(origin: .zero, size: size)
+        UIGraphicsBeginImageContextWithOptions(rect.size, false, 0.0)
+        color.setFill()
+        UIRectFill(rect)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        guard let cgImage = image?.cgImage else { return nil }
+        return UIImage(cgImage: cgImage)
     }
     
     static func css() -> String {
@@ -86,5 +109,9 @@ extension UIColor {
     
     class func tldrLightBody() -> UIColor {
         return UIColor.white
+    }
+    
+    class func tldrMidBody() -> UIColor {
+        return UIColor.lightGray
     }
 }

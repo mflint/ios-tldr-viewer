@@ -12,6 +12,12 @@ struct Constant {
     
     struct PreferenceKey {
         static let latest = "latest"
+        static let selectedDataSource = "selectedDataSource"
+        static let favouriteCommandNames = "favouriteCommandNames"
+    }
+    
+    struct iCloudKey {
+        static let favouriteCommandNames = "favouriteCommandNames"
     }
     
     struct Shortcut {
@@ -27,5 +33,9 @@ struct Constant {
     struct DetailViewPresence {
         static let shownNotificationName = Notification.Name("detailViewShown")
         static let hiddenNotificationName = Notification.Name("detailViewHidden")
+    }
+    
+    struct FavouriteChangeNotification {
+        static let name = Notification.Name("favouriteChangeNotification")
     }
 }

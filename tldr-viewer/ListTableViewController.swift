@@ -65,7 +65,14 @@ class ListTableViewController: UITableViewController {
                 }
             }
             
-            self.refreshControl?.attributedTitle = NSAttributedString(string: self.viewModel.lastUpdatedString)
+            if self.viewModel.canRefresh {
+                let refreshControl = UIRefreshControl()
+                refreshControl.attributedTitle = NSAttributedString(string: self.viewModel.lastUpdatedString)
+                refreshControl.addTarget(self, action: #selector(ListTableViewController.onPullToRefresh(_:)), for: .valueChanged)
+                self.tableView.refreshControl = refreshControl
+            } else {
+                self.tableView.refreshControl = nil
+            }
             
             self.tableView.reloadData()
             

@@ -25,6 +25,10 @@ class DetailViewModel {
     var showPlatforms: Bool = false
     var selectedPlatform: DetailPlatformViewModel!
     
+    var favourite: Bool = false
+    var favouriteButtonIconSmall: String!
+    var favouriteButtonIconLarge: String!
+    
     private var command: Command! {
         didSet {
             self.navigationBarTitle = self.command.name
@@ -36,11 +40,13 @@ class DetailViewModel {
             }
             
             self.platforms = platforms
+            setupFavourite()
         }
     }
     
     init(command: Command) {
         NotificationCenter.default.addObserver(self, selector: #selector(DetailViewModel.externalCommandChange(notification:)), name: Constant.ExternalCommandChangeNotification.name, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(DetailViewModel.favouriteChange(notification:)), name: Constant.FavouriteChangeNotification.name, object: nil)
         
         defer {
             self.command = command
@@ -68,6 +74,14 @@ class DetailViewModel {
         NotificationCenter.default.post(name: Constant.DetailViewPresence.hiddenNotificationName, object: nil)
     }
     
+    func onFavouriteToggled() {
+        if favourite {
+            FavouriteDataSource.sharedInstance.remove(commandName: command.name)
+        } else {
+            FavouriteDataSource.sharedInstance.add(commandName: command.name)
+        }
+    }
+    
     @objc func externalCommandChange(notification: Notification) {
         guard let userInfo = notification.userInfo else { return }
         guard let commandName = userInfo[Constant.ExternalCommandChangeNotification.commandNameKey] as? String else { return }
@@ -77,5 +91,16 @@ class DetailViewModel {
             updateSignal()
             onCommandDisplayed()
         }
+    }
+    
+    @objc func favouriteChange(notification: Notification) {
+        setupFavourite()
+        updateSignal()
+    }
+    
+    private func setupFavourite() {
+        favourite = FavouriteDataSource.sharedInstance.favouriteCommandNames.contains(command.name)
+        favouriteButtonIconSmall = favourite ? "heart-small" : "heart-o-small"
+        favouriteButtonIconLarge = favourite ? "heart-large" : "heart-o-large"
     }
 }
