@@ -25,6 +25,9 @@ class DetailViewModel {
     var showPlatforms: Bool = false
     var selectedPlatform: DetailPlatformViewModel!
     
+    var favourite: Bool!
+    var favouriteButtonTitle: String!
+    
     private var command: Command! {
         didSet {
             self.navigationBarTitle = self.command.name
@@ -36,11 +39,13 @@ class DetailViewModel {
             }
             
             self.platforms = platforms
+            setupFavourite()
         }
     }
     
     init(command: Command) {
         NotificationCenter.default.addObserver(self, selector: #selector(DetailViewModel.externalCommandChange(notification:)), name: Constant.ExternalCommandChangeNotification.name, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(DetailViewModel.favouriteChange(notification:)), name: Constant.FavouriteChangeNotification.name, object: nil)
         
         defer {
             self.command = command
@@ -77,5 +82,14 @@ class DetailViewModel {
             updateSignal()
             onCommandDisplayed()
         }
+    }
+    
+    @objc func favouriteChange(notification: Notification) {
+        setupFavourite()
+    }
+    
+    private func setupFavourite() {
+        favourite = FavouriteDataSource.sharedInstance.favouriteCommandNames.contains(command.name)
+        favouriteButtonTitle = favourite ? "🖤" : "♡"
     }
 }

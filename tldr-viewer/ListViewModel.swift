@@ -14,6 +14,9 @@ class ListViewModel: NSObject {
     var updateSignal: (_ indexPath: IndexPath?) -> Void = {(indexPath) in}
     var showDetail: (_ detailViewModel: DetailViewModel) -> Void = {(vm) in}
     var cancelSearchSignal: () -> Void = {}
+
+    var canSearch: Bool = false
+    var canRefresh: Bool = false
     
     var lastUpdatedString: String!
     var searchText: String = ""
@@ -22,10 +25,37 @@ class ListViewModel: NSObject {
     var sectionViewModels = [SectionViewModel]()
     var sectionIndexes = [String]()
     
+    var dataSources: [DataSourceType]!
+    var dataSourceNames: [String]!
+    
     var detailVisible: Bool = false
     
     private let dateFormatter = DateFormatter()
-    private let dataSource = DataSource.sharedInstance
+    private var selectedDataSource: DataSourceType!
+    var selectedDataSourceIndex: Int! {
+        didSet {
+            selectedDataSource = dataSources[selectedDataSourceIndex]
+            selectedDataSource.updateSignal = {
+                self.update()
+            }
+            
+            if let _ = selectedDataSource as? SearchableDataSourceType {
+                canSearch = true
+                canRefresh = true
+            } else {
+                canSearch = false
+                canRefresh = false
+            }
+            
+            refreshableDataSource = selectedDataSource as? RefreshableDataSourceType
+
+            Preferences.sharedInstance.setCurrentDataSource(selectedDataSource.type)
+            
+            update()
+        }
+    }
+    
+    private var refreshableDataSource: RefreshableDataSourceType?
     private var cellViewModels = [BaseCellViewModel]()
     
     override init() {
@@ -34,15 +64,24 @@ class ListViewModel: NSObject {
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .short
         
-        dataSource.updateSignal = {
-            self.update()
+        dataSources = [DataSource.sharedInstance, FavouriteDataSource()]
+        dataSourceNames = []
+        for dataSource in dataSources {
+            dataSourceNames.append(dataSource.name)
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(ListViewModel.externalCommandChange(notification:)), name: Constant.ExternalCommandChangeNotification.name, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(ListViewModel.detailShown(notification:)), name: Constant.DetailViewPresence.shownNotificationName, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(ListViewModel.detailHidden(notification:)), name: Constant.DetailViewPresence.hiddenNotificationName, object: nil)
         
-        update()
+        defer {
+            let currentDataSourceType = Preferences.sharedInstance.currentDataSource()
+            for (index, dataSource) in dataSources.enumerated() {
+                if currentDataSourceType == dataSource.type {
+                    selectedDataSourceIndex = index
+                }
+            }
+        }
     }
     
     deinit {
@@ -53,8 +92,12 @@ class ListViewModel: NSObject {
         guard let userInfo = notification.userInfo else { return }
         guard let commandName = userInfo[Constant.ExternalCommandChangeNotification.commandNameKey] as? String else { return }
         
-        if let command = DataSource.sharedInstance.commandWith(name: commandName) {
-            showCommand(commandName: command.name)
+        selectedDataSourceIndex = 0
+        
+        if let searchableDataSource = selectedDataSource as? SearchableDataSourceType {
+            if let command = searchableDataSource.commandWith(name: commandName) {
+                showCommand(commandName: command.name)
+            }
         }
     }
     
@@ -67,43 +110,49 @@ class ListViewModel: NSObject {
     }
     
     func refreshData() {
-        dataSource.beginRequest()
+        refreshableDataSource?.beginRequest()
     }
     
     private func update() {
-        requesting = dataSource.requesting
-        if let lastUpdateTime = dataSource.lastUpdateTime() {
-            let lastUpdatedDateTime = dateFormatter.string(from: lastUpdateTime)
-            lastUpdatedString = "Updated \(lastUpdatedDateTime)"
+        var vms = [BaseCellViewModel]()
+        var commands: [Command]
+        if let searchableDataSource = selectedDataSource as? SearchableDataSourceType {
+            commands = searchableDataSource.commandsWith(filter: searchText)
         } else {
-            lastUpdatedString = ""
+            commands = selectedDataSource.allCommands()
         }
         
-        var vms = [BaseCellViewModel]()
-        
-        let commands = dataSource.commandsWith(filter: searchText)
-        
-        if commands.count == 0 {
-            if dataSource.requesting {
-                let cellViewModel = LoadingCellViewModel()
-                vms.append(cellViewModel)
-            } else if searchText.characters.count > 0 {
-                // search had no results
-                let cellViewModel = NoResultsCellViewModel(searchTerm: searchText, buttonAction: {
-                    let url = URL(string: "https://github.com/tldr-pages/tldr/blob/master/CONTRIBUTING.md")!
-                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        if let refreshableDataSource = self.refreshableDataSource {
+            requesting = refreshableDataSource.requesting
+            if let lastUpdateTime = refreshableDataSource.lastUpdateTime() {
+                let lastUpdatedDateTime = dateFormatter.string(from: lastUpdateTime)
+                lastUpdatedString = "Updated \(lastUpdatedDateTime)"
+            } else {
+                lastUpdatedString = ""
+            }
+            
+            if commands.count == 0 {
+                if refreshableDataSource.requesting {
+                    let cellViewModel = LoadingCellViewModel()
+                    vms.append(cellViewModel)
+                } else if searchText.characters.count > 0 {
+                    // search had no results
+                    let cellViewModel = NoResultsCellViewModel(searchTerm: searchText, buttonAction: {
+                        let url = URL(string: "https://github.com/tldr-pages/tldr/blob/master/CONTRIBUTING.md")!
+                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                    })
+                    vms.append(cellViewModel)
+                }
+            }
+            
+            if let errorText = refreshableDataSource.requestError {
+                let cellViewModel = ErrorCellViewModel(errorText: errorText, buttonAction: {
+                    refreshableDataSource.beginRequest()
                 })
                 vms.append(cellViewModel)
+            } else if let oldIndexCell = OldIndexCellViewModel.create(dataSource: refreshableDataSource) {
+                vms.append(oldIndexCell)
             }
-        }
-        
-        if let errorText = dataSource.requestError {
-            let cellViewModel = ErrorCellViewModel(errorText: errorText, buttonAction: {
-                self.dataSource.beginRequest()
-            })
-            vms.append(cellViewModel)
-        } else if let oldIndexCell = OldIndexCellViewModel.create(dataSource: dataSource) {
-            vms.append(oldIndexCell)
         }
         
         for command in commands {

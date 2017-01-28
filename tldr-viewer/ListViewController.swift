@@ -13,14 +13,24 @@ class ListViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar? {
         didSet {
             self.searchBar?.autocapitalizationType = UITextAutocapitalizationType.none
+            self.searchBar?.placeholder = "Search Commands"
         }
     }
     
+    @IBOutlet weak var searchBarTopConstraint: NSLayoutConstraint?
+    
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
+    
     internal var viewModel: ListViewModel! {
         didSet {
-            self.viewModel.cancelSearchSignal = {
+            viewModel.cancelSearchSignal = {
                 self.searchBar?.resignFirstResponder()
                 self.searchBar?.text = self.viewModel.searchText
+            }
+            
+            segmentedControl.removeAllSegments()
+            for name in viewModel.dataSourceNames.reversed() {
+                segmentedControl.insertSegment(withTitle: name, at: 0, animated: false)
             }
         }
     }
@@ -30,7 +40,11 @@ class ListViewController: UIViewController {
         
         self.viewModel = ListViewModel()
         
+        self.view.backgroundColor = .tldrTeal()
+        self.segmentedControl.selectedSegmentIndex = viewModel.selectedDataSourceIndex
         self.splitViewController?.delegate = self
+        
+        doShowOrHideSearchBar()
     }
     
     // MARK: - Segues
@@ -46,6 +60,29 @@ class ListViewController: UIViewController {
             }
         }
     }
+    
+    // MARK: event handing
+    
+    @IBAction func onDataSourceChanged(_ sender: UISegmentedControl) {
+        viewModel.selectedDataSourceIndex = sender.selectedSegmentIndex
+        showOrHideSearchBar()
+    }
+    
+    private func showOrHideSearchBar() {
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.25) {
+                self.doShowOrHideSearchBar()
+            }
+        }
+    }
+    
+    private func doShowOrHideSearchBar() {
+        let offset = self.viewModel.canSearch ? 0 : self.searchBar?.bounds.height
+        if let offset = offset {
+            self.searchBarTopConstraint?.constant = -offset
+            self.view.layoutIfNeeded()
+        }
+    }
 }
 
 // MARK: - UISearchBarDelegate
@@ -57,6 +94,16 @@ extension ListViewController: UISearchBarDelegate {
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(true, animated: true)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(false, animated: true)
+        navigationController?.setNavigationBarHidden(false, animated: true)
     }
 }
 

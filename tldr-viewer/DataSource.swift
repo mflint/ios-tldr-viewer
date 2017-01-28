@@ -9,12 +9,15 @@
 import Foundation
 import Zip
 
-public class DataSource {
+public class DataSource: DataSourceType, RefreshableDataSourceType, SearchableDataSourceType {
+
     private let documentsDirectory : URL!
     private let zipFileURL : URL!
     private let indexFileURL : URL!
     
     static let sharedInstance = DataSource()
+    let name = "All"
+    let type = Preferences.DataSourceEnumType.all
     
     // no-op closures until the ViewModel provides its own
     var updateSignal: () -> Void = {}
@@ -56,15 +59,24 @@ public class DataSource {
         }
     }
     
+    func allCommands() -> [Command] {
+        return commands
+    }
+    
     func commandsWith(filter: String) -> [Command] {
         // if the search string is empty, return everything
         if filter.characters.count == 0 {
             return commands
         }
         
-        return commands.filter{ command in
-            return command.name.lowercased().contains(filter)
-        }
+        let lowercasedFilter = filter.lowercased()
+        return commandsWith(filter: { (command) -> Bool in
+            return command.name.lowercased().contains(lowercasedFilter)
+        })
+    }
+    
+    func commandsWith(filter: (Command) -> Bool) -> [Command] {
+        return commands.filter(filter)
     }
     
     func commandWith(name: String) -> Command? {

@@ -15,9 +15,9 @@ struct OldIndexCellViewModel: BaseCellViewModel, MessageAndButtonCellViewModel {
     var labelText: NSAttributedString!
     var buttonText: String!
     
-    private let dataSource: DataSource
+    private let dataSource: RefreshableDataSourceType
     
-    static func create(dataSource: DataSource) -> OldIndexCellViewModel? {
+    static func create(dataSource: RefreshableDataSourceType) -> OldIndexCellViewModel? {
         guard let lastUpdateTime = dataSource.lastUpdateTime() else {
             return nil
         }
@@ -30,7 +30,7 @@ struct OldIndexCellViewModel: BaseCellViewModel, MessageAndButtonCellViewModel {
         return nil
     }
     
-    init(dataSource: DataSource, age: TimeInterval) {
+    init(dataSource: RefreshableDataSourceType, age: TimeInterval) {
         self.dataSource = dataSource
         
         let days = Date.daysForTimeInterval(age)
