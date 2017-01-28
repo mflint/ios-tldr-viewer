@@ -20,6 +20,26 @@ public class FavouriteDataSource: DataSourceType {
     var favouriteCommandNames = Preferences.sharedInstance.favouriteCommandNames()
     
     private init() {
+        let keyValueStore = NSUbiquitousKeyValueStore.default()
+        NotificationCenter.default.addObserver(self, selector: #selector(FavouriteDataSource.onCloudKeyValueStoreUpdate), name: NSUbiquitousKeyValueStore.didChangeExternallyNotification, object: keyValueStore)
+        keyValueStore.synchronize()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc private func onCloudKeyValueStoreUpdate(notification: Notification) {
+        guard let changeReason = notification.userInfo?[NSUbiquitousKeyValueStoreChangeReasonKey] as? Int else { return }
+        guard let changedKeys = notification.userInfo?[NSUbiquitousKeyValueStoreChangedKeysKey] as? [String] else { return }
+        
+        if changeReason == NSUbiquitousKeyValueStoreInitialSyncChange || changeReason == NSUbiquitousKeyValueStoreServerChange && changedKeys.contains(Constant.iCloudKey.favouriteCommandNames) {
+            let keyValueStore = NSUbiquitousKeyValueStore.default()
+            if let incomingFavouriteNames = keyValueStore.array(forKey: Constant.iCloudKey.favouriteCommandNames) as? [String] {
+                favouriteCommandNames = incomingFavouriteNames
+                postNotification()
+            }
+        }
     }
     
     func allCommands() -> [Command] {
@@ -43,6 +63,15 @@ public class FavouriteDataSource: DataSourceType {
     
     private func save() {
         Preferences.sharedInstance.setFavouriteCommandNames(favouriteCommandNames)
+        
+        let keyValueStore = NSUbiquitousKeyValueStore.default()
+        keyValueStore.set(favouriteCommandNames, forKey: Constant.iCloudKey.favouriteCommandNames)
+        keyValueStore.synchronize()
+        
+        postNotification()
+    }
+    
+    private func postNotification() {
         NotificationCenter.default.post(name: Constant.FavouriteChangeNotification.name, object:self)
     }
 }

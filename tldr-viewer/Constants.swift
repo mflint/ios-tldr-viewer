@@ -16,6 +16,10 @@ struct Constant {
         static let favouriteCommandNames = "favouriteCommandNames"
     }
     
+    struct iCloudKey {
+        static let favouriteCommandNames = "favouriteCommandNames"
+    }
+    
     struct Shortcut {
         static let count = 4
         static let commandNameKey = "commandName"
