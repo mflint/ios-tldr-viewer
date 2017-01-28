@@ -93,6 +93,7 @@
 		34358AF41C3589D200BB7DDB /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		34358AF61C3592CC00BB7DDB /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		34358AF91C35D81F00BB7DDB /* style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
+		34474FE01E3D2E3E00CBA95D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		34555B761E36B8FB0049AD5F /* NoResultsCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoResultsCellViewModel.swift; sourceTree = "<group>"; };
 		3459C68A1E3B5C3200DD6053 /* DataSourceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSourceType.swift; sourceTree = "<group>"; };
 		3459C68C1E3B69CB00DD6053 /* FavouriteDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavouriteDataSource.swift; sourceTree = "<group>"; };
@@ -151,6 +152,7 @@
 		342514771C349D96001D31F4 = {
 			isa = PBXGroup;
 			children = (
+				34474FE01E3D2E3E00CBA95D /* README.md */,
 				34D06BD21C5CCAF500D30041 /* MobileCoreServices.framework */,
 				34D06BD01C5CC9A000D30041 /* CoreSpotlight.framework */,
 				34D06BB91C519C1100D30041 /* Zip.framework */,
