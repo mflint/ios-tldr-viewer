@@ -37,6 +37,7 @@ public class FavouriteDataSource: DataSourceType {
             let keyValueStore = NSUbiquitousKeyValueStore.default()
             if let incomingFavouriteNames = keyValueStore.array(forKey: Constant.iCloudKey.favouriteCommandNames) as? [String] {
                 favouriteCommandNames = incomingFavouriteNames
+                Preferences.sharedInstance.setFavouriteCommandNames(favouriteCommandNames)
                 postNotification()
             }
         }
