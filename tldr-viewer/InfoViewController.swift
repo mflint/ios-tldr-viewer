@@ -28,7 +28,7 @@ class InfoViewController: UIViewController {
     
     override var preferredContentSize: CGSize {
         get {
-            return CGSize(width: 500, height: 800)
+            return CGSize(width: 500, height: 720)
         }
         set {
             super.preferredContentSize = newValue

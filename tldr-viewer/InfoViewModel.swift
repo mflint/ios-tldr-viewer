@@ -18,7 +18,7 @@ class InfoViewModel {
     private func updateCellViewModels() {
         var groups = [GroupViewModel]()
         
-        groups.append(GroupViewModel(groupTitle: "About", cellViewModels:[aboutCell(), versionCell()]))
+        groups.append(GroupViewModel(groupTitle: "About", cellViewModels:[aboutCell(), versionCell(), authorCell()]))
         groups.append(GroupViewModel(groupTitle: "Contact", cellViewModels: [bugReports(), contactCell()]))
         groups.append(GroupViewModel(groupTitle: "Thanks to", cellViewModels: [thanks1(), thanks2(), thanks3(), thanks4()]))
         groups.append(GroupViewModel(groupTitle: "Open Source app", cellViewModels: [forkMe()]))
@@ -34,6 +34,13 @@ class InfoViewModel {
     private func versionCell() -> BaseCellViewModel {
         let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
         return TextCellViewModel(text: "Version", detailText: version)
+    }
+    
+    private func authorCell() -> BaseCellViewModel {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy"
+        let year = dateFormatter.string(from: Date())
+        return TextCellViewModel(text: "Author", detailText: "© \(year) Green Light Apps")
     }
     
     private func bugReports() -> BaseCellViewModel {

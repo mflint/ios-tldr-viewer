@@ -160,6 +160,10 @@ class ListViewModel: NSObject {
             }
         }
         
+        if selectedDataSource.type == .favourites && commands.count == 0 {
+            vms.append(NoFavouritesCellViewModel())
+        }
+        
         for command in commands {
             let cellViewModel = CommandCellViewModel(command: command, action: {
                 let detailViewModel = DetailViewModel(command: command)

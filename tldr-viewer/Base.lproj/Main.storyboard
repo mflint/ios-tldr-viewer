@@ -281,6 +281,30 @@
                                     <outlet property="activityIndicator" destination="41H-FU-yEF" id="Cbp-hY-7L8"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="MessageCell" rowHeight="61" id="SXC-AG-QOq" userLabel="MessageCell" customClass="MessageCell" customModule="tldr_viewer" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="287" width="600" height="61"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SXC-AG-QOq" id="Bl0-pW-xZd">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="60.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Text" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="MgI-xo-OTV" userLabel="Label">
+                                            <rect key="frame" x="15" y="12" width="570" height="36"/>
+                                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="MgI-xo-OTV" firstAttribute="leading" secondItem="Bl0-pW-xZd" secondAttribute="leading" constant="15" id="NIA-H3-o0S"/>
+                                        <constraint firstAttribute="trailing" secondItem="MgI-xo-OTV" secondAttribute="trailing" constant="15" id="PSj-YR-TPp"/>
+                                        <constraint firstAttribute="bottom" secondItem="MgI-xo-OTV" secondAttribute="bottom" constant="12" id="WCV-87-j0B"/>
+                                        <constraint firstItem="MgI-xo-OTV" firstAttribute="top" secondItem="Bl0-pW-xZd" secondAttribute="top" constant="12" id="uyz-ED-cpf"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="messageLabel" destination="MgI-xo-OTV" id="Q8w-jn-QVO"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="KVq-bc-a3X" id="NCS-gX-H73"/>
@@ -327,10 +351,10 @@
                                                 </textView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="7DR-W7-YYl" firstAttribute="top" secondItem="6mv-S2-hp0" secondAttribute="top" constant="12" id="81j-lk-PHk"/>
+                                                <constraint firstItem="7DR-W7-YYl" firstAttribute="top" secondItem="6mv-S2-hp0" secondAttribute="top" constant="6" id="81j-lk-PHk"/>
                                                 <constraint firstItem="7DR-W7-YYl" firstAttribute="leading" secondItem="6mv-S2-hp0" secondAttribute="leading" constant="15" id="Vfi-hK-s4V"/>
                                                 <constraint firstAttribute="trailing" secondItem="7DR-W7-YYl" secondAttribute="trailing" constant="15" id="WBn-BK-Yqf"/>
-                                                <constraint firstAttribute="bottom" secondItem="7DR-W7-YYl" secondAttribute="bottom" constant="12" id="tQ7-GI-cE5"/>
+                                                <constraint firstAttribute="bottom" secondItem="7DR-W7-YYl" secondAttribute="bottom" constant="6" id="tQ7-GI-cE5"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -360,9 +384,9 @@
                                             <constraints>
                                                 <constraint firstItem="Hn4-KQ-S6E" firstAttribute="centerY" secondItem="Thb-tq-XPX" secondAttribute="centerY" id="683-1y-DgN"/>
                                                 <constraint firstItem="uiU-u0-W8d" firstAttribute="leading" secondItem="Thb-tq-XPX" secondAttribute="leading" constant="15" id="8i8-7v-NRx"/>
-                                                <constraint firstAttribute="bottom" secondItem="uiU-u0-W8d" secondAttribute="bottom" constant="12" id="J9u-oV-JmY"/>
+                                                <constraint firstAttribute="bottom" secondItem="uiU-u0-W8d" secondAttribute="bottom" constant="6" id="J9u-oV-JmY"/>
                                                 <constraint firstAttribute="trailing" secondItem="Hn4-KQ-S6E" secondAttribute="trailing" constant="15" id="Ti0-eV-50c"/>
-                                                <constraint firstItem="uiU-u0-W8d" firstAttribute="top" secondItem="Thb-tq-XPX" secondAttribute="top" constant="12" id="XJH-SL-BaN"/>
+                                                <constraint firstItem="uiU-u0-W8d" firstAttribute="top" secondItem="Thb-tq-XPX" secondAttribute="top" constant="6" id="XJH-SL-BaN"/>
                                                 <constraint firstItem="Hn4-KQ-S6E" firstAttribute="leading" secondItem="uiU-u0-W8d" secondAttribute="trailing" constant="12" id="uRy-jG-cCo"/>
                                             </constraints>
                                         </tableViewCellContentView>
