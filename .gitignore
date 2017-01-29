@@ -5,6 +5,7 @@
 ## Build generated
 build/
 DerivedData
+tldr-viewer/en-US.lproj/Localizable.strings
 
 ## Various settings
 *.pbxuser

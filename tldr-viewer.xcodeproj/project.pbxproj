@@ -43,7 +43,8 @@
 		3459C6911E3BA21600DD6053 /* SegmentedControlWhite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3459C6901E3BA21600DD6053 /* SegmentedControlWhite.swift */; };
 		3459C6931E3BA25400DD6053 /* SegmentedControlTeal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3459C6921E3BA25400DD6053 /* SegmentedControlTeal.swift */; };
 		3459C6971E3C002100DD6053 /* SearchableDataSourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3459C6961E3C002100DD6053 /* SearchableDataSourceType.swift */; };
-		34C800551E3D5C4C00164493 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 34C800541E3D5C4C00164493 /* Localizable.strings */; };
+		3465C1BE1E3D6792008D4560 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3465C1C01E3D6792008D4560 /* Localizable.strings */; };
+		3465C1CA1E3D6E82008D4560 /* LocalizableOverride.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3465C1CC1E3D6E82008D4560 /* LocalizableOverride.strings */; };
 		34C800571E3D5CB000164493 /* Localizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C800561E3D5CB000164493 /* Localizations.swift */; };
 		34D06BBD1C537CC100D30041 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D06BBC1C537CC100D30041 /* DataSource.swift */; };
 		34D06BBE1C5386DF00D30041 /* Zip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34D06BB91C519C1100D30041 /* Zip.framework */; };
@@ -107,7 +108,9 @@
 		3459C6901E3BA21600DD6053 /* SegmentedControlWhite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlWhite.swift; sourceTree = "<group>"; };
 		3459C6921E3BA25400DD6053 /* SegmentedControlTeal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlTeal.swift; sourceTree = "<group>"; };
 		3459C6961E3C002100DD6053 /* SearchableDataSourceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchableDataSourceType.swift; sourceTree = "<group>"; };
-		34C800541E3D5C4C00164493 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		3465C1C31E3D67C9008D4560 /* en-US */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-US"; path = "en-US.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		3465C1CD1E3D6E87008D4560 /* en-US */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-US"; path = "en-US.lproj/LocalizableOverride.strings"; sourceTree = "<group>"; };
+		34674D2C1E3D7120000B73E0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		34C800561E3D5CB000164493 /* Localizations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localizations.swift; sourceTree = "<group>"; };
 		34D06BB91C519C1100D30041 /* Zip.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Zip.framework; path = Carthage/Build/iOS/Zip.framework; sourceTree = "<group>"; };
 		34D06BBC1C537CC100D30041 /* DataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
@@ -191,7 +194,8 @@
 				3425148C1C349D96001D31F4 /* Assets.xcassets */,
 				3425148E1C349D96001D31F4 /* LaunchScreen.storyboard */,
 				342514911C349D96001D31F4 /* Info.plist */,
-				34C800541E3D5C4C00164493 /* Localizable.strings */,
+				3465C1C01E3D6792008D4560 /* Localizable.strings */,
+				3465C1CC1E3D6E82008D4560 /* LocalizableOverride.strings */,
 			);
 			path = "tldr-viewer";
 			sourceTree = "<group>";
@@ -294,6 +298,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 342514941C349D96001D31F4 /* Build configuration list for PBXNativeTarget "tldr-viewer" */;
 			buildPhases = (
+				34674D2D1E3D72D6000B73E0 /* Run Script (US localization override) */,
 				34C800531E3D5B5900164493 /* Run Script (Laurine) */,
 				3425147C1C349D96001D31F4 /* Sources */,
 				3425147D1C349D96001D31F4 /* Frameworks */,
@@ -339,6 +344,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"en-US",
 			);
 			mainGroup = 342514771C349D96001D31F4;
 			productRefGroup = 342514811C349D96001D31F4 /* Products */;
@@ -355,9 +361,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				34C800551E3D5C4C00164493 /* Localizable.strings in Resources */,
+				3465C1BE1E3D6792008D4560 /* Localizable.strings in Resources */,
 				342514901C349D96001D31F4 /* LaunchScreen.storyboard in Resources */,
 				34358AFA1C35D81F00BB7DDB /* style.css in Resources */,
+				3465C1CA1E3D6E82008D4560 /* LocalizableOverride.strings in Resources */,
 				3425148D1C349D96001D31F4 /* Assets.xcassets in Resources */,
 				3425148B1C349D96001D31F4 /* Main.storyboard in Resources */,
 			);
@@ -366,6 +373,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		34674D2D1E3D72D6000B73E0 /* Run Script (US localization override) */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script (US localization override)";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "BASE_PATH=\"$PROJECT_DIR/$PROJECT_NAME\"\necho \"// AUTO-GENERATED - DO NOT EDIT!\" > \"$BASE_PATH/en-US.lproj/Localizable.strings\"\necho \"\" >> \"$BASE_PATH/en-US.lproj/Localizable.strings\"\necho \"// BASE STRINGS\" >> \"$BASE_PATH/en-US.lproj/Localizable.strings\"\ncat \"$BASE_PATH/Base.lproj/Localizable.strings\" >> \"$BASE_PATH/en-US.lproj/Localizable.strings\"\necho \"\" >> \"$BASE_PATH/en-US.lproj/Localizable.strings\"\necho \"// OVERRIDE STRINGS\" >> \"$BASE_PATH/en-US.lproj/Localizable.strings\"\ncat \"$BASE_PATH/en-US.lproj/LocalizableOverride.strings\" >> \"$BASE_PATH/en-US.lproj/Localizable.strings\"\n";
+		};
 		34C800531E3D5B5900164493 /* Run Script (Laurine) */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -378,7 +399,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -x\n\n# Get base path to project\nBASE_PATH=\"$PROJECT_DIR/$PROJECT_NAME\"\n\n#--------- START OF YOUR CONFIGURATION (change Path_To_.. to fit)\n\n# Get path to Laurine Generator script\nLAURINE_PATH=\"$BASE_PATH/../scripts/LaurineGenerator.swift\"\n\n# Get path to main localization file (usually english).\nSOURCE_PATH=\"$BASE_PATH/Localizable.strings\"\n\n# Get path to output. If you use ObjC version of output, set implementation file (.m), as header will be generated automatically\nOUTPUT_PATH=\"$BASE_PATH/Localizations.swift\"\n\n#--------- END OF YOUR CONFIGURATION\n\n# Add permission to generator for script execution\nchmod 755 \"$LAURINE_PATH\"\n\n# Actually generate output. -- CUSTOMIZE -- parameters to your needs (see documentation).\n# Will only re-generate script if something changed\nif [ \"$OUTPUT_PATH\" -ot \"$SOURCE_PATH\" ]; then\n\"$LAURINE_PATH\" -i \"$SOURCE_PATH\" -c -o \"$OUTPUT_PATH\"\nfi";
+			shellScript = "set -x\n\n# Get base path to project\nBASE_PATH=\"$PROJECT_DIR/$PROJECT_NAME\"\n\n#--------- START OF YOUR CONFIGURATION (change Path_To_.. to fit)\n\n# Get path to Laurine Generator script\nLAURINE_PATH=\"$BASE_PATH/../scripts/LaurineGenerator.swift\"\n\n# Get path to main localization file (usually english).\nSOURCE_PATH=\"$BASE_PATH/Base.lproj/Localizable.strings\"\n\n# Get path to output. If you use ObjC version of output, set implementation file (.m), as header will be generated automatically\nOUTPUT_PATH=\"$BASE_PATH/Localizations.swift\"\n\n#--------- END OF YOUR CONFIGURATION\n\n# Add permission to generator for script execution\nchmod 755 \"$LAURINE_PATH\"\n\n# Actually generate output. -- CUSTOMIZE -- parameters to your needs (see documentation).\n# Will only re-generate script if something changed\nif [ \"$OUTPUT_PATH\" -ot \"$SOURCE_PATH\" ]; then\n\"$LAURINE_PATH\" -i \"$SOURCE_PATH\" -c -o \"$OUTPUT_PATH\"\nfi";
 		};
 		34D06BBB1C519C2100D30041 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -473,6 +494,23 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
+		3465C1C01E3D6792008D4560 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3465C1C31E3D67C9008D4560 /* en-US */,
+				34674D2C1E3D7120000B73E0 /* Base */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		3465C1CC1E3D6E82008D4560 /* LocalizableOverride.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3465C1CD1E3D6E87008D4560 /* en-US */,
+			);
+			name = LocalizableOverride.strings;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -480,6 +518,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -528,6 +567,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
