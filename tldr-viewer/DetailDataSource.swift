@@ -26,7 +26,7 @@ struct DetailDataSource {
             errorString = nil
         } catch {
             markdown = nil
-            errorString = "Could not find tl;dr"
+            errorString = Localizations.CommandDetail.Error.CouldNotFindTldr
         }
     }
 }

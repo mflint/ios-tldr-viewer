@@ -16,7 +16,7 @@ public class DataSource: DataSourceType, RefreshableDataSourceType, SearchableDa
     private let indexFileURL : URL!
     
     static let sharedInstance = DataSource()
-    let name = "All"
+    let name = Localizations.CommandList.DataSources.All
     let type = Preferences.DataSourceEnumType.all
     
     // no-op closures until the ViewModel provides its own
@@ -99,7 +99,7 @@ public class DataSource: DataSourceType, RefreshableDataSourceType, SearchableDa
     }
     
     private func handle(error: Error) {
-        requestError = "Could not download tl;dr file"
+        requestError = Localizations.CommandList.Error.CouldNotDownload
     }
     
     private func handleSuccess(data: Data) {
@@ -144,7 +144,7 @@ public class DataSource: DataSourceType, RefreshableDataSourceType, SearchableDa
         do {
             try zipData.write(to: zipFileURL, options: (.atomic))
         } catch {
-            requestError = "Could not save the download"
+            requestError = Localizations.CommandList.Error.CouldNotSaveDownload
             return false
         }
         
@@ -157,7 +157,7 @@ public class DataSource: DataSourceType, RefreshableDataSourceType, SearchableDa
             return true
         }
         catch {
-            requestError = "Could not unzip the download"
+            requestError = Localizations.CommandList.Error.CouldNotUnzipDownload
             return false
         }
     }
@@ -178,7 +178,7 @@ public class DataSource: DataSourceType, RefreshableDataSourceType, SearchableDa
                 return jsonResult["commands"]
             }
         }  catch let error as NSError {
-            requestError = "Could not read index file"
+            requestError = Localizations.CommandList.Error.CouldNotReadIndexFile
             print (error)
         }
         

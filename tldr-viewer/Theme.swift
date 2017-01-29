@@ -68,7 +68,11 @@ class Theme {
             return nil
         }
         
-        return NSAttributedString(string: string, attributes: [NSFontAttributeName:UIFont.tldrBody(), NSForegroundColorAttributeName:UIColor.tldrBody()])
+        return NSAttributedString(string: string, attributes: bodyAttributes())
+    }
+    
+    static func bodyAttributes() -> [String : Any] {
+        return [NSFontAttributeName:UIFont.tldrBody(), NSForegroundColorAttributeName:UIColor.tldrBody()]
     }
     
     static func detailAttributed(string: String?) -> NSAttributedString? {

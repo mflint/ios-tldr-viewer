@@ -19,12 +19,14 @@ struct NoResultsCellViewModel: BaseCellViewModel, MessageAndButtonCellViewModel 
         self.cellIdentifier = "MessageAndButtonCell"
         self.action = buttonAction
         
-        let labelText = NSMutableAttributedString(attributedString: Theme.detailAttributed(string: "Nothing found for '\(searchTerm)'.\n\n")!)
-        labelText.append(Theme.bodyAttributed(string: "tldr")!)
-        labelText.append(Theme.detailAttributed(string: " is a community effort, and relies on people like you to contribute content.\n")!)
+        let labelText = NSMutableAttributedString(attributedString: Theme.detailAttributed(string: Localizations.CommandList.Search.NothingFound.For(value1: searchTerm))!)
+        let range = NSString(string: labelText.string).range(of: Localizations.CommandList.Search.NothingFound.ForHighlight)
+        if range.location != NSNotFound {
+            labelText.setAttributes(Theme.bodyAttributes(), range: range)
+        }
         
         self.labelText = labelText
-        self.buttonText = "Contribute new content"
+        self.buttonText = Localizations.CommandList.Search.NothingFound.ContributeContent
     }
     
     func performAction() {

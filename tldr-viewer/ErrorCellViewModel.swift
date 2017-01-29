@@ -19,7 +19,7 @@ struct ErrorCellViewModel: BaseCellViewModel, MessageAndButtonCellViewModel {
         self.cellIdentifier = "MessageAndButtonCell"
         self.action = buttonAction
         self.labelText = Theme.detailAttributed(string: errorText)
-        self.buttonText = "Try again"
+        self.buttonText = Localizations.CommandList.Error.TryAgain
     }
     
     func performAction() {

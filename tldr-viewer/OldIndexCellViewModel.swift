@@ -34,11 +34,11 @@ struct OldIndexCellViewModel: BaseCellViewModel, MessageAndButtonCellViewModel {
         self.dataSource = dataSource
         
         let days = Date.daysForTimeInterval(age)
-        let messageText = "The index is \(days) days old."
+        let messageText = Localizations.CommandList.IndexOld.NumberOfDays(value1: days)
         
         cellIdentifier = "MessageAndButtonCell"
         labelText = Theme.detailAttributed(string: messageText)
-        buttonText = "Update index now"
+        buttonText = Localizations.CommandList.IndexOld.UpdateNow
     }
     
     func performAction() {

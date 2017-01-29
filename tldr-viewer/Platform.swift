@@ -14,8 +14,10 @@ class Platform {
     
     // this maps API platform names to display names. Anything not in this list will be capitalized
     private static let platformMapping = [
-        "osx": "OS X",
-        "sunos": "Solaris"
+        "osx": Localizations.CommandList.CommandPlatform.Osx,
+        "sunos": Localizations.CommandList.CommandPlatform.Solaris,
+        "linux": Localizations.CommandList.CommandPlatform.Linux,
+        "common": Localizations.CommandList.CommandPlatform.Common
     ]
     
     private static var platforms: [String:Platform] = [:]

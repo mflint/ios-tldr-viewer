@@ -110,7 +110,7 @@ class DetailViewController: UIViewController {
                 self.doConfigureSegmentedControl(viewModel)
             }
         } else {
-            message = Theme.detailAttributed(string: "Nothing selected")
+            message = Theme.detailAttributed(string: Localizations.CommandDetail.NothingSelected)
             htmlString = nil
             sceneTitle = ""
         }

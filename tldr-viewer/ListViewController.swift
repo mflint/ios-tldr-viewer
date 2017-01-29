@@ -13,7 +13,6 @@ class ListViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar? {
         didSet {
             self.searchBar?.autocapitalizationType = UITextAutocapitalizationType.none
-            self.searchBar?.placeholder = "Search Commands"
         }
     }
     
@@ -43,6 +42,8 @@ class ListViewController: UIViewController {
         self.view.backgroundColor = .tldrTeal()
         self.segmentedControl.selectedSegmentIndex = viewModel.selectedDataSourceIndex
         self.splitViewController?.delegate = self
+        
+        self.searchBar?.placeholder = viewModel.searchPlaceholder
         
         doShowOrHideSearchBar()
     }

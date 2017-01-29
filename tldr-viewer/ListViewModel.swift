@@ -20,6 +20,7 @@ class ListViewModel: NSObject {
     
     var lastUpdatedString: String!
     var searchText: String = ""
+    let searchPlaceholder = Localizations.CommandList.AllCommands.SearchPlaceholder
     var itemSelected: Bool = false
     var requesting: Bool = false
     var sectionViewModels = [SectionViewModel]()
@@ -131,7 +132,7 @@ class ListViewModel: NSObject {
             requesting = refreshableDataSource.requesting
             if let lastUpdateTime = refreshableDataSource.lastUpdateTime() {
                 let lastUpdatedDateTime = dateFormatter.string(from: lastUpdateTime)
-                lastUpdatedString = "Updated \(lastUpdatedDateTime)"
+                lastUpdatedString = Localizations.CommandList.AllCommands.UpdatedDateTime(value1: lastUpdatedDateTime)
             } else {
                 lastUpdatedString = ""
             }

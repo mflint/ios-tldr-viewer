@@ -17,8 +17,183 @@ import Foundation
 public struct Localizations {
 
 
+    public struct CommandDetail {
+
+        /// Base translation: Nothing selected
+        public static var NothingSelected : String = NSLocalizedString("COMMAND_DETAIL.NOTHING_SELECTED", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+
+        public struct Error {
+
+            /// Base translation: Could not find tl;dr
+            public static var CouldNotFindTldr : String = NSLocalizedString("COMMAND_DETAIL.ERROR.COULD_NOT_FIND_TLDR", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+        }
+    }
+
+    public struct Info {
+
+
+        public struct Author {
+
+            /// Base translation: Author
+            public static var Title : String = NSLocalizedString("INFO.AUTHOR.TITLE", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+            /// Base translation: © %@ Green Light Apps
+            public static func Detail(value1 : String) -> String {
+                return String(format: NSLocalizedString("INFO.AUTHOR.DETAIL", tableName: nil, bundle: Bundle.main, value: "", comment: ""), value1)
+            }
+
+        }
+
+        public struct Version {
+
+            /// Base translation: %@
+            public static func Detail(value1 : String) -> String {
+                return String(format: NSLocalizedString("INFO.VERSION.DETAIL", tableName: nil, bundle: Bundle.main, value: "", comment: ""), value1)
+            }
+
+            /// Base translation: Version
+            public static var Title : String = NSLocalizedString("INFO.VERSION.TITLE", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+        }
+
+        public struct Thanks {
+
+            /// Base translation: Thanks to
+            public static var Header : String = NSLocalizedString("INFO.THANKS.HEADER", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+
+            public struct _3 {
+
+                /// Base translation: 'Arabidopsis' for the gorgeous teal-deer artwork, found on DeviantArt. It's available on a shirt via Redbubble. (All profits go to the artist)
+                public static var Message : String = NSLocalizedString("INFO.THANKS.3.MESSAGE", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+
+                public struct LinkAnchor {
+
+                    /// Base translation: DeviantArt
+                    public static var Deviantart : String = NSLocalizedString("INFO.THANKS.3.LINK_ANCHOR.DEVIANTART", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+                    /// Base translation: Redbubble
+                    public static var Redbubble : String = NSLocalizedString("INFO.THANKS.3.LINK_ANCHOR.REDBUBBLE", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+                }
+            }
+
+            public struct _1 {
+
+                /// Base translation: Romain Prieto and all other contributors to tldr-pages.
+                public static var Message : String = NSLocalizedString("INFO.THANKS.1.MESSAGE", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+                /// Base translation: tldr-pages
+                public static var LinkAnchor : String = NSLocalizedString("INFO.THANKS.1.LINK_ANCHOR", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+            }
+
+            public struct _4 {
+
+                /// Base translation: All our beta testers. Contact us to join the group.
+                public static var Message : String = NSLocalizedString("INFO.THANKS.4.MESSAGE", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+                /// Base translation: Contact us
+                public static var LinkAnchor : String = NSLocalizedString("INFO.THANKS.4.LINK_ANCHOR", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+            }
+
+            public struct _2 {
+
+                /// Base translation: Kristopher Johnson for Markingbird, a Markdown processor in Swift.
+                public static var Message : String = NSLocalizedString("INFO.THANKS.2.MESSAGE", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+                /// Base translation: Markingbird
+                public static var LinkAnchor : String = NSLocalizedString("INFO.THANKS.2.LINK_ANCHOR", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+            }
+        }
+
+        public struct OpenSource {
+
+            /// Base translation: Fork me on GitHub!
+            public static var Message : String = NSLocalizedString("INFO.OPEN_SOURCE.MESSAGE", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+            /// Base translation: Open Source app
+            public static var Header : String = NSLocalizedString("INFO.OPEN_SOURCE.HEADER", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+            /// Base translation: Fork me
+            public static var LinkAnchor : String = NSLocalizedString("INFO.OPEN_SOURCE.LINK_ANCHOR", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+        }
+
+        public struct About {
+
+            /// Base translation: An iOS client for tldr-pages - simplified and community-driven man pages.
+            public static var Message : String = NSLocalizedString("INFO.ABOUT.MESSAGE", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+            /// Base translation: About
+            public static var Header : String = NSLocalizedString("INFO.ABOUT.HEADER", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+            /// Base translation: tldr-pages
+            public static var LinkAnchor : String = NSLocalizedString("INFO.ABOUT.LINK_ANCHOR", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+        }
+
+        public struct BugReports {
+
+            /// Base translation: Bug reports, requests, pull requests welcome at the GitHub Issues page.
+            public static var Message : String = NSLocalizedString("INFO.BUG_REPORTS.MESSAGE", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+            /// Base translation: GitHub Issues
+            public static var LinkAnchor : String = NSLocalizedString("INFO.BUG_REPORTS.LINK_ANCHOR", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+        }
+
+        public struct Contact {
+
+            /// Base translation: Contact
+            public static var Header : String = NSLocalizedString("INFO.CONTACT.HEADER", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+            /// Base translation: Contact via email or Twitter.
+            public static var Message : String = NSLocalizedString("INFO.CONTACT.MESSAGE", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+
+            public struct Twitter {
+
+                /// Base translation: Twitter
+                public static var LinkAnchor : String = NSLocalizedString("INFO.CONTACT.TWITTER.LINK_ANCHOR", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+            }
+
+            public struct Email {
+
+                /// Base translation: email
+                public static var LinkAnchor : String = NSLocalizedString("INFO.CONTACT.EMAIL.LINK_ANCHOR", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+            }
+        }
+    }
+
     public struct CommandList {
 
+
+        public struct Search {
+
+
+            public struct NothingFound {
+
+                /// Base translation: Contribute new content
+                public static var ContributeContent : String = NSLocalizedString("COMMAND_LIST.SEARCH.NOTHING_FOUND.CONTRIBUTE_CONTENT", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+                /// Base translation: tldr
+                public static var ForHighlight : String = NSLocalizedString("COMMAND_LIST.SEARCH.NOTHING_FOUND.FOR_HIGHLIGHT", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+                /// Base translation: Nothing found for '%@'.  tldr is a community effort, and replies on people like you to contribute content. 
+                public static func For(value1 : String) -> String {
+                    return String(format: NSLocalizedString("COMMAND_LIST.SEARCH.NOTHING_FOUND.FOR", tableName: nil, bundle: Bundle.main, value: "", comment: ""), value1)
+                }
+
+            }
+        }
 
         public struct Favourites {
 
@@ -27,10 +202,96 @@ public struct Localizations {
 
         }
 
+        public struct AllCommands {
+
+            /// Base translation: Updated %@
+            public static func UpdatedDateTime(value1 : String) -> String {
+                return String(format: NSLocalizedString("COMMAND_LIST.ALL_COMMANDS.UPDATED_DATE_TIME", tableName: nil, bundle: Bundle.main, value: "", comment: ""), value1)
+            }
+
+            /// Base translation: Search Commands
+            public static var SearchPlaceholder : String = NSLocalizedString("COMMAND_LIST.ALL_COMMANDS.SEARCH_PLACEHOLDER", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+        }
+
+        public struct CommandPlatforms {
+
+            /// Base translation: %@, %@
+            public static func Two(value1 : String, _ value2 : String) -> String {
+                return String(format: NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORMS.TWO", tableName: nil, bundle: Bundle.main, value: "", comment: ""), value1, value2)
+            }
+
+            /// Base translation: %@, %@, %@, %@
+            public static func Four(value1 : String, _ value2 : String, _ value3 : String, _ value4 : String) -> String {
+                return String(format: NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORMS.FOUR", tableName: nil, bundle: Bundle.main, value: "", comment: ""), value1, value2, value3, value4)
+            }
+
+            /// Base translation: %@
+            public static func One(value1 : String) -> String {
+                return String(format: NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORMS.ONE", tableName: nil, bundle: Bundle.main, value: "", comment: ""), value1)
+            }
+
+            /// Base translation: %@, %@, %@
+            public static func Three(value1 : String, _ value2 : String, _ value3 : String) -> String {
+                return String(format: NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORMS.THREE", tableName: nil, bundle: Bundle.main, value: "", comment: ""), value1, value2, value3)
+            }
+
+        }
+
+        public struct IndexOld {
+
+            /// Base translation: Update index now
+            public static var UpdateNow : String = NSLocalizedString("COMMAND_LIST.INDEX_OLD.UPDATE_NOW", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+            /// Base translation: The index is %d days old.
+            public static func NumberOfDays(value1 : Int) -> String {
+                return String(format: NSLocalizedString("COMMAND_LIST.INDEX_OLD.NUMBER_OF_DAYS", tableName: nil, bundle: Bundle.main, value: "", comment: ""), value1)
+            }
+
+        }
+
+        public struct Error {
+
+            /// Base translation: Could not the read index file
+            public static var CouldNotReadIndexFile : String = NSLocalizedString("COMMAND_LIST.ERROR.COULD_NOT_READ_INDEX_FILE", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+            /// Base translation: Could not save the download
+            public static var CouldNotSaveDownload : String = NSLocalizedString("COMMAND_LIST.ERROR.COULD_NOT_SAVE_DOWNLOAD", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+            /// Base translation: Could not unzip the download
+            public static var CouldNotUnzipDownload : String = NSLocalizedString("COMMAND_LIST.ERROR.COULD_NOT_UNZIP_DOWNLOAD", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+            /// Base translation: Try again
+            public static var TryAgain : String = NSLocalizedString("COMMAND_LIST.ERROR.TRY_AGAIN", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+            /// Base translation: Could not download tl;dr file
+            public static var CouldNotDownload : String = NSLocalizedString("COMMAND_LIST.ERROR.COULD_NOT_DOWNLOAD", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+        }
+
         public struct DataSources {
+
+            /// Base translation: All
+            public static var All : String = NSLocalizedString("COMMAND_LIST.DATA_SOURCES.ALL", tableName: nil, bundle: Bundle.main, value: "", comment: "")
 
             /// Base translation: Favourites
             public static var Favourites : String = NSLocalizedString("COMMAND_LIST.DATA_SOURCES.FAVOURITES", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+        }
+
+        public struct CommandPlatform {
+
+            /// Base translation: Solaris
+            public static var Solaris : String = NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORM.SOLARIS", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+            /// Base translation: Common
+            public static var Common : String = NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORM.COMMON", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+            /// Base translation: Linux
+            public static var Linux : String = NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORM.LINUX", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+            /// Base translation: macOS
+            public static var Osx : String = NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORM.OSX", tableName: nil, bundle: Bundle.main, value: "", comment: "")
 
         }
     }

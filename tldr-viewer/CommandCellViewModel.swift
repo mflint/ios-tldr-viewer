@@ -25,15 +25,29 @@ struct CommandCellViewModel: BaseCellViewModel {
         
         self.commandText = Theme.bodyAttributed(string: command.name)
         
-        var platforms = ""
-        for (index, platform) in command.platforms.enumerated() {
-            platforms += platform.displayName
-            if (index < command.platforms.count - 1) {
-                platforms += ", "
+        var platformString: String!
+        if let platforms = command.platforms {
+            let platformNames = platforms.map({ (platform) -> String in
+                return platform.displayName
+            })
+            
+            switch platformNames.count {
+            case 0:
+                platformString = ""
+            case 1:
+                platformString = Localizations.CommandList.CommandPlatforms.One(value1: platformNames[0])
+            case 2:
+                platformString = Localizations.CommandList.CommandPlatforms.Two(value1: platformNames[0], platformNames[1])
+            case 3:
+                platformString = Localizations.CommandList.CommandPlatforms.Three(value1: platformNames[0], platformNames[1], platformNames[2])
+            default:
+                platformString = Localizations.CommandList.CommandPlatforms.Four(value1: platformNames[0], platformNames[1], platformNames[2], platformNames[3])
             }
+        } else {
+            platformString = ""
         }
         
-        self.platforms = Theme.detailAttributed(string: platforms)
+        self.platforms = Theme.detailAttributed(string: platformString)
     }
     
     func performAction() {

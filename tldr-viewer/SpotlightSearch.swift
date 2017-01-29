@@ -31,9 +31,6 @@ struct SpotlightSearch {
             if error != nil {
                 print(error!.localizedDescription)
             }
-            else {
-                print("Item indexed.")
-            }
         }
     }
     
