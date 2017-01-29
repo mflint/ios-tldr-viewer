@@ -14,6 +14,11 @@ class Shortcuts {
         var shortcutItems: [UIApplicationShortcutItem] = []
         for commandName in Preferences.sharedInstance.latest().makeIterator() {
             let shortcutItem = UIMutableApplicationShortcutItem(type: "", localizedTitle: commandName)
+            
+            if let command = DataSource.sharedInstance.commandWith(name: commandName) {
+                shortcutItem.localizedSubtitle = command.summary()
+            }
+            
             shortcutItem.icon = UIApplicationShortcutIcon(type: .favorite)
             shortcutItem.userInfo = [Constant.Shortcut.commandNameKey: commandName as NSString]
             shortcutItems.insert(shortcutItem, at: 0)

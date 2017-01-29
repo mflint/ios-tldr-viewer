@@ -16,7 +16,7 @@ struct SpotlightSearch {
         let attributeSet = CSSearchableItemAttributeSet(itemContentType: kUTTypeText as String)
         // Add metadata that supplies details about the item.
         attributeSet.title = command.name
-        attributeSet.contentDescription = description(command: command)
+        attributeSet.contentDescription = command.summary()
         
         if let image = UIImage(named: "AppIcon") {
             attributeSet.thumbnailData = UIImagePNGRepresentation(image)
@@ -32,38 +32,5 @@ struct SpotlightSearch {
                 print(error!.localizedDescription)
             }
         }
-    }
-    
-    private func description(command: Command) -> String {
-        let detailDataSource = DetailDataSource(command: command, platform: command.platforms[0])
-        
-        guard let markdown = detailDataSource.markdown else {
-            return ""
-        }
-        
-        /**
-         tl;dr pages conform to a specific markdown format. We'll try to grab the stuff in the first blockquote
-         
-         See https://github.com/tldr-pages/tldr/blob/master/CONTRIBUTING.md#markdown-format
-        **/
-        var result = ""
-        var stop = false
-        
-        let lines = markdown.components(separatedBy: "\n")
-        
-        for line in lines {
-            if !stop && line.hasPrefix("> ") {
-                if !result.isEmpty {
-                    result += " "
-                }
-                
-                let index = line.characters.index(line.startIndex, offsetBy: 2)
-                result += line.substring(from:index)
-            } else if !result.isEmpty {
-                stop = true
-            }
-        }
-        
-        return result
     }
 }
