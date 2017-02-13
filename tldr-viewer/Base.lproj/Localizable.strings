@@ -27,6 +27,9 @@
 "COMMAND_DETAIL.NOTHING_SELECTED"="Nothing selected";
 "COMMAND_DETAIL.ERROR.COULD_NOT_FIND_TLDR"="Could not find tl;dr";
 
+"INFO.SETTINGS.PLATFORM_FILTER.HEADER"="Show Platforms";
+"INFO.SETTINGS.PLATFORM_FILTER.FOOTER"="Deselect a platform to hide platform-specific commands in the main list. Common commands are always shown.";
+
 "INFO.ABOUT.HEADER"="About";
 "INFO.ABOUT.MESSAGE"="An iOS client for tldr-pages - simplified and community-driven man pages.";
 "INFO.ABOUT.LINK_ANCHOR"="tldr-pages";

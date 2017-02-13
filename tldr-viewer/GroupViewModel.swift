@@ -9,6 +9,7 @@
 import Foundation
 
 struct GroupViewModel {
-    let groupTitle: String?
+    let title: String
     let cellViewModels: [BaseCellViewModel]
+    let footer: String?
 }

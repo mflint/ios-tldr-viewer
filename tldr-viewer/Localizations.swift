@@ -36,25 +36,25 @@ public struct Localizations {
 
         public struct Author {
 
-            /// Base translation: Author
-            public static var Title : String = NSLocalizedString("INFO.AUTHOR.TITLE", tableName: nil, bundle: Bundle.main, value: "", comment: "")
-
             /// Base translation: © %@ Green Light Apps
             public static func Detail(value1 : String) -> String {
                 return String(format: NSLocalizedString("INFO.AUTHOR.DETAIL", tableName: nil, bundle: Bundle.main, value: "", comment: ""), value1)
             }
 
+            /// Base translation: Author
+            public static var Title : String = NSLocalizedString("INFO.AUTHOR.TITLE", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
         }
 
         public struct Version {
+
+            /// Base translation: Version
+            public static var Title : String = NSLocalizedString("INFO.VERSION.TITLE", tableName: nil, bundle: Bundle.main, value: "", comment: "")
 
             /// Base translation: %@
             public static func Detail(value1 : String) -> String {
                 return String(format: NSLocalizedString("INFO.VERSION.DETAIL", tableName: nil, bundle: Bundle.main, value: "", comment: ""), value1)
             }
-
-            /// Base translation: Version
-            public static var Title : String = NSLocalizedString("INFO.VERSION.TITLE", tableName: nil, bundle: Bundle.main, value: "", comment: "")
 
         }
 
@@ -112,13 +112,27 @@ public struct Localizations {
             }
         }
 
-        public struct OpenSource {
+        public struct Settings {
 
-            /// Base translation: Fork me on GitHub!
-            public static var Message : String = NSLocalizedString("INFO.OPEN_SOURCE.MESSAGE", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+            public struct PlatformFilter {
+
+                /// Base translation: Deselect a platform to hide platform-specific commands in the main list. Common commands are always shown.
+                public static var Footer : String = NSLocalizedString("INFO.SETTINGS.PLATFORM_FILTER.FOOTER", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+                /// Base translation: Show Platforms
+                public static var Header : String = NSLocalizedString("INFO.SETTINGS.PLATFORM_FILTER.HEADER", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+            }
+        }
+
+        public struct OpenSource {
 
             /// Base translation: Open Source app
             public static var Header : String = NSLocalizedString("INFO.OPEN_SOURCE.HEADER", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+            /// Base translation: Fork me on GitHub!
+            public static var Message : String = NSLocalizedString("INFO.OPEN_SOURCE.MESSAGE", tableName: nil, bundle: Bundle.main, value: "", comment: "")
 
             /// Base translation: Fork me
             public static var LinkAnchor : String = NSLocalizedString("INFO.OPEN_SOURCE.LINK_ANCHOR", tableName: nil, bundle: Bundle.main, value: "", comment: "")
@@ -150,11 +164,11 @@ public struct Localizations {
 
         public struct Contact {
 
-            /// Base translation: Contact
-            public static var Header : String = NSLocalizedString("INFO.CONTACT.HEADER", tableName: nil, bundle: Bundle.main, value: "", comment: "")
-
             /// Base translation: Contact via email or Twitter.
             public static var Message : String = NSLocalizedString("INFO.CONTACT.MESSAGE", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+            /// Base translation: Contact
+            public static var Header : String = NSLocalizedString("INFO.CONTACT.HEADER", tableName: nil, bundle: Bundle.main, value: "", comment: "")
 
 
             public struct Twitter {
@@ -176,13 +190,17 @@ public struct Localizations {
     public struct CommandList {
 
 
+        public struct Favourites {
+
+            /// Base translation: No favourites yet!  Tap the ♡ button to favourite a command.
+            public static var None : String = NSLocalizedString("COMMAND_LIST.FAVOURITES.NONE", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+        }
+
         public struct Search {
 
 
             public struct NothingFound {
-
-                /// Base translation: Contribute new content
-                public static var ContributeContent : String = NSLocalizedString("COMMAND_LIST.SEARCH.NOTHING_FOUND.CONTRIBUTE_CONTENT", tableName: nil, bundle: Bundle.main, value: "", comment: "")
 
                 /// Base translation: tldr
                 public static var ForHighlight : String = NSLocalizedString("COMMAND_LIST.SEARCH.NOTHING_FOUND.FOR_HIGHLIGHT", tableName: nil, bundle: Bundle.main, value: "", comment: "")
@@ -192,14 +210,10 @@ public struct Localizations {
                     return String(format: NSLocalizedString("COMMAND_LIST.SEARCH.NOTHING_FOUND.FOR", tableName: nil, bundle: Bundle.main, value: "", comment: ""), value1)
                 }
 
+                /// Base translation: Contribute new content
+                public static var ContributeContent : String = NSLocalizedString("COMMAND_LIST.SEARCH.NOTHING_FOUND.CONTRIBUTE_CONTENT", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
             }
-        }
-
-        public struct Favourites {
-
-            /// Base translation: No favourites yet!  Tap the ♡ button to favourite a command.
-            public static var None : String = NSLocalizedString("COMMAND_LIST.FAVOURITES.NONE", tableName: nil, bundle: Bundle.main, value: "", comment: "")
-
         }
 
         public struct AllCommands {
@@ -281,17 +295,17 @@ public struct Localizations {
 
         public struct CommandPlatform {
 
-            /// Base translation: Solaris
-            public static var Solaris : String = NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORM.SOLARIS", tableName: nil, bundle: Bundle.main, value: "", comment: "")
-
-            /// Base translation: Common
-            public static var Common : String = NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORM.COMMON", tableName: nil, bundle: Bundle.main, value: "", comment: "")
-
             /// Base translation: Linux
             public static var Linux : String = NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORM.LINUX", tableName: nil, bundle: Bundle.main, value: "", comment: "")
 
+            /// Base translation: Solaris
+            public static var Solaris : String = NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORM.SOLARIS", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
             /// Base translation: macOS
             public static var Osx : String = NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORM.OSX", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+            /// Base translation: Common
+            public static var Common : String = NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORM.COMMON", tableName: nil, bundle: Bundle.main, value: "", comment: "")
 
         }
     }

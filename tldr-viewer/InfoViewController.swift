@@ -65,6 +65,10 @@ extension InfoViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return self.viewModel!.groupViewModels[section].groupTitle
+        return self.viewModel!.groupViewModels[section].title
+    }
+    
+    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        return self.viewModel!.groupViewModels[section].footer
     }
 }

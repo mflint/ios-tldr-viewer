@@ -25,6 +25,8 @@ public class DataSource: DataSourceType, RefreshableDataSourceType, SearchableDa
     var requestError: String?
     private var commands = [Command]()
     
+    var platforms: [Platform]?
+    
     private init() {
         documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         zipFileURL = documentsDirectory.appendingPathComponent("tldr.zip")

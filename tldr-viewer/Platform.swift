@@ -12,6 +12,16 @@ class Platform {
     var name: String
     var displayName: String
     
+    // in the API, the platforms are in alphabetic order so "linux" comes before "osx". I'm setting a different order here ("common" first, followed by "osx", then alphabetic afterwards) to appease the AppStore Review Gods
+    static let sortRule = { (first: Platform, second: Platform) -> Bool in
+        if first.name == "common" { return true }
+        if second.name == "common" { return false }
+        if first.name == "osx" { return true }
+        if second.name == "osx" { return false }
+        return first.name.compare(second.name) == ComparisonResult.orderedAscending
+    }
+
+    
     // this maps API platform names to display names. Anything not in this list will be capitalized
     private static let platformMapping = [
         "osx": Localizations.CommandList.CommandPlatform.Osx,
@@ -20,7 +30,7 @@ class Platform {
         "common": Localizations.CommandList.CommandPlatform.Common
     ]
     
-    private static var platforms: [String:Platform] = [:]
+    static var platforms: [String:Platform] = [:]
     
     private init(name: String) {
         self.name = name
@@ -42,17 +52,7 @@ class Platform {
         return platform!
     }
     
-    // in the API, the platforms are in alphabetic order so "linux" comes before "osx". I'm setting a different order here ("common" first, followed by "osx", then alphabetic afterwards) to appease the AppStore Review Gods
     class func sort(platforms: [Platform]) -> [Platform] {
-        return platforms.sorted(by: { (first, second) -> Bool in
-            switch(first.name) {
-            case "common":
-                return true
-            case "osx":
-                return true
-            default:
-                return first.name.compare(second.name) == ComparisonResult.orderedAscending
-            }
-        })
+        return platforms.sorted(by: sortRule)
     }
 }

@@ -45,6 +45,8 @@
 		3459C6971E3C002100DD6053 /* SearchableDataSourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3459C6961E3C002100DD6053 /* SearchableDataSourceType.swift */; };
 		3465C1BE1E3D6792008D4560 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3465C1C01E3D6792008D4560 /* Localizable.strings */; };
 		3465C1CA1E3D6E82008D4560 /* LocalizableOverride.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3465C1CC1E3D6E82008D4560 /* LocalizableOverride.strings */; };
+		3495AA1A1E50FF0000F41C7E /* SwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3495AA191E50FF0000F41C7E /* SwitchCell.swift */; };
+		3495AA1C1E51128700F41C7E /* SwitchCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3495AA1B1E51128700F41C7E /* SwitchCellViewModel.swift */; };
 		34C800571E3D5CB000164493 /* Localizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C800561E3D5CB000164493 /* Localizations.swift */; };
 		34D06BBD1C537CC100D30041 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D06BBC1C537CC100D30041 /* DataSource.swift */; };
 		34D06BBE1C5386DF00D30041 /* Zip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34D06BB91C519C1100D30041 /* Zip.framework */; };
@@ -111,6 +113,8 @@
 		3465C1C31E3D67C9008D4560 /* en-US */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-US"; path = "en-US.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		3465C1CD1E3D6E87008D4560 /* en-US */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-US"; path = "en-US.lproj/LocalizableOverride.strings"; sourceTree = "<group>"; };
 		34674D2C1E3D7120000B73E0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3495AA191E50FF0000F41C7E /* SwitchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchCell.swift; sourceTree = "<group>"; };
+		3495AA1B1E51128700F41C7E /* SwitchCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchCellViewModel.swift; sourceTree = "<group>"; };
 		34C800561E3D5CB000164493 /* Localizations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localizations.swift; sourceTree = "<group>"; };
 		34D06BB91C519C1100D30041 /* Zip.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Zip.framework; path = Carthage/Build/iOS/Zip.framework; sourceTree = "<group>"; };
 		34D06BBC1C537CC100D30041 /* DataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
@@ -287,6 +291,8 @@
 				34FD9AB81C388A15001DB968 /* TextCellRightDetail.swift */,
 				34FBC0CE1C38A189008AD2C0 /* TextCellBasic.swift */,
 				34FD9ABA1C388A1E001DB968 /* TextCellViewModel.swift */,
+				3495AA191E50FF0000F41C7E /* SwitchCell.swift */,
+				3495AA1B1E51128700F41C7E /* SwitchCellViewModel.swift */,
 			);
 			name = Info;
 			sourceTree = "<group>";
@@ -441,6 +447,7 @@
 				34555B771E36B8FB0049AD5F /* NoResultsCellViewModel.swift in Sources */,
 				34048D291C37402500E91EE7 /* DetailPlatformViewModel.swift in Sources */,
 				3425149A1C34A31E001D31F4 /* ListViewModel.swift in Sources */,
+				3495AA1C1E51128700F41C7E /* SwitchCellViewModel.swift in Sources */,
 				342514A51C34BA05001D31F4 /* TLDRURLSessionConfiguration.swift in Sources */,
 				342514A71C34BCEF001D31F4 /* TLDRRequest.swift in Sources */,
 				34D5B6541E35168700C6AB64 /* Shortcuts.swift in Sources */,
@@ -460,6 +467,7 @@
 				34D5B6501E350DA500C6AB64 /* Preferences.swift in Sources */,
 				342514AB1C34C5D8001D31F4 /* Command.swift in Sources */,
 				34D06BCF1C5CC93700D30041 /* SpotlightSearch.swift in Sources */,
+				3495AA1A1E50FF0000F41C7E /* SwitchCell.swift in Sources */,
 				3459C68B1E3B5C3200DD6053 /* DataSourceType.swift in Sources */,
 				34FD9ABB1C388A1E001DB968 /* TextCellViewModel.swift in Sources */,
 				34D06BCB1C54CA6100D30041 /* NSDateExtension.swift in Sources */,

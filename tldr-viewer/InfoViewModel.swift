@@ -18,12 +18,26 @@ class InfoViewModel {
     private func updateCellViewModels() {
         var groups = [GroupViewModel]()
         
-        groups.append(GroupViewModel(groupTitle: Localizations.Info.About.Header, cellViewModels:[aboutCell(), versionCell(), authorCell()]))
-        groups.append(GroupViewModel(groupTitle: Localizations.Info.Contact.Header, cellViewModels: [bugReports(), contactCell()]))
-        groups.append(GroupViewModel(groupTitle: Localizations.Info.Thanks.Header, cellViewModels: [thanks1(), thanks2(), thanks3(), thanks4()]))
-        groups.append(GroupViewModel(groupTitle: Localizations.Info.OpenSource.Header, cellViewModels: [forkMe()]))
+        groups.append(GroupViewModel(title: Localizations.Info.Settings.PlatformFilter.Header, cellViewModels:platformToggleSwitchCells(), footer:Localizations.Info.Settings.PlatformFilter.Footer))
+        groups.append(GroupViewModel(title: Localizations.Info.About.Header, cellViewModels:[aboutCell(), versionCell(), authorCell()], footer:nil))
+        groups.append(GroupViewModel(title: Localizations.Info.Contact.Header, cellViewModels: [bugReports(), contactCell()], footer:nil))
+        groups.append(GroupViewModel(title: Localizations.Info.Thanks.Header, cellViewModels: [thanks1(), thanks2(), thanks3(), thanks4()], footer:nil))
+        groups.append(GroupViewModel(title: Localizations.Info.OpenSource.Header, cellViewModels: [forkMe()], footer:nil))
         
         groupViewModels = groups
+    }
+    
+    private func platformToggleSwitchCells() -> [BaseCellViewModel] {
+        let platforms = Platform.platforms.values.sorted(by:Platform.sortRule)
+        let platformNames = platforms.map { (platform) -> String in
+            return platform.displayName
+            }
+        let filteredPlatformNames = platformNames.filter { (name) -> Bool in
+                return name != "Common"
+        }
+        return filteredPlatformNames.map { (platformName) -> BaseCellViewModel in
+            SwitchCellViewModel(attributedText: attributedString(text: platformName, anchors: [], urls: []))
+        }
     }
     
     private func aboutCell() -> BaseCellViewModel {

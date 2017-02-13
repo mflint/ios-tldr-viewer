@@ -16,6 +16,8 @@ class TextCellBasic: UITableViewCell, BaseCell {
         self.textView.textContainer.lineFragmentPadding = 0
         self.textView.textContainerInset = UIEdgeInsetsMake(0, 0, 0, 0)
         self.textView.tintColor = UIColor.tldrTeal()
+        
+        separatorInset = UIEdgeInsetsMake(0, 10000, 0, 0)
     }
     
     func configure(cellViewModel: BaseCellViewModel!) {
