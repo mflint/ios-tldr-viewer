@@ -9,8 +9,11 @@
 import Foundation
 
 protocol SearchableDataSourceType {
-    // find a Command or Commands with some criteria
+    // find a Command or Commands with some criteria, from the complete set
     func commandWith(name: String) -> Command?
-    func commandsWith(filter: String) -> [Command]
     func commandsWith(filter: (Command) -> Bool) -> [Command]
+    
+    // find a Command or Commands with a filter, from the listable set
+    // (listable set is pre-filtered by platform)
+    func listableCommandsWith(filter: String) -> [Command]
 }

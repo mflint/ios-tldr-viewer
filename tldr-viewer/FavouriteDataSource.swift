@@ -49,6 +49,10 @@ public class FavouriteDataSource: DataSourceType {
         })
     }
     
+    func allListableCommands() -> [Command] {
+        return allCommands()
+    }
+    
     func add(commandName: String) {
         favouriteCommandNames.append(commandName)
         favouriteCommandNames.sort()

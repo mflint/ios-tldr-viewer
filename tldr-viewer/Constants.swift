@@ -38,4 +38,8 @@ struct Constant {
     struct FavouriteChangeNotification {
         static let name = Notification.Name("favouriteChangeNotification")
     }
+    
+    struct MainListFilterChangeNotification {
+        static let name = Notification.Name("mainListFilterChangeNotification")
+    }
 }

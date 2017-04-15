@@ -33,6 +33,7 @@ class ListViewModel: NSObject {
     
     private let dateFormatter = DateFormatter()
     private var selectedDataSource: DataSourceType!
+    
     var selectedDataSourceIndex: Int! {
         didSet {
             selectedDataSource = dataSources[selectedDataSourceIndex]
@@ -74,7 +75,8 @@ class ListViewModel: NSObject {
         NotificationCenter.default.addObserver(self, selector: #selector(ListViewModel.externalCommandChange(notification:)), name: Constant.ExternalCommandChangeNotification.name, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(ListViewModel.detailShown(notification:)), name: Constant.DetailViewPresence.shownNotificationName, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(ListViewModel.detailHidden(notification:)), name: Constant.DetailViewPresence.hiddenNotificationName, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(DetailViewModel.favouriteChange(notification:)), name: Constant.FavouriteChangeNotification.name, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ListViewModel.favouriteChange(notification:)), name: Constant.FavouriteChangeNotification.name, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ListViewModel.mainListFilterChange(notification:)), name: Constant.MainListFilterChangeNotification.name, object: nil)
         
         defer {
             let currentDataSourceType = Preferences.sharedInstance.currentDataSource()
@@ -115,6 +117,10 @@ class ListViewModel: NSObject {
         update()
     }
     
+    @objc func mainListFilterChange(notification: Notification) {
+        update()
+    }
+    
     func refreshData() {
         refreshableDataSource?.beginRequest()
     }
@@ -123,9 +129,9 @@ class ListViewModel: NSObject {
         var vms = [BaseCellViewModel]()
         var commands: [Command]
         if let searchableDataSource = selectedDataSource as? SearchableDataSourceType {
-            commands = searchableDataSource.commandsWith(filter: searchText)
+            commands = searchableDataSource.listableCommandsWith(filter: searchText)
         } else {
-            commands = selectedDataSource.allCommands()
+            commands = selectedDataSource.allListableCommands()
         }
         
         if let refreshableDataSource = self.refreshableDataSource {

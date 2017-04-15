@@ -15,5 +15,9 @@ protocol DataSourceType {
     // callback signal from the DataSource when data has changed
     var updateSignal: () -> Void { get set }
     
+    // all the known commands
     func allCommands() -> [Command]
+    
+    // all commands shown in the default list (this may have some plstform-specific stuff removed)
+    func allListableCommands() -> [Command]
 }

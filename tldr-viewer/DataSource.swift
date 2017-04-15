@@ -23,11 +23,23 @@ public class DataSource: DataSourceType, RefreshableDataSourceType, SearchableDa
     var updateSignal: () -> Void = {}
     var requesting = false
     var requestError: String?
-    private var commands = [Command]()
+    
+    // the complete unfiltred list
+    private var allCommandsList = [Command]()
+    
+    // the list with platform-specific stuff filtered out
+    private var allListableCommandsList = [Command]()
+    private var requiredPlatformNames: [String]!
     
     var platforms: [Platform]?
     
+    private var spotlistIndexPending = false
+    private var spotlightIndexRunning = false
+    
     private init() {
+        // TODO: load from prefs
+        requiredPlatformNames = ["common"]
+        
         documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         zipFileURL = documentsDirectory.appendingPathComponent("tldr.zip")
         indexFileURL = documentsDirectory.appendingPathComponent("pages").appendingPathComponent("index.json")
@@ -62,27 +74,35 @@ public class DataSource: DataSourceType, RefreshableDataSourceType, SearchableDa
     }
     
     func allCommands() -> [Command] {
-        return commands
+        return allCommandsList
     }
     
-    func commandsWith(filter: String) -> [Command] {
+    func allListableCommands() -> [Command] {
+        return allListableCommandsList
+    }
+    
+    func listableCommandsWith(filter: String) -> [Command] {
         // if the search string is empty, return everything
         if filter.characters.count == 0 {
-            return commands
+            return allListableCommandsList
         }
         
         let lowercasedFilter = filter.lowercased()
-        return commandsWith(filter: { (command) -> Bool in
+        return listableCommandsWith(filter: { (command) -> Bool in
             return command.name.lowercased().contains(lowercasedFilter)
         })
     }
     
+    private func listableCommandsWith(filter: (Command) -> Bool) -> [Command] {
+        return allListableCommandsList.filter(filter)
+    }
+    
     func commandsWith(filter: (Command) -> Bool) -> [Command] {
-        return commands.filter(filter)
+        return allCommandsList.filter(filter)
     }
     
     func commandWith(name: String) -> Command? {
-        let foundCommands = commands.filter{ command in
+        let foundCommands = allCommandsList.filter{ command in
             return command.name == name
         }
         
@@ -112,18 +132,31 @@ public class DataSource: DataSourceType, RefreshableDataSourceType, SearchableDa
         if !unzipSavedFile() {
             return
         }
-        
-        if loadCommandsFromIndexFile() {
-            DispatchQueue.global(qos: .background).async {
-                self.addToSpotlightIndex()
-            }
-        }
     }
     
     private func addToSpotlightIndex() {
+        spotlistIndexPending = true
+        
+        if spotlightIndexRunning {
+            return
+        }
+        
+        DispatchQueue.global(qos: .background).async {
+            self.spotlightIndexRunning = true
+            
+            while(self.spotlistIndexPending) {
+                self.spotlistIndexPending = false
+                self.addToSpotlightIndex()
+            }
+            
+            self.spotlightIndexRunning = false
+        }
+    }
+    
+    private func doAddToSpotlightIndex() {
         let spotlightSearch = SpotlightSearch()
         
-        for command in self.commands {
+        for command in self.allListableCommandsList {
             spotlightSearch.addToIndex(command: command)
         }
     }
@@ -137,9 +170,30 @@ public class DataSource: DataSourceType, RefreshableDataSourceType, SearchableDa
             return false
         }
         
-        self.commands = commandsFrom(indexFile: indexFileContents)
+        allCommandsList = commandsFrom(indexFile: indexFileContents)
+        makeListableCommands()
         
         return true
+    }
+    
+    func setRequiredPlatforms(platforms: [Platform]) {
+        
+    }
+    
+    private func makeListableCommands() {
+        allListableCommandsList = allCommandsList.filter({ (command) -> Bool in
+//            command.platforms.contains(where: { (commandPlatform) -> Bool in
+//                self.requiredPlatformNames.contains(where: { (requiredPlatformName) -> Bool in
+//                    requiredPlatformName == commandPlatform.name
+//                })
+//            })
+            let matchingPlatformNames = command.platforms.map({ (platform) -> String in
+                platform.name
+            }).filter(requiredPlatformNames.contains)
+            return matchingPlatformNames.count > 0
+        })
+        
+        addToSpotlightIndex()
     }
     
     private func save(zipData: Data) -> Bool {
