@@ -26,6 +26,7 @@
 
 "COMMAND_DETAIL.NOTHING_SELECTED"="Nothing selected";
 "COMMAND_DETAIL.ERROR.COULD_NOT_FIND_TLDR"="Could not find tl;dr";
+"COMMAND_DETAIL.SEE_ALSO"="See also:";
 
 "INFO.ABOUT.HEADER"="About";
 "INFO.ABOUT.MESSAGE"="An iOS client for tldr-pages - simplified and community-driven man pages.";

@@ -19,6 +19,9 @@ public struct Localizations {
 
     public struct CommandDetail {
 
+        /// Base translation: See also:
+        public static var SeeAlso : String = NSLocalizedString("COMMAND_DETAIL.SEE_ALSO", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
         /// Base translation: Nothing selected
         public static var NothingSelected : String = NSLocalizedString("COMMAND_DETAIL.NOTHING_SELECTED", tableName: nil, bundle: Bundle.main, value: "", comment: "")
 
@@ -176,6 +179,13 @@ public struct Localizations {
     public struct CommandList {
 
 
+        public struct Favourites {
+
+            /// Base translation: No favourites yet!  Tap the ♡ button to favourite a command.
+            public static var None : String = NSLocalizedString("COMMAND_LIST.FAVOURITES.NONE", tableName: nil, bundle: Bundle.main, value: "", comment: "")
+
+        }
+
         public struct Search {
 
 
@@ -193,13 +203,6 @@ public struct Localizations {
                 }
 
             }
-        }
-
-        public struct Favourites {
-
-            /// Base translation: No favourites yet!  Tap the ♡ button to favourite a command.
-            public static var None : String = NSLocalizedString("COMMAND_LIST.FAVOURITES.NONE", tableName: nil, bundle: Bundle.main, value: "", comment: "")
-
         }
 
         public struct AllCommands {

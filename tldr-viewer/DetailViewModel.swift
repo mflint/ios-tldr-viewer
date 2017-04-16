@@ -28,6 +28,7 @@ class DetailViewModel {
     var favourite: Bool = false
     var favouriteButtonIconSmall: String!
     var favouriteButtonIconLarge: String!
+    private let dataSource: SearchableDataSourceType
     
     private var command: Command! {
         didSet {
@@ -35,7 +36,7 @@ class DetailViewModel {
             
             var platforms: [DetailPlatformViewModel] = []
             for (index, platform) in self.command.platforms.enumerated() {
-                let platformVM = DetailPlatformViewModel(command: self.command, platform: platform, platformIndex: index)
+                let platformVM = DetailPlatformViewModel(dataSource: dataSource, command: self.command, platform: platform, platformIndex: index)
                 platforms.append(platformVM)
             }
             
@@ -44,7 +45,9 @@ class DetailViewModel {
         }
     }
     
-    init(command: Command) {
+    init(dataSource: SearchableDataSourceType, command: Command) {
+        self.dataSource = dataSource
+        
         NotificationCenter.default.addObserver(self, selector: #selector(DetailViewModel.externalCommandChange(notification:)), name: Constant.ExternalCommandChangeNotification.name, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(DetailViewModel.favouriteChange(notification:)), name: Constant.FavouriteChangeNotification.name, object: nil)
         
@@ -80,6 +83,18 @@ class DetailViewModel {
         } else {
             FavouriteDataSource.sharedInstance.add(commandName: command.name)
         }
+    }
+    
+    func handleAbsoluteURL(_ absoluteURLString: String) -> Bool {
+        if dataSource.commandWith(name: absoluteURLString) != nil {
+            // command exists, so handle it here
+            NotificationCenter.default.post(name: Constant.ExternalCommandChangeNotification.name, object: nil, userInfo: [Constant.ExternalCommandChangeNotification.commandNameKey : absoluteURLString as NSSecureCoding])
+            return false
+        }
+        
+        // command doesn't exist, so this ViewModel cannot handle it
+        // return true so the ViewController handles it
+        return true
     }
     
     @objc func externalCommandChange(notification: Notification) {

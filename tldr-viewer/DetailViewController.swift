@@ -39,6 +39,7 @@ class DetailViewController: UIViewController {
         
         // disable webview magnification
         self.webView.scrollView.delegate = self
+        self.webView.navigationDelegate = self
         
         self.webView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.webView)
@@ -169,5 +170,18 @@ class DetailViewController: UIViewController {
 extension DetailViewController: UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return nil
+    }
+}
+
+extension DetailViewController: WKNavigationDelegate {
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        guard let viewModel = viewModel else { return }
+        
+        let absoluteURLString = navigationAction.request.url!.absoluteString
+        if viewModel.handleAbsoluteURL(absoluteURLString) {
+            decisionHandler(.allow)
+        } else {
+            decisionHandler(.cancel)
+        }
     }
 }

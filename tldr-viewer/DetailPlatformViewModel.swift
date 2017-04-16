@@ -8,6 +8,34 @@
 
 import Foundation
 
+extension String {
+    func capturedGroups(withRegex pattern: String) -> [String] {
+        var results = [String]()
+        
+        var regex: NSRegularExpression
+        do {
+            regex = try NSRegularExpression(pattern: pattern, options: [])
+        } catch {
+            return results
+        }
+        
+        let matches = regex.matches(in: self, options: [], range: NSRange(location:0, length: self.characters.count))
+        
+        for match in matches {
+            let lastRangeIndex = match.numberOfRanges - 1
+            guard lastRangeIndex >= 1 else { return results }
+            
+            for i in 1...lastRangeIndex {
+                let capturedGroupIndex = match.rangeAt(i)
+                let matchedString = (self as NSString).substring(with: capturedGroupIndex)
+                results.append(matchedString)
+            }
+        }
+        
+        return results
+    }
+}
+
 class DetailPlatformViewModel {
     // the message to show when there's no tldr page
     var message: NSAttributedString?
@@ -19,10 +47,12 @@ class DetailPlatformViewModel {
     // tldr page in HTML
     var detailHTML: String?
     
-    private var command: Command!
-    private var platform: Platform!
+    private let dataSource: SearchableDataSourceType
+    private let command: Command
+    private let platform: Platform
     
-    init(command: Command, platform: Platform, platformIndex: Int) {
+    init(dataSource: SearchableDataSourceType, command: Command, platform: Platform, platformIndex: Int) {
+        self.dataSource = dataSource
         self.command = command
         self.platform = platform
         self.platformIndex = platformIndex
@@ -45,7 +75,37 @@ class DetailPlatformViewModel {
     private func handleSuccess(_ markdownString: String) {
         var markdown = Markdown()
         let html = markdown.transform(markdownString).replacingOccurrences(of: "{{", with: "<span class='parameter'>").replacingOccurrences(of: "}}", with: "</span>")
-        self.detailHTML = Theme.pageFrom(htmlSnippet: html)
+        let seeAlso = generateSeeAlso(markdownString)
+        self.detailHTML = Theme.pageFrom(htmlSnippet: html + seeAlso)
         self.message = nil
+    }
+ 
+    private func generateSeeAlso(_ html: String) -> String {
+        var seeAlsoCommands = [String:Command]()
+        let codeBlocks = Set(html.capturedGroups(withRegex: "`(.*?)`"))
+        
+        for codeBlock in codeBlocks {
+            if codeBlock != self.command.name {
+                if let command = dataSource.commandWith(name: codeBlock) {
+                    seeAlsoCommands[codeBlock] = command
+                }
+            }
+        }
+        
+        var seeAlsoHTML = ""
+        
+        if seeAlsoCommands.count > 0 {
+            seeAlsoHTML += "<div class=\"seeAlso\">"
+            seeAlsoHTML += "<h2>\(Localizations.CommandDetail.SeeAlso)</h2>"
+            seeAlsoHTML += "<dl>"
+            for seeAlsoCommandName in seeAlsoCommands.keys.sorted() {
+                let command = seeAlsoCommands[seeAlsoCommandName]!
+                let summary = command.summary()
+                seeAlsoHTML += "<dt><a href=\"\(seeAlsoCommandName)\">\(seeAlsoCommandName)</a></dt><dd>\(summary)</dd>"
+            }
+            seeAlsoHTML += "</dl></div>"
+        }
+        
+        return seeAlsoHTML
     }
 }

@@ -24,6 +24,7 @@ public class DataSource: DataSourceType, RefreshableDataSourceType, SearchableDa
     var requesting = false
     var requestError: String?
     private var commands = [Command]()
+    private var commandsByName = [String:Command]()
     
     private init() {
         documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
@@ -80,11 +81,7 @@ public class DataSource: DataSourceType, RefreshableDataSourceType, SearchableDa
     }
     
     func commandWith(name: String) -> Command? {
-        let foundCommands = commands.filter{ command in
-            return command.name == name
-        }
-        
-        return foundCommands.count > 0 ? foundCommands[0] : nil
+        return commandsByName[name]
     }
     
     private func processResponse(response: TLDRResponse) {
@@ -135,7 +132,7 @@ public class DataSource: DataSourceType, RefreshableDataSourceType, SearchableDa
             return false
         }
         
-        self.commands = commandsFrom(indexFile: indexFileContents)
+        (self.commands, self.commandsByName) = commandsFrom(indexFile: indexFileContents)
         
         return true
     }
@@ -185,8 +182,9 @@ public class DataSource: DataSourceType, RefreshableDataSourceType, SearchableDa
         return nil
     }
     
-    private func commandsFrom(indexFile: Array<Dictionary<String, AnyObject>>) -> [Command] {
+    private func commandsFrom(indexFile: Array<Dictionary<String, AnyObject>>) -> ([Command],[String:Command]) {
         var commands = [Command]()
+        var commandsByName = [String:Command]()
         
         for commandJSON in indexFile {
             let name = commandJSON["name"] as! String
@@ -198,8 +196,9 @@ public class DataSource: DataSourceType, RefreshableDataSourceType, SearchableDa
             let command = Command(name: name , platforms: Platform.sort(platforms: platforms))
             
             commands.append(command)
+            commandsByName[name] = command
         }
         
-        return commands
+        return (commands, commandsByName)
     }
 }

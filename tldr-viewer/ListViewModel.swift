@@ -26,6 +26,7 @@ class ListViewModel: NSObject {
     var sectionViewModels = [SectionViewModel]()
     var sectionIndexes = [String]()
     
+    var searchableDataSource: SearchableDataSourceType!
     var dataSources: [DataSourceType]!
     var dataSourceNames: [String]!
     
@@ -69,6 +70,9 @@ class ListViewModel: NSObject {
         dataSourceNames = []
         for dataSource in dataSources {
             dataSourceNames.append(dataSource.name)
+            if let searchable = dataSource as? SearchableDataSourceType {
+                searchableDataSource = searchable
+            }
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(ListViewModel.externalCommandChange(notification:)), name: Constant.ExternalCommandChangeNotification.name, object: nil)
@@ -167,7 +171,7 @@ class ListViewModel: NSObject {
         
         for command in commands {
             let cellViewModel = CommandCellViewModel(command: command, action: {
-                let detailViewModel = DetailViewModel(command: command)
+                let detailViewModel = DetailViewModel(dataSource: self.searchableDataSource, command: command)
                 self.showDetail(detailViewModel)
             })
             vms.append(cellViewModel)
