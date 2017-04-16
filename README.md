@@ -6,6 +6,7 @@ An iOS client for "TLDR-pages".
 Changelog
 ---------
 
+* 1.3.0: Adds "See also" to detail pages when other relevant commands are found
 * 1.2.0: Favourite commands with iCloud sync; adds "no search results" message
 * 1.1.0: Added 3D Touch shortcuts to recently-viewed pages
 * 1.0.2: Improved formatting and style of the tldr pages; upgraded to Swift 3
