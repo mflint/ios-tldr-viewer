@@ -44,7 +44,7 @@ public class DataSource: DataSourceType, RefreshableDataSourceType, SearchableDa
         requesting = true
         requestError = nil
         
-        TLDRRequest.requestWithURL(urlString: "https://tldr-pages.github.io/assets/tldr.zip") { response in
+        TLDRRequest.requestWithURL(urlString: "https://tldr.sh/assets/tldr.zip") { response in
             self.processResponse(response: response)
         }
         
