@@ -20,7 +20,7 @@ public class FavouriteDataSource: DataSourceType {
     var favouriteCommandNames = Preferences.sharedInstance.favouriteCommandNames()
     
     private init() {
-        let keyValueStore = NSUbiquitousKeyValueStore.default()
+        let keyValueStore = NSUbiquitousKeyValueStore.default
         NotificationCenter.default.addObserver(self, selector: #selector(FavouriteDataSource.onCloudKeyValueStoreUpdate), name: NSUbiquitousKeyValueStore.didChangeExternallyNotification, object: keyValueStore)
         keyValueStore.synchronize()
     }
@@ -34,7 +34,7 @@ public class FavouriteDataSource: DataSourceType {
         guard let changedKeys = notification.userInfo?[NSUbiquitousKeyValueStoreChangedKeysKey] as? [String] else { return }
         
         if changeReason == NSUbiquitousKeyValueStoreInitialSyncChange || changeReason == NSUbiquitousKeyValueStoreServerChange && changedKeys.contains(Constant.iCloudKey.favouriteCommandNames) {
-            let keyValueStore = NSUbiquitousKeyValueStore.default()
+            let keyValueStore = NSUbiquitousKeyValueStore.default
             if let incomingFavouriteNames = keyValueStore.array(forKey: Constant.iCloudKey.favouriteCommandNames) as? [String] {
                 favouriteCommandNames = incomingFavouriteNames
                 Preferences.sharedInstance.setFavouriteCommandNames(favouriteCommandNames)
@@ -65,7 +65,7 @@ public class FavouriteDataSource: DataSourceType {
     private func save() {
         Preferences.sharedInstance.setFavouriteCommandNames(favouriteCommandNames)
         
-        let keyValueStore = NSUbiquitousKeyValueStore.default()
+        let keyValueStore = NSUbiquitousKeyValueStore.default
         keyValueStore.set(favouriteCommandNames, forKey: Constant.iCloudKey.favouriteCommandNames)
         keyValueStore.synchronize()
         

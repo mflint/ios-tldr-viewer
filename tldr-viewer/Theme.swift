@@ -12,10 +12,10 @@ import UIKit
 class Theme {
     static func setup() {
         // navigation bar and item
-        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.tldrLightBody(), NSFontAttributeName: UIFont.tldrBody()]
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue: UIColor.tldrLightBody(), NSAttributedStringKey.font.rawValue: UIFont.tldrBody()]
         UINavigationBar.appearance().barTintColor = UIColor.tldrTeal()
         UINavigationBar.appearance().tintColor = UIColor.tldrLightBody()
-        UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: UIFont.tldrBody()], for: .normal)
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font.rawValue: UIFont.tldrBody()], for: .normal)
 
         // set the background image for UINavigationBar, which removes the ugly black shadow
         if let backgroundImage = imageWith(color: .tldrTeal()) {
@@ -71,8 +71,8 @@ class Theme {
         return NSAttributedString(string: string, attributes: bodyAttributes())
     }
     
-    static func bodyAttributes() -> [String : Any] {
-        return [NSFontAttributeName:UIFont.tldrBody(), NSForegroundColorAttributeName:UIColor.tldrBody()]
+    static func bodyAttributes() -> [NSAttributedStringKey : Any] {
+        return [NSAttributedStringKey.font:UIFont.tldrBody(), NSAttributedStringKey.foregroundColor:UIColor.tldrBody()]
     }
     
     static func detailAttributed(string: String?) -> NSAttributedString? {
@@ -80,7 +80,7 @@ class Theme {
             return nil
         }
         
-        return NSAttributedString(string: string, attributes: [NSFontAttributeName:UIFont.tldrBody(), NSForegroundColorAttributeName:UIColor.tldrDetail()])
+        return NSAttributedString(string: string, attributes: [NSAttributedStringKey.font:UIFont.tldrBody(), NSAttributedStringKey.foregroundColor:UIColor.tldrDetail()])
     }
 }
 
