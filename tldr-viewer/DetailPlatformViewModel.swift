@@ -26,7 +26,7 @@ extension String {
             guard lastRangeIndex >= 1 else { return results }
             
             for i in 1...lastRangeIndex {
-                let capturedGroupIndex = match.rangeAt(i)
+                let capturedGroupIndex = match.range(at: i)
                 let matchedString = (self as NSString).substring(with: capturedGroupIndex)
                 results.append(matchedString)
             }

@@ -15,7 +15,7 @@ class Theme {
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue: UIColor.tldrLightBody(), NSAttributedStringKey.font.rawValue: UIFont.tldrBody()]
         UINavigationBar.appearance().barTintColor = UIColor.tldrTeal()
         UINavigationBar.appearance().tintColor = UIColor.tldrLightBody()
-        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font.rawValue: UIFont.tldrBody()], for: .normal)
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedStringKey(rawValue: NSAttributedStringKey.font.rawValue): UIFont.tldrBody()], for: .normal)
 
         // set the background image for UINavigationBar, which removes the ugly black shadow
         if let backgroundImage = imageWith(color: .tldrTeal()) {

@@ -1968,7 +1968,7 @@ private struct MarkdownRegexMatch {
     
     func valueOfGroupAtIndex(_ idx: Int) -> NSString {
         if 0 <= idx && idx < textCheckingResult.numberOfRanges {
-            let groupRange = textCheckingResult.rangeAt(idx)
+            let groupRange = textCheckingResult.range(at: idx)
             if (groupRange.location == NSNotFound) {
                 return ""
             }
