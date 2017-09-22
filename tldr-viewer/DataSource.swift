@@ -10,7 +10,8 @@ import Foundation
 import Zip
 
 public class DataSource: DataSourceType, RefreshableDataSourceType, SearchableDataSourceType {
-
+    private let commandNameBlackList = ["fuck"] // this is a family show
+    
     private let documentsDirectory : URL!
     private let zipFileURL : URL!
     private let indexFileURL : URL!
@@ -188,6 +189,9 @@ public class DataSource: DataSourceType, RefreshableDataSourceType, SearchableDa
         
         for commandJSON in indexFile {
             let name = commandJSON["name"] as! String
+            
+            guard !commandNameBlackList.contains(name) else { continue }
+            
             var platforms = [Platform]()
             for platformName in commandJSON["platform"] as! Array<String> {
                 let platform = Platform.get(name: platformName)
