@@ -42,7 +42,7 @@ struct Command {
                 }
                 
                 let index = line.characters.index(line.startIndex, offsetBy: 2)
-                result += line.substring(from:index)
+                result += String(line[index...])
             } else if !result.isEmpty {
                 stop = true
             }
