@@ -41,7 +41,7 @@ struct Command {
                     result += " "
                 }
                 
-                let index = line.characters.index(line.startIndex, offsetBy: 2)
+                let index = line.index(line.startIndex, offsetBy: 2)
                 result += String(line[index...])
             } else if !result.isEmpty {
                 stop = true

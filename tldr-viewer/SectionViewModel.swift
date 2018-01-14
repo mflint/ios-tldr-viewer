@@ -22,9 +22,7 @@ class SectionViewModel {
     
     private func titleForCommandCellViewModel(_ commandCellViewModel: CommandCellViewModel) -> String {
         let commandName = commandCellViewModel.command.name.lowercased()
-        let firstCharacter = commandName.characters.first
-        
-        guard let first = firstCharacter else { return "#" }
+        guard let first = commandName.first else { return "#" }
         
         if first >= "a" && first <= "z" {
             return String(first)

@@ -67,7 +67,7 @@ public class DataSource: DataSourceType, RefreshableDataSourceType, SearchableDa
     
     func commandsWith(filter: String) -> [Command] {
         // if the search string is empty, return everything
-        if filter.characters.count == 0 {
+        if filter.count == 0 {
             return commands
         }
         

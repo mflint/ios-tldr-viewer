@@ -19,7 +19,7 @@ extension String {
             return results
         }
         
-        let matches = regex.matches(in: self, options: [], range: NSRange(location:0, length: self.characters.count))
+        let matches = regex.matches(in: self, options: [], range: NSRange(location:0, length: self.count))
         
         for match in matches {
             let lastRangeIndex = match.numberOfRanges - 1

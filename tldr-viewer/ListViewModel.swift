@@ -145,7 +145,7 @@ class ListViewModel: NSObject {
                 if refreshableDataSource.requesting {
                     let cellViewModel = LoadingCellViewModel()
                     vms.append(cellViewModel)
-                } else if searchText.characters.count > 0 {
+                } else if searchText.count > 0 {
                     // search had no results
                     let cellViewModel = NoResultsCellViewModel(searchTerm: searchText, buttonAction: {
                         let url = URL(string: "https://github.com/tldr-pages/tldr/blob/master/CONTRIBUTING.md")!
