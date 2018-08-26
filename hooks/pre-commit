@@ -1,0 +1,16 @@
+#!/usr/bin/env sh
+
+files=$(ls */Info.plist)
+
+git diff --cached --name-status | while read modificationtype thisfile; do
+        if [ "$modificationtype" == 'D' ]; then continue; fi
+        for file in $files
+        do
+            if [ ! "$thisfile" == "$file" ]; then continue; fi
+            if egrep '[0-9a-fA-F]{40}' $file ; then
+                echo "ERROR: API key in file: ${file}"
+                exit 1
+            fi
+        done
+done || exit $?
+
