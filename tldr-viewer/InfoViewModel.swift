@@ -20,7 +20,7 @@ class InfoViewModel {
         
         groups.append(GroupViewModel(groupTitle: Localizations.Info.About.Header, cellViewModels:[aboutCell(), versionCell(), authorCell()]))
         groups.append(GroupViewModel(groupTitle: Localizations.Info.Contact.Header, cellViewModels: [bugReports(), contactCell()]))
-        groups.append(GroupViewModel(groupTitle: Localizations.Info.Thanks.Header, cellViewModels: [thanks1(), thanks2(), thanks3(), thanks4()]))
+        groups.append(GroupViewModel(groupTitle: Localizations.Info.Thanks.Header, cellViewModels: [thanks1(), thanks2(), thanks3()]))
         groups.append(GroupViewModel(groupTitle: Localizations.Info.OpenSource.Header, cellViewModels: [forkMe()]))
         
         groupViewModels = groups
@@ -65,11 +65,6 @@ class InfoViewModel {
     
     private func thanks3() -> BaseCellViewModel {
         let message = attributedString(text: Localizations.Info.Thanks._3.Message, anchors: [Localizations.Info.Thanks._3.LinkAnchor.Deviantart, Localizations.Info.Thanks._3.LinkAnchor.Redbubble], urls: ["http://arabidopsis.deviantart.com/art/Teal-Deer-II-158802763", "http://www.redbubble.com/people/arabidopsis/works/5386340-1-teal-deer-too-long-didnt-read"])
-        return TextCellViewModel(attributedText: message)
-    }
-    
-    private func thanks4() -> BaseCellViewModel {
-        let message = attributedString(text: Localizations.Info.Thanks._4.Message, anchors: [Localizations.Info.Thanks._4.LinkAnchor], urls: [NSURL(string: "mailto:tldr@greenlightapps.co.uk")!])
         return TextCellViewModel(attributedText: message)
     }
     

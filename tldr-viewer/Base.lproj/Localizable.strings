@@ -57,8 +57,6 @@
 "INFO.THANKS.3.MESSAGE"="'Arabidopsis' for the gorgeous teal-deer artwork, found on DeviantArt. It's available on a shirt via Redbubble. (All profits go to the artist)";
 "INFO.THANKS.3.LINK_ANCHOR.DEVIANTART"="DeviantArt";
 "INFO.THANKS.3.LINK_ANCHOR.REDBUBBLE"="Redbubble";
-"INFO.THANKS.4.MESSAGE"="All our beta testers. Contact us to join the group.";
-"INFO.THANKS.4.LINK_ANCHOR"="Contact us";
 
 "INFO.OPEN_SOURCE.HEADER"="Open Source app";
 "INFO.OPEN_SOURCE.MESSAGE"="Fork me on GitHub!";

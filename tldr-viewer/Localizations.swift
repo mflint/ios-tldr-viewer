@@ -94,16 +94,6 @@ public struct Localizations {
 
             }
 
-            public struct _4 {
-
-                /// Base translation: All our beta testers. Contact us to join the group.
-                public static var Message : String = NSLocalizedString("INFO.THANKS.4.MESSAGE", comment: "")
-
-                /// Base translation: Contact us
-                public static var LinkAnchor : String = NSLocalizedString("INFO.THANKS.4.LINK_ANCHOR", comment: "")
-
-            }
-
             public struct _2 {
 
                 /// Base translation: Kristopher Johnson for Markingbird, a Markdown processor in Swift.
@@ -227,6 +217,16 @@ public struct Localizations {
             /// Base translation: %@, %@, %@, %@
             public static func Four(_ value1 : String, _ value2 : String, _ value3 : String, _ value4 : String) -> String {
                 return String(format: NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORMS.FOUR", comment: ""), value1, value2, value3, value4)
+            }
+
+            /// Base translation: %@, %@, %@, %@, %@, %@
+            public static func Six(_ value1 : String, _ value2 : String, _ value3 : String, _ value4 : String, _ value5 : String, _ value6 : String) -> String {
+                return String(format: NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORMS.SIX", comment: ""), value1, value2, value3, value4, value5, value6)
+            }
+
+            /// Base translation: %@, %@, %@, %@, %@
+            public static func Five(_ value1 : String, _ value2 : String, _ value3 : String, _ value4 : String, _ value5 : String) -> String {
+                return String(format: NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORMS.FIVE", comment: ""), value1, value2, value3, value4, value5)
             }
 
             /// Base translation: %@
