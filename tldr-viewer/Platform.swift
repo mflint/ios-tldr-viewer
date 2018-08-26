@@ -17,6 +17,7 @@ class Platform {
         "osx": Localizations.CommandList.CommandPlatform.Osx,
         "sunos": Localizations.CommandList.CommandPlatform.Solaris,
         "linux": Localizations.CommandList.CommandPlatform.Linux,
+        "windows": Localizations.CommandList.CommandPlatform.Windows,
         "common": Localizations.CommandList.CommandPlatform.Common
     ]
     
