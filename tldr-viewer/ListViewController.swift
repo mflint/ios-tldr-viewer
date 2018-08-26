@@ -94,7 +94,7 @@ extension ListViewController: UISearchBarDelegate {
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
+        self.viewModel.filterCancel()
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {

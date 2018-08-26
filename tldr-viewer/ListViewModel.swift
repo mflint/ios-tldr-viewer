@@ -211,8 +211,17 @@ class ListViewModel: NSObject {
     }
     
     func filterTextDidChange(text: String) {
+        setFilter(text: text)
+    }
+    
+    private func setFilter(text: String) {
         searchText = text
         update()
+    }
+    
+    func filterCancel() {
+        setFilter(text: "")
+        cancelSearchSignal()
     }
     
     func showCommand(commandName: String) {
