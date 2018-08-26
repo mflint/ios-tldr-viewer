@@ -29,6 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard let commandName = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String else { return false }
         postNotification(commandName)
         
+        Answers.logCustomEvent(withName: "Spotlight", customAttributes: nil)
+        
         return true
     }
     
@@ -36,6 +38,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard let userInfo = shortcutItem.userInfo else { return }
         guard let commandName = userInfo[Constant.Shortcut.commandNameKey] as? String else { return }
         postNotification(commandName)
+        
+        Answers.logCustomEvent(withName: "Shortcut", customAttributes: nil)
         // TODO: completionHandler?
     }
     

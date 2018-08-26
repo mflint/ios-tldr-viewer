@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Crashlytics
 
 class DetailViewModel {
     // no-op closures until the ViewController provides its own
@@ -82,6 +83,8 @@ class DetailViewModel {
             FavouriteDataSource.sharedInstance.remove(commandName: command.name)
         } else {
             FavouriteDataSource.sharedInstance.add(commandName: command.name)
+            
+            Answers.logCustomEvent(withName: "Favourite", customAttributes: ["commandName": command.name])
         }
     }
     
