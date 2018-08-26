@@ -141,18 +141,18 @@ class ListViewModel: NSObject {
                 lastUpdatedString = ""
             }
             
-            if commands.count == 0 {
-                if refreshableDataSource.requesting {
-                    let cellViewModel = LoadingCellViewModel()
-                    vms.append(cellViewModel)
-                } else if searchText.count > 0 {
-                    // search had no results
-                    let cellViewModel = NoResultsCellViewModel(searchTerm: searchText, buttonAction: {
-                        let url = URL(string: "https://github.com/tldr-pages/tldr/blob/master/CONTRIBUTING.md")!
-                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                    })
-                    vms.append(cellViewModel)
-                }
+            if requesting {
+                let cellViewModel = LoadingCellViewModel()
+                vms.append(cellViewModel)
+            }
+            
+            if commands.count == 0 && searchText.count > 0 {
+                // search had no results
+                let cellViewModel = NoResultsCellViewModel(searchTerm: searchText, buttonAction: {
+                    let url = URL(string: "https://github.com/tldr-pages/tldr/blob/master/CONTRIBUTING.md")!
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                })
+                vms.append(cellViewModel)
             }
             
             if let errorText = refreshableDataSource.requestError {
@@ -160,7 +160,7 @@ class ListViewModel: NSObject {
                     refreshableDataSource.beginRequest()
                 })
                 vms.append(cellViewModel)
-            } else if let oldIndexCell = OldIndexCellViewModel.create(dataSource: refreshableDataSource) {
+            } else if !requesting, let oldIndexCell = OldIndexCellViewModel.create(dataSource: refreshableDataSource) {
                 vms.append(oldIndexCell)
             }
         }
