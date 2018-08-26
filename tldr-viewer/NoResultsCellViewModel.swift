@@ -19,7 +19,7 @@ struct NoResultsCellViewModel: BaseCellViewModel, MessageAndButtonCellViewModel 
         self.cellIdentifier = "MessageAndButtonCell"
         self.action = buttonAction
         
-        let labelText = NSMutableAttributedString(attributedString: Theme.detailAttributed(string: Localizations.CommandList.Search.NothingFound.For(value1: searchTerm))!)
+        let labelText = NSMutableAttributedString(attributedString: Theme.detailAttributed(string: Localizations.CommandList.Search.NothingFound.For(searchTerm))!)
         let range = NSString(string: labelText.string).range(of: Localizations.CommandList.Search.NothingFound.ForHighlight)
         if range.location != NSNotFound {
             labelText.setAttributes(Theme.bodyAttributes(), range: range)

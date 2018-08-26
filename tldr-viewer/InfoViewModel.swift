@@ -33,14 +33,14 @@ class InfoViewModel {
     
     private func versionCell() -> BaseCellViewModel {
         let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
-        return TextCellViewModel(text: Localizations.Info.Version.Title, detailText: Localizations.Info.Version.Detail(value1: version))
+        return TextCellViewModel(text: Localizations.Info.Version.Title, detailText: Localizations.Info.Version.Detail(version))
     }
     
     private func authorCell() -> BaseCellViewModel {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy"
         let year = dateFormatter.string(from: Date())
-        return TextCellViewModel(text: Localizations.Info.Author.Title, detailText: Localizations.Info.Author.Detail(value1: year))
+        return TextCellViewModel(text: Localizations.Info.Author.Title, detailText: Localizations.Info.Author.Detail(year))
     }
     
     private func bugReports() -> BaseCellViewModel {

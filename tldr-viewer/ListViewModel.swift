@@ -136,7 +136,7 @@ class ListViewModel: NSObject {
             requesting = refreshableDataSource.requesting
             if let lastUpdateTime = refreshableDataSource.lastUpdateTime() {
                 let lastUpdatedDateTime = dateFormatter.string(from: lastUpdateTime)
-                lastUpdatedString = Localizations.CommandList.AllCommands.UpdatedDateTime(value1: lastUpdatedDateTime)
+                lastUpdatedString = Localizations.CommandList.AllCommands.UpdatedDateTime(lastUpdatedDateTime)
             } else {
                 lastUpdatedString = ""
             }

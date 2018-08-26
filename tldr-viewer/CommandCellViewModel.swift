@@ -35,13 +35,13 @@ struct CommandCellViewModel: BaseCellViewModel {
             case 0:
                 platformString = ""
             case 1:
-                platformString = Localizations.CommandList.CommandPlatforms.One(value1: platformNames[0])
+                platformString = Localizations.CommandList.CommandPlatforms.One(platformNames[0])
             case 2:
-                platformString = Localizations.CommandList.CommandPlatforms.Two(value1: platformNames[0], platformNames[1])
+                platformString = Localizations.CommandList.CommandPlatforms.Two(platformNames[0], platformNames[1])
             case 3:
-                platformString = Localizations.CommandList.CommandPlatforms.Three(value1: platformNames[0], platformNames[1], platformNames[2])
+                platformString = Localizations.CommandList.CommandPlatforms.Three(platformNames[0], platformNames[1], platformNames[2])
             default:
-                platformString = Localizations.CommandList.CommandPlatforms.Four(value1: platformNames[0], platformNames[1], platformNames[2], platformNames[3])
+                platformString = Localizations.CommandList.CommandPlatforms.Four(platformNames[0], platformNames[1], platformNames[2], platformNames[3])
             }
         } else {
             platformString = ""

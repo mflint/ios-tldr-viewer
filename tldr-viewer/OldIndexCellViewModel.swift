@@ -34,7 +34,7 @@ struct OldIndexCellViewModel: BaseCellViewModel, MessageAndButtonCellViewModel {
         self.dataSource = dataSource
         
         let days = Date.daysForTimeInterval(age)
-        let messageText = Localizations.CommandList.IndexOld.NumberOfDays(value1: days)
+        let messageText = Localizations.CommandList.IndexOld.NumberOfDays(days)
         
         cellIdentifier = "MessageAndButtonCell"
         labelText = Theme.detailAttributed(string: messageText)
