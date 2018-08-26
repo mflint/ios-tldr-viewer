@@ -6,6 +6,7 @@ An iOS client for "TLDR-pages".
 Changelog
 ---------
 
+* 1.7.0: 
 * 1.6.0: Updates for iPhone X and Swift 4.0.3
 * 1.5.0: Updates for iOS 11 and Swift 4
 * 1.4.0: Switches source URL, to avoid a 301 redirect to http :-/
