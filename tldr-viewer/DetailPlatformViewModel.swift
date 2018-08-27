@@ -74,15 +74,51 @@ class DetailPlatformViewModel {
     
     private func handleSuccess(_ markdownString: String) {
         var markdown = Markdown()
-        let html = markdown.transform(markdownString).replacingOccurrences(of: "{{", with: "<span class='parameter'>").replacingOccurrences(of: "}}", with: "</span>")
+        var html = markdown.transform(markdownString)
+        html = linkifyCodeBlocks(markdown: markdownString, html: html)
+            .replacingOccurrences(of: "{{", with: "<span class='parameter'>")
+            .replacingOccurrences(of: "}}", with: "</span>")
+        
         let seeAlso = generateSeeAlso(markdownString)
         self.detailHTML = Theme.pageFrom(htmlSnippet: html + seeAlso)
+        
         self.message = nil
     }
- 
-    private func generateSeeAlso(_ html: String) -> String {
+    
+    private func linkifyCodeBlocks(markdown: String, html: String) -> String {
+        let codeBlocks = markdown.capturedGroups(withRegex: "`(.*?)`")
+        var closingCodeTagRanges = [Range<String.Index>]()
+        var searchRange = html.startIndex..<html.endIndex
+        var finished = false
+        while !finished {
+            if let closingCodeTagRange = html.range(of: "</code>", options: .caseInsensitive, range: searchRange, locale: nil) {
+                closingCodeTagRanges.append(closingCodeTagRange)
+                searchRange = closingCodeTagRange.upperBound..<searchRange.upperBound
+//                print("search range is for *\(html[searchRange])*")
+            } else {
+                finished = true
+            }
+        }
+        
+//        print ("codeBlocks.count: \(codeBlocks.count) .... closingCodeTagRanges.count: \(closingCodeTagRanges.count)")
+
+        guard codeBlocks.count == closingCodeTagRanges.count else { return html }
+        
+        var result = html
+        for index in (0..<codeBlocks.count).reversed() {
+            let code = codeBlocks[index]
+                .replacingOccurrences(of: "{{", with: "")
+                .replacingOccurrences(of: "}}", with: "")
+            let replacement = "</code><a class='copylink' href=\"tldr://foo\">↗️</a>"
+            result = result.replacingCharacters(in: closingCodeTagRanges[index], with: replacement)
+        }
+        
+        return result
+    }
+    
+    private func generateSeeAlso(_ markdown: String) -> String {
         var seeAlsoCommands = [String:Command]()
-        let codeBlocks = Set(html.capturedGroups(withRegex: "`(.*?)`"))
+        let codeBlocks = Set(markdown.capturedGroups(withRegex: "`(.*?)`"))
         
         for codeBlock in codeBlocks {
             if codeBlock != self.command.name {

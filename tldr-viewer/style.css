@@ -33,6 +33,13 @@ code {
     vertical-align: +6%;
     padding: 0.20em 0.6em;
     margin: 0.1em 0.1em 0.1em 0.1em;
+    max-width: 85%
+}
+
+a.copylink {
+    display: inline-block;
+    float: right;
+    text-decoration: none;
 }
 
 ul {
