@@ -9,8 +9,8 @@
 import Foundation
 
 extension String {
-    func capturedGroups(withRegex pattern: String) -> [String] {
-        var results = [String]()
+    func capturedGroups(withRegex pattern: String) -> [(substring: String, range: Range<String.Index>)] {
+        var results = [(String, Range<String.Index>)]()
         
         var regex: NSRegularExpression
         do {
@@ -26,9 +26,11 @@ extension String {
             guard lastRangeIndex >= 1 else { return results }
             
             for i in 1...lastRangeIndex {
-                let capturedGroupIndex = match.range(at: i)
-                let matchedString = (self as NSString).substring(with: capturedGroupIndex)
-                results.append(matchedString)
+                let capturedGroupRange = match.range(at: i)
+                let matchedString = (self as NSString).substring(with: capturedGroupRange)
+                
+                let swiftRange = Range(capturedGroupRange, in: self)!
+                results.append((matchedString, swiftRange))
             }
         }
         
@@ -46,6 +48,9 @@ class DetailPlatformViewModel {
     
     // tldr page in HTML
     var detailHTML: String?
+    
+    // raw examples in this manpage
+    var examples: [String]?
     
     private let dataSource: SearchableDataSourceType
     private let command: Command
@@ -68,6 +73,13 @@ class DetailPlatformViewModel {
         handleSuccess(markdown)
     }
     
+    func example(at index: Int) -> String? {
+        guard let examples = self.examples,
+            index < examples.count else { return nil }
+        
+        return examples[index]
+    }
+    
     private func handleError(_ error: String?) {
         self.message = Theme.detailAttributed(string: error)
     }
@@ -86,31 +98,24 @@ class DetailPlatformViewModel {
     }
     
     private func linkifyCodeBlocks(markdown: String, html: String) -> String {
-        let codeBlocks = markdown.capturedGroups(withRegex: "`(.*?)`")
-        var closingCodeTagRanges = [Range<String.Index>]()
-        var searchRange = html.startIndex..<html.endIndex
-        var finished = false
-        while !finished {
-            if let closingCodeTagRange = html.range(of: "</code>", options: .caseInsensitive, range: searchRange, locale: nil) {
-                closingCodeTagRanges.append(closingCodeTagRange)
-                searchRange = closingCodeTagRange.upperBound..<searchRange.upperBound
-//                print("search range is for *\(html[searchRange])*")
-            } else {
-                finished = true
-            }
-        }
+        let examples = markdown.capturedGroups(withRegex: "`(.*?)`")
+        let codeTagRanges = html.capturedGroups(withRegex: "(<code.*?/code>)")
         
-//        print ("codeBlocks.count: \(codeBlocks.count) .... closingCodeTagRanges.count: \(closingCodeTagRanges.count)")
-
-        guard codeBlocks.count == closingCodeTagRanges.count else { return html }
+        guard examples.count == codeTagRanges.count else { return html }
         
-        var result = html
-        for index in (0..<codeBlocks.count).reversed() {
-            let code = codeBlocks[index]
+        self.examples = [String]()
+        for index in (0..<examples.count) {
+            let example = examples[index].substring
                 .replacingOccurrences(of: "{{", with: "")
                 .replacingOccurrences(of: "}}", with: "")
-            let replacement = "</code><a class='copylink' href=\"tldr://foo\">↗️</a>"
-            result = result.replacingCharacters(in: closingCodeTagRanges[index], with: replacement)
+            self.examples?.append(example)
+        }
+        
+        var result = html
+        for index in (0..<examples.count).reversed() {
+            let codeBlock = codeTagRanges[index].substring
+            let replacement = "<a class='copylink' href=\"tldr://pasteboard/\(index)\">\(codeBlock)</a>"
+            result = result.replacingCharacters(in: codeTagRanges[index].range, with: replacement)
         }
         
         return result
@@ -118,9 +123,10 @@ class DetailPlatformViewModel {
     
     private func generateSeeAlso(_ markdown: String) -> String {
         var seeAlsoCommands = [String:Command]()
-        let codeBlocks = Set(markdown.capturedGroups(withRegex: "`(.*?)`"))
+        let codeBlocksAndRanges = markdown.capturedGroups(withRegex: "`(.*?)`")
         
-        for codeBlock in codeBlocks {
+        for codeBlockAndRange in codeBlocksAndRanges {
+            let codeBlock = codeBlockAndRange.substring
             if codeBlock != self.command.name {
                 if let command = dataSource.commandWith(name: codeBlock) {
                     seeAlsoCommands[codeBlock] = command

@@ -13,6 +13,9 @@ class DetailViewModel {
     // no-op closures until the ViewController provides its own
     var updateSignal: () -> Void = {}
     
+    // set a value in the UIKit pasteboard
+    var setPasteboardValue: (String) -> Void = { value in }
+    
     // navigation bar title
     var navigationBarTitle: String = ""
 
@@ -85,6 +88,16 @@ class DetailViewModel {
             FavouriteDataSource.sharedInstance.add(commandName: command.name)
             
             Answers.logCustomEvent(withName: "Favourite", customAttributes: ["commandName": command.name])
+        }
+    }
+    
+    func handleTapExampleUrl(_ url: URL) {
+        let path = url.path
+        let numberIndex = path.index(path.startIndex, offsetBy: 1)
+        let numberString = path[numberIndex...]
+        if let number = Int(numberString),
+            let example = selectedPlatform.example(at: number) {
+            setPasteboardValue(example)
         }
     }
     

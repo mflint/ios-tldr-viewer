@@ -27,6 +27,9 @@ class DetailViewController: UIViewController {
             viewModel?.updateSignal = {
                 self.configureView()
             }
+            viewModel?.setPasteboardValue = { value in
+                UIPasteboard.general.string = value
+            }
             self.configureView()
         }
     }
@@ -35,6 +38,7 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         
         let configuration = WKWebViewConfiguration()
+        configuration.setURLSchemeHandler(self, forURLScheme: "tldr")
         self.webView = WKWebView(frame: .zero, configuration: configuration)
         
         // disable webview magnification
@@ -184,4 +188,14 @@ extension DetailViewController: WKNavigationDelegate {
             decisionHandler(.cancel)
         }
     }
+}
+
+extension DetailViewController: WKURLSchemeHandler {
+    func webView(_ webView: WKWebView, start urlSchemeTask: WKURLSchemeTask) {
+        if let url = urlSchemeTask.request.url {
+            viewModel?.handleTapExampleUrl(url)
+        }
+    }
+    
+    func webView(_ webView: WKWebView, stop urlSchemeTask: WKURLSchemeTask) {}
 }
