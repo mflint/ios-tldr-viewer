@@ -14,7 +14,7 @@ class DetailViewModel {
     var updateSignal: () -> Void = {}
     
     // set a value in the UIKit pasteboard
-    var setPasteboardValue: (String) -> Void = { value in }
+    var setPasteboardValue: (String, String) -> Void = { value, message in }
     
     // navigation bar title
     var navigationBarTitle: String = ""
@@ -97,7 +97,7 @@ class DetailViewModel {
         let numberString = path[numberIndex...]
         if let number = Int(numberString),
             let example = selectedPlatform.example(at: number) {
-            setPasteboardValue(example)
+            setPasteboardValue(example, Localizations.CommandDetail.CopiedToPasteboard)
         }
     }
     

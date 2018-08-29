@@ -10,6 +10,50 @@ import UIKit
 import WebKit
 import CoreSpotlight
 
+private class ToastLabel: UILabel {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        initialise()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+
+        initialise()
+    }
+    
+    private func initialise() {
+        textColor = UIColor.tldrTeal()
+        font = UIFont.tldrBody()
+        preferredMaxLayoutWidth = UIScreen.main.bounds.width * 0.8
+        numberOfLines = 0
+
+        clipsToBounds = true
+        layer.borderWidth = 2
+        layer.borderColor = UIColor.tldrTeal().cgColor
+        layer.cornerRadius = 10
+        layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        
+        isOpaque = true
+        backgroundColor = UIColor.white
+        
+        invalidateIntrinsicContentSize()
+    }
+    
+    override func drawText(in rect: CGRect) {
+        let insets = UIEdgeInsets(top: 5, left: 30, bottom: 5, right: 15)
+        super.drawText(in: UIEdgeInsetsInsetRect(rect, insets))
+    }
+    
+    override func textRect(forBounds bounds: CGRect, limitedToNumberOfLines numberOfLines: Int) -> CGRect {
+        let superRect = super.textRect(forBounds: bounds, limitedToNumberOfLines: numberOfLines)
+        let adjusted = CGRect.insetBy(superRect)(dx: -30, dy: -10)
+        return adjusted
+    }
+}
+
+
 class DetailViewController: UIViewController {
     @IBOutlet weak var platformsSegmentedControl: UISegmentedControl!
 
@@ -27,8 +71,8 @@ class DetailViewController: UIViewController {
             viewModel?.updateSignal = {
                 self.configureView()
             }
-            viewModel?.setPasteboardValue = { value in
-                UIPasteboard.general.string = value
+            viewModel?.setPasteboardValue = { value, message in
+                self.setPasteboard(string: value, message: message)
             }
             self.configureView()
         }
@@ -94,6 +138,37 @@ class DetailViewController: UIViewController {
         }
     }
     
+    private func setPasteboard(string: String, message: String) {
+        DispatchQueue.main.async {
+            self.doSetPasteboard(string: string, message: message)
+        }
+    }
+        
+    private func doSetPasteboard(string: String, message: String) {
+        UIPasteboard.general.string = string
+        
+        UINotificationFeedbackGenerator().notificationOccurred(.success)
+
+        let toastLabel = ToastLabel()
+        toastLabel.text = message
+        toastLabel.sizeToFit()
+        
+        let x = (UIScreen.main.bounds.width - toastLabel.frame.width) / 2
+        let height = toastLabel.frame.height
+        toastLabel.frame = CGRect(x: x, y: -height, width: toastLabel.frame.width, height: toastLabel.frame.height)
+        view.addSubview(toastLabel)
+        
+        UIView.animate(withDuration: 0.35, delay: 0, options: .curveEaseInOut, animations: {
+            toastLabel.frame = CGRect(x: x, y: 0, width: toastLabel.frame.width, height: toastLabel.frame.height)
+        }) { (finished) in
+            UIView.animate(withDuration: 0.35, delay: 2.5, options: .curveEaseInOut, animations: {
+                toastLabel.frame = CGRect(x: x, y: -height, width: toastLabel.frame.width, height: toastLabel.frame.height)
+            }, completion: { (finished) in
+                toastLabel.removeFromSuperview()
+            })
+        }
+    }
+    
     private func doConfigureView() {
         var htmlString: String?
         var message: NSAttributedString?
@@ -149,6 +224,10 @@ class DetailViewController: UIViewController {
     
     @objc private func onFavouriteToggled() {
         viewModel?.onFavouriteToggled()
+        
+        DispatchQueue.main.async {
+            UISelectionFeedbackGenerator().selectionChanged()
+        }
     }
     
     private func doConfigureSegmentedControl(_ viewModel: DetailViewModel) {

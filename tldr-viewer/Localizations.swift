@@ -19,11 +19,14 @@ public struct Localizations {
 
     public struct CommandDetail {
 
-        /// Base translation: See also:
-        public static var SeeAlso : String = NSLocalizedString("COMMAND_DETAIL.SEE_ALSO", comment: "")
+        /// Base translation: Copied to pasteboard
+        public static var CopiedToPasteboard : String = NSLocalizedString("COMMAND_DETAIL.COPIED_TO_PASTEBOARD", comment: "")
 
         /// Base translation: Nothing selected
         public static var NothingSelected : String = NSLocalizedString("COMMAND_DETAIL.NOTHING_SELECTED", comment: "")
+
+        /// Base translation: See also:
+        public static var SeeAlso : String = NSLocalizedString("COMMAND_DETAIL.SEE_ALSO", comment: "")
 
 
         public struct Error {
