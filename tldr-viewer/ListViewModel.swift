@@ -8,7 +8,6 @@
 
 import Foundation
 import UIKit
-import Crashlytics
 
 class ListViewModel: NSObject {
     // no-op closures until the ViewController provides its own
@@ -21,7 +20,6 @@ class ListViewModel: NSObject {
     
     var lastUpdatedString: String!
     var searchText: String = ""
-    var noSearchResults: Bool = false
     let searchPlaceholder = Localizations.CommandList.AllCommands.SearchPlaceholder
     var itemSelected: Bool = false
     var requesting: Bool = false
@@ -130,7 +128,6 @@ class ListViewModel: NSObject {
         var commands: [Command]
         if let searchableDataSource = selectedDataSource as? SearchableDataSourceType {
             commands = searchableDataSource.commandsWith(filter: searchText)
-            noSearchResults = commands.count == 0
         } else {
             commands = selectedDataSource.allCommands()
         }
@@ -218,15 +215,8 @@ class ListViewModel: NSObject {
     }
     
     private func setFilter(text: String) {
-        let previousSearchText = searchText
-        let previousSearchHadNoResults = noSearchResults
-        
         searchText = text
         update()
-        
-        if searchText.count == 0 && previousSearchText.count > 0 && previousSearchHadNoResults {
-            Answers.logCustomEvent(withName: "SearchFailure", customAttributes: ["searchText": previousSearchText])
-        }
     }
     
     func filterCancel() {

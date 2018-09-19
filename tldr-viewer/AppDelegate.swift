@@ -8,8 +8,6 @@
 
 import UIKit
 import CoreSpotlight
-import Fabric
-import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,7 +16,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         // Override point for customization after application launch.
-        Fabric.with([Crashlytics.self])
         Theme.setup()
         
         return true
@@ -29,8 +26,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard let commandName = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String else { return false }
         postNotification(commandName)
         
-        Answers.logCustomEvent(withName: "Spotlight", customAttributes: nil)
-        
         return true
     }
     
@@ -38,8 +33,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard let userInfo = shortcutItem.userInfo else { return }
         guard let commandName = userInfo[Constant.Shortcut.commandNameKey] as? String else { return }
         postNotification(commandName)
-        
-        Answers.logCustomEvent(withName: "Shortcut", customAttributes: nil)
         // TODO: completionHandler?
     }
     

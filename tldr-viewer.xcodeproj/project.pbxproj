@@ -14,8 +14,6 @@
 		34048D241C36E4DD00E91EE7 /* LoadingCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34048D231C36E4DD00E91EE7 /* LoadingCellViewModel.swift */; };
 		34048D271C37212A00E91EE7 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34048D261C37212A00E91EE7 /* ActionButton.swift */; };
 		34048D291C37402500E91EE7 /* DetailPlatformViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34048D281C37402500E91EE7 /* DetailPlatformViewModel.swift */; };
-		340DBC0B2132ED1400870781 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 340DBC092132ED1400870781 /* Fabric.framework */; };
-		340DBC0C2132ED1400870781 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 340DBC0A2132ED1400870781 /* Crashlytics.framework */; };
 		342514841C349D96001D31F4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342514831C349D96001D31F4 /* AppDelegate.swift */; };
 		342514861C349D96001D31F4 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342514851C349D96001D31F4 /* ListViewController.swift */; };
 		342514881C349D96001D31F4 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342514871C349D96001D31F4 /* DetailViewController.swift */; };
@@ -78,8 +76,6 @@
 		34048D231C36E4DD00E91EE7 /* LoadingCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingCellViewModel.swift; sourceTree = "<group>"; };
 		34048D261C37212A00E91EE7 /* ActionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
 		34048D281C37402500E91EE7 /* DetailPlatformViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailPlatformViewModel.swift; sourceTree = "<group>"; };
-		340DBC092132ED1400870781 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
-		340DBC0A2132ED1400870781 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		342514801C349D96001D31F4 /* tldr-viewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "tldr-viewer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		342514831C349D96001D31F4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		342514851C349D96001D31F4 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
@@ -145,10 +141,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				34D06BD31C5CCAF500D30041 /* MobileCoreServices.framework in Frameworks */,
-				340DBC0B2132ED1400870781 /* Fabric.framework in Frameworks */,
 				34D06BD11C5CC9A000D30041 /* CoreSpotlight.framework in Frameworks */,
 				34358AF51C3589D200BB7DDB /* WebKit.framework in Frameworks */,
-				340DBC0C2132ED1400870781 /* Crashlytics.framework in Frameworks */,
 				34D06BBE1C5386DF00D30041 /* Zip.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -170,8 +164,6 @@
 			isa = PBXGroup;
 			children = (
 				34474FE01E3D2E3E00CBA95D /* README.md */,
-				340DBC0A2132ED1400870781 /* Crashlytics.framework */,
-				340DBC092132ED1400870781 /* Fabric.framework */,
 				34D06BD21C5CCAF500D30041 /* MobileCoreServices.framework */,
 				34D06BD01C5CC9A000D30041 /* CoreSpotlight.framework */,
 				34D06BB91C519C1100D30041 /* Zip.framework */,
@@ -312,7 +304,6 @@
 				3425147D1C349D96001D31F4 /* Frameworks */,
 				3425147E1C349D96001D31F4 /* Resources */,
 				34D06BBB1C519C2100D30041 /* Run Script (carthage copy frameworks) */,
-				340DBC082132ECEA00870781 /* Run Script (fabric) */,
 			);
 			buildRules = (
 			);
@@ -382,20 +373,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		340DBC082132ECEA00870781 /* Run Script (fabric) */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Run Script (fabric)";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = ./scripts/fabric.sh;
-		};
 		34674D2D1E3D72D6000B73E0 /* Run Script (US localization override) */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -437,7 +414,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

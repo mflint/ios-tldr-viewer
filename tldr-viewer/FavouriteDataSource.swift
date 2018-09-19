@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Crashlytics
 
 public class FavouriteDataSource: DataSourceType {
     // no-op closures until the ViewModel provides its own
@@ -37,8 +36,6 @@ public class FavouriteDataSource: DataSourceType {
         if changeReason == NSUbiquitousKeyValueStoreInitialSyncChange || changeReason == NSUbiquitousKeyValueStoreServerChange && changedKeys.contains(Constant.iCloudKey.favouriteCommandNames) {
             let keyValueStore = NSUbiquitousKeyValueStore.default
             if let incomingFavouriteNames = keyValueStore.array(forKey: Constant.iCloudKey.favouriteCommandNames) as? [String] {
-                Answers.logCustomEvent(withName: "iCloudSync", customAttributes: ["favouriteCount": incomingFavouriteNames.count])
-
                 favouriteCommandNames = incomingFavouriteNames
                 Preferences.sharedInstance.setFavouriteCommandNames(favouriteCommandNames)
                 postNotification()
