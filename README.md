@@ -6,7 +6,7 @@ An iOS client for "TLDR-pages".
 Changelog
 ---------
 
-* 1.8.0: 
+* 1.8.0: Tap code examples to copy to pasteboard
 * 1.7.0: Adds some Fabric analytics; Cancel search button now really cancels search
 * 1.6.0: Updates for iPhone X and Swift 4.0.3
 * 1.5.0: Updates for iOS 11 and Swift 4
