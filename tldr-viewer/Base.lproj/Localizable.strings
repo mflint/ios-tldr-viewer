@@ -43,6 +43,9 @@
 "INFO.AUTHOR.DETAIL"="© %@ Green Light Apps";
 
 "INFO.CONTACT.HEADER"="Contact";
+"INFO.LEAVE_REVIEW.MESSAGE"="Do you find this app useful? Please leave a review in the App Store.";
+"INFO.LEAVE_REVIEW.LINK_ANCHOR"="review in the App Store";
+
 "INFO.BUG_REPORTS.MESSAGE"="Bug reports, requests, pull requests welcome at the GitHub Issues page.";
 "INFO.BUG_REPORTS.LINK_ANCHOR"="GitHub Issues";
 

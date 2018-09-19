@@ -40,6 +40,16 @@ public struct Localizations {
     public struct Info {
 
 
+        public struct LeaveReview {
+
+            /// Base translation: Do you find this app useful? Please leave a review in the App Store.
+            public static var Message : String = NSLocalizedString("INFO.LEAVE_REVIEW.MESSAGE", comment: "")
+
+            /// Base translation: review in the App Store
+            public static var LinkAnchor : String = NSLocalizedString("INFO.LEAVE_REVIEW.LINK_ANCHOR", comment: "")
+
+        }
+
         public struct Author {
 
             /// Base translation: © %@ Green Light Apps
@@ -49,18 +59,6 @@ public struct Localizations {
 
             /// Base translation: Author
             public static var Title : String = NSLocalizedString("INFO.AUTHOR.TITLE", comment: "")
-
-        }
-
-        public struct Version {
-
-            /// Base translation: Version
-            public static var Title : String = NSLocalizedString("INFO.VERSION.TITLE", comment: "")
-
-            /// Base translation: %@
-            public static func Detail(_ value1 : String) -> String {
-                return String(format: NSLocalizedString("INFO.VERSION.DETAIL", comment: ""), value1)
-            }
 
         }
 
@@ -108,16 +106,28 @@ public struct Localizations {
             }
         }
 
+        public struct Version {
+
+            /// Base translation: Version
+            public static var Title : String = NSLocalizedString("INFO.VERSION.TITLE", comment: "")
+
+            /// Base translation: %@
+            public static func Detail(_ value1 : String) -> String {
+                return String(format: NSLocalizedString("INFO.VERSION.DETAIL", comment: ""), value1)
+            }
+
+        }
+
         public struct OpenSource {
 
-            /// Base translation: Open Source app
-            public static var Header : String = NSLocalizedString("INFO.OPEN_SOURCE.HEADER", comment: "")
+            /// Base translation: Fork me
+            public static var LinkAnchor : String = NSLocalizedString("INFO.OPEN_SOURCE.LINK_ANCHOR", comment: "")
 
             /// Base translation: Fork me on GitHub!
             public static var Message : String = NSLocalizedString("INFO.OPEN_SOURCE.MESSAGE", comment: "")
 
-            /// Base translation: Fork me
-            public static var LinkAnchor : String = NSLocalizedString("INFO.OPEN_SOURCE.LINK_ANCHOR", comment: "")
+            /// Base translation: Open Source app
+            public static var Header : String = NSLocalizedString("INFO.OPEN_SOURCE.HEADER", comment: "")
 
         }
 
@@ -227,14 +237,14 @@ public struct Localizations {
                 return String(format: NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORMS.SIX", comment: ""), value1, value2, value3, value4, value5, value6)
             }
 
-            /// Base translation: %@, %@, %@, %@, %@
-            public static func Five(_ value1 : String, _ value2 : String, _ value3 : String, _ value4 : String, _ value5 : String) -> String {
-                return String(format: NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORMS.FIVE", comment: ""), value1, value2, value3, value4, value5)
-            }
-
             /// Base translation: %@
             public static func One(_ value1 : String) -> String {
                 return String(format: NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORMS.ONE", comment: ""), value1)
+            }
+
+            /// Base translation: %@, %@, %@, %@, %@
+            public static func Five(_ value1 : String, _ value2 : String, _ value3 : String, _ value4 : String, _ value5 : String) -> String {
+                return String(format: NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORMS.FIVE", comment: ""), value1, value2, value3, value4, value5)
             }
 
             /// Base translation: %@, %@, %@
@@ -258,11 +268,11 @@ public struct Localizations {
 
         public struct Error {
 
-            /// Base translation: Could not the read index file
-            public static var CouldNotReadIndexFile : String = NSLocalizedString("COMMAND_LIST.ERROR.COULD_NOT_READ_INDEX_FILE", comment: "")
-
             /// Base translation: Could not save the download
             public static var CouldNotSaveDownload : String = NSLocalizedString("COMMAND_LIST.ERROR.COULD_NOT_SAVE_DOWNLOAD", comment: "")
+
+            /// Base translation: Could not the read index file
+            public static var CouldNotReadIndexFile : String = NSLocalizedString("COMMAND_LIST.ERROR.COULD_NOT_READ_INDEX_FILE", comment: "")
 
             /// Base translation: Could not unzip the download
             public static var CouldNotUnzipDownload : String = NSLocalizedString("COMMAND_LIST.ERROR.COULD_NOT_UNZIP_DOWNLOAD", comment: "")
@@ -287,17 +297,17 @@ public struct Localizations {
 
         public struct CommandPlatform {
 
-            /// Base translation: Linux
-            public static var Linux : String = NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORM.LINUX", comment: "")
-
             /// Base translation: Solaris
             public static var Solaris : String = NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORM.SOLARIS", comment: "")
+
+            /// Base translation: macOS
+            public static var Osx : String = NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORM.OSX", comment: "")
 
             /// Base translation: Windows
             public static var Windows : String = NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORM.WINDOWS", comment: "")
 
-            /// Base translation: macOS
-            public static var Osx : String = NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORM.OSX", comment: "")
+            /// Base translation: Linux
+            public static var Linux : String = NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORM.LINUX", comment: "")
 
             /// Base translation: Common
             public static var Common : String = NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORM.COMMON", comment: "")

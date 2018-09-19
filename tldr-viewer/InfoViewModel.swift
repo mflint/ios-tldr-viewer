@@ -19,7 +19,7 @@ class InfoViewModel {
         var groups = [GroupViewModel]()
         
         groups.append(GroupViewModel(groupTitle: Localizations.Info.About.Header, cellViewModels:[aboutCell(), versionCell(), authorCell()]))
-        groups.append(GroupViewModel(groupTitle: Localizations.Info.Contact.Header, cellViewModels: [bugReports(), contactCell()]))
+        groups.append(GroupViewModel(groupTitle: Localizations.Info.Contact.Header, cellViewModels: [leaveReview(), bugReports(), contactCell()]))
         groups.append(GroupViewModel(groupTitle: Localizations.Info.Thanks.Header, cellViewModels: [thanks1(), thanks2(), thanks3()]))
         groups.append(GroupViewModel(groupTitle: Localizations.Info.OpenSource.Header, cellViewModels: [forkMe()]))
         
@@ -41,6 +41,11 @@ class InfoViewModel {
         dateFormatter.dateFormat = "yyyy"
         let year = dateFormatter.string(from: Date())
         return TextCellViewModel(text: Localizations.Info.Author.Title, detailText: Localizations.Info.Author.Detail(year))
+    }
+    
+    private func leaveReview() -> BaseCellViewModel {
+        let message = attributedString(text: Localizations.Info.LeaveReview.Message, anchors: [Localizations.Info.LeaveReview.LinkAnchor], urls: ["https://itunes.apple.com/gb/app/tldr-pages/id1071725095?mt=8"])
+        return TextCellViewModel(attributedText: message)
     }
     
     private func bugReports() -> BaseCellViewModel {
