@@ -126,6 +126,7 @@
 		34D5B6531E35168700C6AB64 /* Shortcuts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shortcuts.swift; sourceTree = "<group>"; };
 		34D5B6551E351D4000C6AB64 /* ShortcutHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortcutHandler.swift; sourceTree = "<group>"; };
 		34D6AE9E1E3CD86A00F12B10 /* tldr-viewer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "tldr-viewer.entitlements"; sourceTree = "<group>"; };
+		34F9E0042258F3E4007A6929 /* PRIVACYPOLICY.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = PRIVACYPOLICY.md; sourceTree = "<group>"; };
 		34FBC0CE1C38A189008AD2C0 /* TextCellBasic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextCellBasic.swift; sourceTree = "<group>"; };
 		34FD9AB41C3885C6001DB968 /* InfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		34FD9AB61C3885CE001DB968 /* InfoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewModel.swift; sourceTree = "<group>"; };
@@ -163,6 +164,7 @@
 		342514771C349D96001D31F4 = {
 			isa = PBXGroup;
 			children = (
+				34F9E0042258F3E4007A6929 /* PRIVACYPOLICY.md */,
 				34474FE01E3D2E3E00CBA95D /* README.md */,
 				34D06BD21C5CCAF500D30041 /* MobileCoreServices.framework */,
 				34D06BD01C5CC9A000D30041 /* CoreSpotlight.framework */,
