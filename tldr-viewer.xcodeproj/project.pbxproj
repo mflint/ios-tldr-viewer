@@ -342,6 +342,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 				"en-US",
@@ -642,7 +643,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "uk.co.greenlightapps.tldr-viewer";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
 				VALID_ARCHS = arm64;
 			};
 			name = Debug;
@@ -665,7 +665,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "uk.co.greenlightapps.tldr-viewer";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
 				VALID_ARCHS = arm64;
 			};
 			name = Release;

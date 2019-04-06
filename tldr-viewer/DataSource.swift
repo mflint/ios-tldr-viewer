@@ -30,7 +30,7 @@ public class DataSource: DataSourceType, RefreshableDataSourceType, SearchableDa
     private init() {
         documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         zipFileURL = documentsDirectory.appendingPathComponent("tldr.zip")
-        indexFileURL = documentsDirectory.appendingPathComponent("pages").appendingPathComponent("index.json")
+        indexFileURL = documentsDirectory.appendingPathComponent("index.json")
         
         if !loadCommandsFromIndexFile() {
             beginRequest()
