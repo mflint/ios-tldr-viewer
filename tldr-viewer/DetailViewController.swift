@@ -153,7 +153,7 @@ class DetailViewController: UIViewController {
         toastLabel.text = message
         toastLabel.sizeToFit()
         
-        let x = (UIScreen.main.bounds.width - toastLabel.frame.width) / 2
+        let x = (view.bounds.width - toastLabel.frame.width) / 2
         let height = toastLabel.frame.height
         toastLabel.frame = CGRect(x: x, y: -height, width: toastLabel.frame.width, height: toastLabel.frame.height)
         view.addSubview(toastLabel)
