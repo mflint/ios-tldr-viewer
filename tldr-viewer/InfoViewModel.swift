@@ -82,7 +82,7 @@ class InfoViewModel {
         let message = NSMutableAttributedString(attributedString: Theme.bodyAttributed(string: text)!)
         for (index, anchor) in anchors.enumerated() {
             let range = (text as NSString).range(of: anchor)
-            message.addAttribute(NSAttributedStringKey.link, value: urls[index], range: range)
+            message.addAttribute(NSAttributedString.Key.link, value: urls[index], range: range)
         }
         return message
     }

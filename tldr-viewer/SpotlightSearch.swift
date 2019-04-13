@@ -19,7 +19,7 @@ struct SpotlightSearch {
         attributeSet.contentDescription = command.summary()
         
         if let image = UIImage(named: "AppIcon") {
-            attributeSet.thumbnailData = UIImagePNGRepresentation(image)
+            attributeSet.thumbnailData = image.pngData()
         }
         
         // Create an item with a unique identifier, a domain identifier, and the attribute set you created earlier.

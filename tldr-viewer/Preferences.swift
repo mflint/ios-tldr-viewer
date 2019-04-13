@@ -33,7 +33,7 @@ class Preferences {
     func addLatest(_ newEntry: String) {
         var latest = userDefaults.stringArray(forKey: Constant.PreferenceKey.latest)!
         
-        let indexOfExistingEntry = latest.index(of: newEntry)
+        let indexOfExistingEntry = latest.firstIndex(of: newEntry)
         if let indexOfExistingEntry = indexOfExistingEntry {
             latest.remove(at: indexOfExistingEntry)
         }

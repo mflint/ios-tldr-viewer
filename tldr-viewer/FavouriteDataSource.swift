@@ -56,7 +56,7 @@ public class FavouriteDataSource: DataSourceType {
     }
     
     func remove(commandName: String) {
-        if let index = favouriteCommandNames.index(of: commandName) {
+        if let index = favouriteCommandNames.firstIndex(of: commandName) {
             favouriteCommandNames.remove(at: index)
             save()
         }

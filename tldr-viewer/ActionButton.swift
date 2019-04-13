@@ -14,6 +14,6 @@ class ActionButton: UIButton {
         self.layer.cornerRadius = 2
         self.titleLabel?.font = UIFont.tldrBody()
         self.setTitleColor(UIColor.tldrActionForeground(), for: .normal)
-        self.contentEdgeInsets = UIEdgeInsetsMake(5, 10, 5, 10)
+        self.contentEdgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
     }
 }

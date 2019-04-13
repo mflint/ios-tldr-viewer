@@ -329,7 +329,7 @@
 					3425147F1C349D96001D31F4 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = 5Q656C7A6K;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.iCloud = {
@@ -341,10 +341,9 @@
 			};
 			buildConfigurationList = 3425147B1C349D96001D31F4 /* Build configuration list for PBXProject "tldr-viewer" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 				"en-US",
@@ -644,8 +643,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "uk.co.greenlightapps.tldr-viewer";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				VALID_ARCHS = arm64;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -666,8 +664,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "uk.co.greenlightapps.tldr-viewer";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				VALID_ARCHS = arm64;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
