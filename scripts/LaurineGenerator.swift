@@ -508,10 +508,10 @@ open class CommandLine {
  * The base class for a command-line option.
  */
 open class Option {
-    open let shortFlag: String?
-    open let longFlag: String?
-    open let required: Bool
-    open let helpMessage: String
+    open var shortFlag: String?
+    open var longFlag: String?
+    open var required: Bool
+    open var helpMessage: String
     
     /** True if the option was set when parsing command-line arguments */
     open var wasSet: Bool {
@@ -1161,7 +1161,7 @@ private extension String {
         }
         
         // Check if it contains that keyword
-        return keywords.index(of: self) != nil
+        return keywords.lastIndex(of: self) != nil
     }
 }
 
@@ -1647,8 +1647,6 @@ class Runtime {
             cli.printUsage(error)
             exit(EX_USAGE)
         }
-        
-        return false
     }
     
     

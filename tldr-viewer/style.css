@@ -93,3 +93,8 @@ dl dt a {
     word-wrap: break-word;
     text-decoration: none;
 }
+
+a {
+    color: #008080;
+    word-wrap: break-word;
+}

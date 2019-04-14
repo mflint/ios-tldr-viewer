@@ -108,9 +108,9 @@
 		3459C6901E3BA21600DD6053 /* SegmentedControlWhite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlWhite.swift; sourceTree = "<group>"; };
 		3459C6921E3BA25400DD6053 /* SegmentedControlTeal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlTeal.swift; sourceTree = "<group>"; };
 		3459C6961E3C002100DD6053 /* SearchableDataSourceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchableDataSourceType.swift; sourceTree = "<group>"; };
-		3465C1C31E3D67C9008D4560 /* en-US */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-US"; path = "en-US.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		3465C1CD1E3D6E87008D4560 /* en-US */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-US"; path = "en-US.lproj/LocalizableOverride.strings"; sourceTree = "<group>"; };
 		34674D2C1E3D7120000B73E0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		34C15E76226329CB00350367 /* en-US */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-US"; path = "en-US.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		34C800561E3D5CB000164493 /* Localizations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localizations.swift; sourceTree = "<group>"; };
 		34D06BB91C519C1100D30041 /* Zip.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Zip.framework; path = Carthage/Build/iOS/Zip.framework; sourceTree = "<group>"; };
 		34D06BBC1C537CC100D30041 /* DataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
@@ -344,7 +344,6 @@
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
 				"en-US",
 			);
@@ -388,6 +387,7 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "BASE_PATH=\"$PROJECT_DIR/$PROJECT_NAME\"\necho \"// AUTO-GENERATED - DO NOT EDIT!\" > \"$BASE_PATH/en-US.lproj/Localizable.strings\"\necho \"\" >> \"$BASE_PATH/en-US.lproj/Localizable.strings\"\necho \"// BASE STRINGS\" >> \"$BASE_PATH/en-US.lproj/Localizable.strings\"\ncat \"$BASE_PATH/Base.lproj/Localizable.strings\" >> \"$BASE_PATH/en-US.lproj/Localizable.strings\"\necho \"\" >> \"$BASE_PATH/en-US.lproj/Localizable.strings\"\necho \"// OVERRIDE STRINGS\" >> \"$BASE_PATH/en-US.lproj/Localizable.strings\"\ncat \"$BASE_PATH/en-US.lproj/LocalizableOverride.strings\" >> \"$BASE_PATH/en-US.lproj/Localizable.strings\"\n";
+			showEnvVarsInLog = 0;
 		};
 		34C800531E3D5B5900164493 /* Run Script (Laurine) */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -401,7 +401,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -x\n\n# Get base path to project\nBASE_PATH=\"$PROJECT_DIR/$PROJECT_NAME\"\n\n#--------- START OF YOUR CONFIGURATION (change Path_To_.. to fit)\n\n# Get path to Laurine Generator script\nLAURINE_PATH=\"$BASE_PATH/../scripts/LaurineGenerator.swift\"\n\n# Get path to main localization file (usually english).\nSOURCE_PATH=\"$BASE_PATH/Base.lproj/Localizable.strings\"\n\n# Get path to output. If you use ObjC version of output, set implementation file (.m), as header will be generated automatically\nOUTPUT_PATH=\"$BASE_PATH/Localizations.swift\"\n\n#--------- END OF YOUR CONFIGURATION\n\n# Add permission to generator for script execution\nchmod 755 \"$LAURINE_PATH\"\n\n# Actually generate output. -- CUSTOMIZE -- parameters to your needs (see documentation).\n# Will only re-generate script if something changed\nif [ \"$OUTPUT_PATH\" -ot \"$SOURCE_PATH\" ]; then\n\"$LAURINE_PATH\" -i \"$SOURCE_PATH\" -c -o \"$OUTPUT_PATH\"\nfi";
+			shellScript = "set -x\n\n# Get base path to project\nBASE_PATH=\"$PROJECT_DIR/$PROJECT_NAME\"\n\n#--------- START OF YOUR CONFIGURATION (change Path_To_.. to fit)\n\n# Get path to Laurine Generator script its the binary\nLAURINE_PATH=\"$BASE_PATH/../scripts/LaurineGenerator.swift\"\nLAURINE_BIN_PATH=\"$BASE_PATH/../bin/laurine\"\n\n# Get path to main localization file (usually english).\nSOURCE_PATH=\"$BASE_PATH/Base.lproj/Localizable.strings\"\n\n# Get path to output. If you use ObjC version of output, set implementation file (.m), as header will be generated automatically\nOUTPUT_PATH=\"$BASE_PATH/Localizations.swift\"\n\n#--------- END OF YOUR CONFIGURATION\n\n# Build laurine binary if necessary\nif [ ! -f $LAURINE_BIN_PATH ]; then\nenv -i swiftc -emit-executable -o$LAURINE_BIN_PATH $LAURINE_PATH\nfi\n\n# Actually generate output. -- CUSTOMIZE -- parameters to your needs (see documentation).\n# Will only re-generate script if something changed\nif [ \"$OUTPUT_PATH\" -ot \"$SOURCE_PATH\" ]; then\n\"$LAURINE_BIN_PATH\" -i \"$SOURCE_PATH\" -c -o \"$OUTPUT_PATH\"\nfi\n";
+			showEnvVarsInLog = 0;
 		};
 		34D06BBB1C519C2100D30041 /* Run Script (carthage copy frameworks) */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -500,8 +501,8 @@
 		3465C1C01E3D6792008D4560 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				3465C1C31E3D67C9008D4560 /* en-US */,
 				34674D2C1E3D7120000B73E0 /* Base */,
+				34C15E76226329CB00350367 /* en-US */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

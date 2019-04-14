@@ -33,8 +33,9 @@
 "COMMAND_DETAIL.COPIED_TO_PASTEBOARD"="Copied to pasteboard";
 
 "INFO.ABOUT.HEADER"="About";
-"INFO.ABOUT.MESSAGE"="An iOS client for tldr-pages - simplified and community-driven man pages.";
+"INFO.ABOUT.MESSAGE"="An iOS client for tldr-pages - simplified and community-driven man pages.\n\nIf you spot missing or incorrect content, here's how you can fix it.";
 "INFO.ABOUT.LINK_ANCHOR"="tldr-pages";
+"INFO.ABOUT.CONTRIBUTION_ANCHOR"="here's how you can fix it";
 
 "INFO.VERSION.TITLE"="Version";
 "INFO.VERSION.DETAIL"="%@";

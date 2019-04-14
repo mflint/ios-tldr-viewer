@@ -6,6 +6,7 @@
 build/
 DerivedData
 tldr-viewer/en-US.lproj/Localizable.strings
+bin/
 
 ## Various settings
 *.pbxuser
