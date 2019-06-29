@@ -188,6 +188,8 @@ public class DataSource: DataSourceType, RefreshableDataSourceType, SearchableDa
         var commandsByName = [String:Command]()
         
         for commandJSON in indexFile {
+            guard (commandJSON["language"] as! Array<String>).contains("en") else { continue }
+
             let name = commandJSON["name"] as! String
             
             guard !commandNameBlackList.contains(name) else { continue }
