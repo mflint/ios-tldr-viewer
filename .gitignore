@@ -25,3 +25,7 @@ xcuserdata
 *.xcuserstate
 
 screenshots/*
+fastlane/screenshots/*
+fastlane/metadata/*
+fastlane/Preview.html
+
