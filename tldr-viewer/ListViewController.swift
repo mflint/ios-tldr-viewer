@@ -39,7 +39,7 @@ class ListViewController: UIViewController {
         
         self.viewModel = ListViewModel()
         
-        self.view.backgroundColor = .tldrTeal()
+        self.view.backgroundColor = Color.teal.uiColor()
         self.segmentedControl.selectedSegmentIndex = viewModel.selectedDataSourceIndex
         self.splitViewController?.delegate = self
         
@@ -53,7 +53,7 @@ class ListViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showInfoPopover" {
             // this sets the color of the popover arrow on iPad, to match the UINavigationBar color of the destination VC
-            segue.destination.popoverPresentationController?.backgroundColor = UIColor.tldrTeal()
+            segue.destination.popoverPresentationController?.backgroundColor = Color.teal.uiColor()
         } else if segue.identifier == "embed" {
             // the embedded UITableViewController
             if let embeddedVC = segue.destination as? ListTableViewController {

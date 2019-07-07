@@ -12,26 +12,38 @@ import UIKit
 class Theme {
     static func setup() {
         // navigation bar and item
-        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.tldrLightBody(), NSAttributedString.Key.font: UIFont.tldrBody()]
-        UINavigationBar.appearance().barTintColor = UIColor.tldrTeal()
-        UINavigationBar.appearance().tintColor = UIColor.tldrLightBody()
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: Color.inverseBody.uiColor(), NSAttributedString.Key.font: UIFont.tldrBody()]
+        UINavigationBar.appearance().barTintColor = Color.teal.uiColor()
+        UINavigationBar.appearance().backgroundColor = Color.teal.uiColor()
+        UINavigationBar.appearance().tintColor = Color.inverseBody.uiColor()
         UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont.tldrBody()], for: .normal)
 
         // set the background image for UINavigationBar, which removes the ugly black shadow
-        if let backgroundImage = imageWith(color: .tldrTeal()) {
-            UINavigationBar.appearance().setBackgroundImage(backgroundImage, for: .any, barMetrics: .default)
+        if let backgroundImage = imageWith(color: UIColor.clear) {
             UINavigationBar.appearance().shadowImage = backgroundImage
-            UINavigationBar.appearance().backgroundColor = .tldrTeal()
         }
-        
-        // segmented control
-        SegmentedControlWhite.appearance().tintColor = UIColor.tldrLightBody()
-        SegmentedControlTeal.appearance().tintColor = UIColor.tldrTeal()
+
+        // segmented control appearance changed a lot in iOS 13
+        if #available(iOS 13.0, *) {
+            SegmentedControl.appearance().selectedSegmentTintColor = Color.inverseBody.uiColor()
+            SegmentedControl.appearance().backgroundColor = Color.tealHighlight.uiColor()
+            SegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Color.inverseBody.uiColor()], for: .normal)
+            SegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Color.teal.uiColor()], for: .selected)
+            
+            SegmentedControlInverse.appearance().selectedSegmentTintColor = Color.teal.uiColor()
+            SegmentedControlInverse.appearance().backgroundColor = Color.inverseBody.uiColor()
+            SegmentedControlInverse.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Color.teal.uiColor()], for: .normal)
+            SegmentedControlInverse.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Color.inverseBody.uiColor()], for: .selected)
+        } else {
+            SegmentedControl.appearance().tintColor = Color.inverseBody.uiColor()
+            
+            SegmentedControlInverse.appearance().tintColor = Color.teal.uiColor()
+        }
         
         // UISearchBar text field
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).font = UIFont.tldrBody()
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = UIColor.tldrLightBody()
-        UILabel.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = UIColor.tldrMidBody() // placeholder
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = Color.inverseBody.uiColor()
+        UILabel.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = Color.inverseBody.uiColor() // placeholder
         UISearchBar.appearance().tintColor = .white // cursor and cancel button
     }
     
@@ -72,7 +84,7 @@ class Theme {
     }
     
     static func bodyAttributes() -> [NSAttributedString.Key : Any] {
-        return [NSAttributedString.Key.font:UIFont.tldrBody(), NSAttributedString.Key.foregroundColor:UIColor.tldrBody()]
+        return [NSAttributedString.Key.font:UIFont.tldrBody(), NSAttributedString.Key.foregroundColor:Color.body.uiColor()]
     }
     
     static func detailAttributed(string: String?) -> NSAttributedString? {
@@ -80,7 +92,7 @@ class Theme {
             return nil
         }
         
-        return NSAttributedString(string: string, attributes: [NSAttributedString.Key.font:UIFont.tldrBody(), NSAttributedString.Key.foregroundColor:UIColor.tldrDetail()])
+        return NSAttributedString(string: string, attributes: [NSAttributedString.Key.font:UIFont.tldrBody(), NSAttributedString.Key.foregroundColor:Color.detail.uiColor()])
     }
 }
 
@@ -90,32 +102,17 @@ extension UIFont {
     }
 }
 
-extension UIColor {
-    class func tldrBody() -> UIColor {
-        return UIColor(red: 33.0/255.0, green: 33.0/255.0, blue: 33.0/255.0, alpha: 1)
-    }
+enum Color: String {
+    case body = "clrBody"
+    case detail = "clrDetail"
+    case teal = "clrTeal"
+    case tealHighlight = "clrTealHighlight"
+    case actionBackground = "clrActionBackground"
+    case actionForeground = "clrActionForeground"
+    case inverseBody = "clrBodyInverse"
+    case midBody = "clrBodyMid"
     
-    class func tldrDetail() -> UIColor {
-        return UIColor.darkGray
-    }
-    
-    class func tldrTeal() -> UIColor {
-        return UIColor(red: 0, green: 0.5, blue: 0.5, alpha: 1)
-    }
-    
-    class func tldrActionBackground() -> UIColor {
-        return UIColor(red: 219.0/255.0, green: 243.0/255.0, blue: 242.0/255.0, alpha: 1)
-    }
-    
-    class func tldrActionForeground() -> UIColor {
-        return UIColor.darkGray
-    }
-    
-    class func tldrLightBody() -> UIColor {
-        return UIColor.white
-    }
-    
-    class func tldrMidBody() -> UIColor {
-        return UIColor.lightGray
+    func uiColor() -> UIColor {
+        return UIColor(named: rawValue)!
     }
 }

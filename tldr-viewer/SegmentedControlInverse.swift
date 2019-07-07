@@ -1,5 +1,5 @@
 //
-//  SegmentedControlWhite.swift
+//  SegmentedControlInverse.swift
 //  tldr-viewer
 //
 //  Created by Matthew Flint on 27/01/2017.
@@ -9,5 +9,5 @@
 import Foundation
 import UIKit
 
-class SegmentedControlWhite: UISegmentedControl {
+class SegmentedControlInverse: UISegmentedControl {
 }

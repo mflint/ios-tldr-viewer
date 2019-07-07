@@ -16,7 +16,7 @@ class TextCellRightDetail: UITableViewCell, BaseCell {
         super.awakeFromNib()
         self.textView.textContainer.lineFragmentPadding = 0
         self.textView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        self.textView.tintColor = UIColor.tldrTeal()
+        self.textView.tintColor = Color.teal.uiColor()
     }
     
     func configure(cellViewModel: BaseCellViewModel!) {

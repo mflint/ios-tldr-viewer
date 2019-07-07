@@ -12,7 +12,7 @@ class ListTableViewController: UITableViewController {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.tableView.sectionIndexColor = UIColor.tldrTeal()
+        self.tableView.sectionIndexColor = Color.teal.uiColor()
     }
     
     var viewModel: ListViewModel! {

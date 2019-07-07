@@ -24,14 +24,14 @@ private class ToastLabel: UILabel {
     }
     
     private func initialise() {
-        textColor = UIColor.tldrTeal()
+        textColor = Color.teal.uiColor()
         font = UIFont.tldrBody()
         preferredMaxLayoutWidth = UIScreen.main.bounds.width * 0.8
         numberOfLines = 0
 
         clipsToBounds = true
         layer.borderWidth = 2
-        layer.borderColor = UIColor.tldrTeal().cgColor
+        layer.borderColor = Color.teal.uiColor().cgColor
         layer.cornerRadius = 10
         layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         

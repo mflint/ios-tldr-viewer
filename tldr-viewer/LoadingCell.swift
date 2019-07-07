@@ -12,7 +12,7 @@ class LoadingCell: UITableViewCell, BaseCell {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     func configure(cellViewModel: BaseCellViewModel!) {
-        self.activityIndicator.color = UIColor.tldrTeal()
+        self.activityIndicator.color = Color.teal.uiColor()
         self.activityIndicator.startAnimating()
     }
 }
