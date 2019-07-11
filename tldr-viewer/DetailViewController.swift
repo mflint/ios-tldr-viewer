@@ -199,7 +199,7 @@ class DetailViewController: UIViewController {
         var sceneTitle: String
         var showSegmentedControl = false
 
-        if let viewModel = self.viewModel, let platformViewModel = viewModel.selectedPlatform {
+        if let viewModel = viewModel, let platformViewModel = viewModel.selectedPlatform {
             if (platformViewModel.message != nil) {
                 message = platformViewModel.message
                 htmlString = nil
@@ -211,7 +211,7 @@ class DetailViewController: UIViewController {
             
             showSegmentedControl = viewModel.showPlatforms
             if (showSegmentedControl) {
-                self.doConfigureSegmentedControl(viewModel)
+                doConfigureSegmentedControl(viewModel)
             }
         } else {
             message = Theme.detailAttributed(string: Localizations.CommandDetail.NothingSelected)
@@ -220,23 +220,27 @@ class DetailViewController: UIViewController {
         }
         
         if let messageToShow = message {
-            self.messageLabel.attributedText = messageToShow
-            self.messageView.isHidden = false
+            messageLabel.attributedText = messageToShow
+            messageView.isHidden = false
             
-            self.messageView.setNeedsLayout()
+            messageView.setNeedsLayout()
         } else {
-            self.messageView.isHidden = true
+            messageView.isHidden = true
         }
         
         if let htmlStringToShow = htmlString {
-            self.webView.loadHTMLString(htmlStringToShow, baseURL: nil)
-            self.webView.isHidden = false
+            webView.loadHTMLString(htmlStringToShow, baseURL: nil)
+            
+            // TODO: fix this terrible hack - show the webView after a delay, to avoid an annoying white flash
+            // ideally, we would *unhide* the webView here - but WKWebView flashes if its visible while loading
+            // https://feedbackassistant.apple.com/feedback/6605638
+            webView.isHidden = true
         } else {
-            self.webView.isHidden = true
+            webView.isHidden = true
         }
         
-        self.title = sceneTitle
-        self.doShowOrHideSegmentedControl(showSegmentedControl)
+        title = sceneTitle
+        doShowOrHideSegmentedControl(showSegmentedControl)
     }
     
     private func doConfigureFavourite() {
@@ -306,16 +310,11 @@ extension DetailViewController: WKNavigationDelegate {
     
     // TODO: fix this terrible hack - show the webView after a delay, to avoid an annoying white flash
     // https://feedbackassistant.apple.com/feedback/6605638
-    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        self.webView.isHidden = true
-    }
-    
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + DispatchTimeInterval.milliseconds(50)) {
             self.webView.isHidden = false
         }
     }
-    // End terrible hack
 }
 
 extension DetailViewController: WKURLSchemeHandler {
