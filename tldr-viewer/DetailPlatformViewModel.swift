@@ -46,8 +46,14 @@ class DetailPlatformViewModel {
     var platformName: String!
     var platformIndex: Int
     
-    // tldr page in HTML
-    var detailHTML: String?
+    // tldr page in HTML, with CSS
+    var detailHTML: String? {
+        if let unstyledDetailHTML = unstyledDetailHTML {
+            return Theme.pageFrom(htmlSnippet: unstyledDetailHTML)
+        }
+        
+        return nil
+    }
     
     // raw examples in this manpage
     var examples: [String]?
@@ -55,6 +61,7 @@ class DetailPlatformViewModel {
     private let dataSource: SearchableDataSourceType
     private let command: Command
     private let platform: Platform
+    private var unstyledDetailHTML: String?
     
     init(dataSource: SearchableDataSourceType, command: Command, platform: Platform, platformIndex: Int) {
         self.dataSource = dataSource
@@ -92,7 +99,7 @@ class DetailPlatformViewModel {
             .replacingOccurrences(of: "}}", with: "</span>")
         
         let seeAlso = generateSeeAlso(markdownString)
-        self.detailHTML = Theme.pageFrom(htmlSnippet: html + seeAlso)
+        unstyledDetailHTML = html + seeAlso
         
         self.message = nil
     }

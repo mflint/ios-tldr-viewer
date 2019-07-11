@@ -124,6 +124,18 @@ class DetailViewController: UIViewController {
         viewModel?.onCommandHidden()
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        if #available(iOS 13.0, *) {
+            // if the light/dark mode trait changes, then reconfigure the whole view
+            // this will recreate the CSS and reload the webview
+            let previousStyle = previousTraitCollection?.userInterfaceStyle
+            
+            if previousStyle != traitCollection.userInterfaceStyle {
+                configureView()
+            }
+        }
+    }
+    
     @IBAction func platformSegmentDidChange(_ sender: AnyObject) {
         guard let viewModel = viewModel else { return }
         
