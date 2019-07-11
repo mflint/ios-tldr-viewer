@@ -1,8 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14835.7" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14790.5"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -14,27 +17,27 @@
                         <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SW3-hq-qcp">
-                                <rect key="frame" x="0.0" y="232" width="600" height="136"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SW3-hq-qcp">
+                                <rect key="frame" x="0.0" y="378.5" width="414" height="139"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="transparent" translatesAutoresizingMaskIntoConstraints="NO" id="3JC-eY-FUJ">
-                                        <rect key="frame" x="250" y="0.0" width="100" height="100"/>
+                                        <rect key="frame" x="157" y="0.0" width="100" height="100"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="100" id="Lzi-Sy-FPO"/>
                                             <constraint firstAttribute="width" constant="100" id="fIw-dy-xVX"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tldr-pages" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EiL-4B-Tjd">
-                                        <rect key="frame" x="262" y="115" width="77" height="24"/>
+                                        <rect key="frame" x="168.5" y="115" width="77" height="24"/>
                                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.50285249948501587" blue="0.50867795944213867" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="3JC-eY-FUJ" firstAttribute="centerX" secondItem="SW3-hq-qcp" secondAttribute="centerX" id="caG-44-Els"/>
                                     <constraint firstItem="EiL-4B-Tjd" firstAttribute="centerX" secondItem="SW3-hq-qcp" secondAttribute="centerX" id="daQ-J1-2Tr"/>
@@ -44,7 +47,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.6470588235294118" green="0.85098039215686272" blue="0.82745098039215681" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="clrLaunchBackground"/>
                         <constraints>
                             <constraint firstItem="SW3-hq-qcp" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="5EN-uj-AtO"/>
                             <constraint firstAttribute="trailing" secondItem="SW3-hq-qcp" secondAttribute="trailing" id="5zr-Ew-ZMR"/>
@@ -60,5 +63,8 @@
     </scenes>
     <resources>
         <image name="transparent" width="100" height="100"/>
+        <namedColor name="clrLaunchBackground">
+            <color red="0.6470588235294118" green="0.85098039215686272" blue="0.82745098039215681" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

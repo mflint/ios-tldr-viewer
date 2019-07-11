@@ -13,8 +13,8 @@ class Theme {
     static func setup() {
         // navigation bar and item
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: Color.inverseBody.uiColor(), NSAttributedString.Key.font: UIFont.tldrBody()]
-        UINavigationBar.appearance().barTintColor = Color.teal.uiColor()
-        UINavigationBar.appearance().backgroundColor = Color.teal.uiColor()
+        UINavigationBar.appearance().barTintColor = Color.backgroundTint.uiColor()
+        UINavigationBar.appearance().backgroundColor = Color.backgroundTint.uiColor()
         UINavigationBar.appearance().tintColor = Color.inverseBody.uiColor()
         UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont.tldrBody()], for: .normal)
 
@@ -26,18 +26,18 @@ class Theme {
         // segmented control appearance changed a lot in iOS 13
         if #available(iOS 13.0, *) {
             SegmentedControl.appearance().selectedSegmentTintColor = Color.inverseBody.uiColor()
-            SegmentedControl.appearance().backgroundColor = Color.tealHighlight.uiColor()
+            SegmentedControl.appearance().backgroundColor = Color.segmentBackground.uiColor()
             SegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Color.inverseBody.uiColor()], for: .normal)
-            SegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Color.teal.uiColor()], for: .selected)
+            SegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Color.bodyTint.uiColor()], for: .selected)
             
-            SegmentedControlInverse.appearance().selectedSegmentTintColor = Color.teal.uiColor()
+            SegmentedControlInverse.appearance().selectedSegmentTintColor = Color.segmentBackground.uiColor()
             SegmentedControlInverse.appearance().backgroundColor = Color.inverseBody.uiColor()
-            SegmentedControlInverse.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Color.teal.uiColor()], for: .normal)
+            SegmentedControlInverse.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Color.bodyTint.uiColor()], for: .normal)
             SegmentedControlInverse.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Color.inverseBody.uiColor()], for: .selected)
         } else {
             SegmentedControl.appearance().tintColor = Color.inverseBody.uiColor()
             
-            SegmentedControlInverse.appearance().tintColor = Color.teal.uiColor()
+            SegmentedControlInverse.appearance().tintColor = Color.segmentBackground.uiColor()
         }
         
         // UISearchBar text field
@@ -47,7 +47,7 @@ class Theme {
         UISearchBar.appearance().tintColor = .white // cursor and cancel button
     }
     
-    static func imageWith(color: UIColor, size: CGSize = CGSize(width: 1, height: 1)) -> UIImage? {
+    private static func imageWith(color: UIColor, size: CGSize = CGSize(width: 1, height: 1)) -> UIImage? {
         let rect = CGRect(origin: .zero, size: size)
         UIGraphicsBeginImageContextWithOptions(rect.size, false, 0.0)
         color.setFill()
@@ -59,12 +59,21 @@ class Theme {
         return UIImage(cgImage: cgImage)
     }
     
-    static func css() -> String {
+    private static func css() -> String {
         let filePath = Bundle.main.url(forResource: "style", withExtension: "css")
         do {
             let data = try Data(contentsOf: filePath!)
-            let cssString = String(data: data, encoding: String.Encoding.utf8)
-            return cssString!
+            if var cssString = String(data: data, encoding: String.Encoding.utf8) {
+                // replace the named (asset catalog) colours with their actual values
+                let capturedGroups = cssString.capturedGroups(withRegex: "#([a-zA-Z]*)")
+                for capturedGroup in capturedGroups.reversed() {
+                    if let hexString = Color(rawValue: capturedGroup.substring)?.uiColor().hexString {
+                        cssString.replaceSubrange(capturedGroup.range, with: hexString)
+                    }
+                }
+                return cssString
+            }
+            return ""
         } catch {
             return ""
         }
@@ -92,7 +101,7 @@ class Theme {
             return nil
         }
         
-        return NSAttributedString(string: string, attributes: [NSAttributedString.Key.font:UIFont.tldrBody(), NSAttributedString.Key.foregroundColor:Color.detail.uiColor()])
+        return NSAttributedString(string: string, attributes: [NSAttributedString.Key.font:UIFont.tldrBody(), NSAttributedString.Key.foregroundColor:Color.bodyDetail.uiColor()])
     }
 }
 
@@ -102,15 +111,82 @@ extension UIFont {
     }
 }
 
+extension UIColor {
+    var hexString: String {
+        let traitCollection = UIScreen.main.traitCollection
+        let colorRef: [CGFloat]?
+        if #available(iOS 13.0, *) {
+            colorRef = self.resolvedColor(with: traitCollection).cgColor.components
+        } else {
+            colorRef = cgColor.components
+        }
+        let r = colorRef?[0] ?? 0
+        let g = colorRef?[1] ?? 0
+        let b = ((colorRef?.count ?? 0) > 2 ? colorRef?[2] : g) ?? 0
+        let a = cgColor.alpha
+        
+        var color = String(
+            format: "%02lX%02lX%02lX",
+            lroundf(Float(r * 255)),
+            lroundf(Float(g * 255)),
+            lroundf(Float(b * 255))
+        )
+        
+        if a < 1 {
+            color += String(format: "%02lX", lroundf(Float(a)))
+        }
+        
+        return color
+    }
+}
+
 enum Color: String {
+    /// a strongly tinted background (example: for navigation bars)
+    case backgroundTint = "clrBackgroundTint"
+    
+    /// a standard completely-black or completely-white background
+    /// for ViewControllers
+    case background = "clrBackground"
+
+    /// the standard background colour for TableViewControllers
+    case tableBackground = "clrTableBackground"
+
+    /// a slightly lighter background colour used for TableViewCells, so the cells stand out
+    /// above the TableView background. Most noticable in a grouped TableView
+    case cellBackground = "clrCellBackground"
+    
+    /// this is the standard colour for body text
     case body = "clrBody"
-    case detail = "clrDetail"
-    case teal = "clrTeal"
-    case tealHighlight = "clrTealHighlight"
+    
+    /// similar to "body", but slightly less contrast compared with the background. Used
+    /// for the detail label in a TableViewCell. Most noticable in dark mode, when the List
+    /// ViewController shows platforms for a command (linux, macos, etc)
+    case bodyDetail = "clrBodyDetail"
+    
+    // TODO: can this go?
+    /// only used as foreground colours in SegmentedControls
+    case bodyTint = "clrBodyTint"
+    
+    /// this is a highighted colour for body text (perhaps for a tappable URL
+    /// inside a paragraph of "body" text)
+    case bodyHighlight = "clrBodyHighlight"
+    
+    /// a slightly different tint, used in SegmentedControls (so the SegmentedControl
+    /// background doesn't blend in with the background of its parent view)
+    case segmentBackground = "clrSegmentBackground"
+    
+    /// the background for an action button (example: the "Update index now" button"
     case actionBackground = "clrActionBackground"
+    
+    /// the foreground for an action button (example: the "Update index now" button"
     case actionForeground = "clrActionForeground"
+    
+    /// body colour for when text is on an inversed background (example: navigation bar
+    /// or segmented control)
     case inverseBody = "clrBodyInverse"
-    case midBody = "clrBodyMid"
+    
+    /// background colour for showing code examples in the "detail" view
+    case codeBackground = "clrCodeBackground"
     
     func uiColor() -> UIColor {
         return UIColor(named: rawValue)!

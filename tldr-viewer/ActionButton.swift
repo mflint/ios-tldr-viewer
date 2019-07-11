@@ -11,7 +11,7 @@ import UIKit
 class ActionButton: UIButton {
     override func awakeFromNib() {
         self.backgroundColor = Color.actionBackground.uiColor()
-        self.layer.cornerRadius = 2
+        self.layer.cornerRadius = 8
         self.titleLabel?.font = UIFont.tldrBody()
         self.setTitleColor(Color.actionForeground.uiColor(), for: .normal)
         self.contentEdgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)

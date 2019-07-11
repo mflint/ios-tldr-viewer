@@ -15,7 +15,10 @@ class TextCellBasic: UITableViewCell, BaseCell {
         super.awakeFromNib()
         self.textView.textContainer.lineFragmentPadding = 0
         self.textView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        self.textView.tintColor = Color.teal.uiColor()
+        
+        // textView.tintColor sets the colour for the NSAttributedString.Key.link
+        // parts of any attributed strings
+        self.textView.tintColor = Color.bodyHighlight.uiColor()
     }
     
     func configure(cellViewModel: BaseCellViewModel!) {

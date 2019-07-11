@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14790.5"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -12,6 +13,7 @@
         <scene sceneID="pY4-Hu-kfo">
             <objects>
                 <navigationController title="Commands" id="RMx-3f-FxP" userLabel="Commands" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translucent="NO" id="Pmd-2v-anx">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -29,7 +31,7 @@
             <objects>
                 <viewController title="Detail" id="JEX-9P-axG" customClass="DetailViewController" customModule="tldr_viewer" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="svH-Pt-448">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="424"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <segmentedControl hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="mvg-5A-6xc" customClass="SegmentedControlInverse" customModule="tldr_viewer" customModuleProvider="target">
@@ -43,16 +45,16 @@
                                 </connections>
                             </segmentedControl>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KMC-Te-eDT">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="424"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iNu-dr-Hwu">
-                                        <rect key="frame" x="139" y="201.5" width="42" height="21"/>
+                                        <rect key="frame" x="139" y="251.5" width="42" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="iNu-dr-Hwu" firstAttribute="top" secondItem="KMC-Te-eDT" secondAttribute="top" id="5hu-fk-NER"/>
                                     <constraint firstItem="iNu-dr-Hwu" firstAttribute="centerX" secondItem="KMC-Te-eDT" secondAttribute="centerX" id="8Am-FA-Rih"/>
@@ -69,7 +71,7 @@
                                 </variation>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" name="clrBackground"/>
                         <constraints>
                             <constraint firstItem="mvg-5A-6xc" firstAttribute="top" secondItem="GHa-q5-ekn" secondAttribute="top" constant="5" id="1Qg-D6-BCP"/>
                             <constraint firstItem="mvg-5A-6xc" firstAttribute="centerX" secondItem="GHa-q5-ekn" secondAttribute="centerX" id="6aP-7X-Rud"/>
@@ -97,6 +99,7 @@
         <scene sceneID="Nki-YV-4Qg">
             <objects>
                 <splitViewController id="H1p-Uh-vWS" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <toolbarItems/>
                     <connections>
                         <segue destination="RMx-3f-FxP" kind="relationship" relationship="masterViewController" id="BlO-5A-QYV"/>
@@ -129,7 +132,7 @@
                                 </connections>
                             </containerView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" name="clrBackgroundTint"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="jew-g3-mNh" secondAttribute="bottom" id="2ZX-5i-H0D"/>
                             <constraint firstItem="jew-g3-mNh" firstAttribute="leading" secondItem="rlv-56-8ec" secondAttribute="leading" id="AZQ-J2-dDr"/>
@@ -145,7 +148,7 @@
                     <navigationItem key="navigationItem" id="Zdf-7t-Un8">
                         <nil key="title"/>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" id="mvl-eb-tld" customClass="SegmentedControl" customModule="tldr_viewer" customModuleProvider="target">
-                            <rect key="frame" x="96" y="7" width="128" height="30"/>
+                            <rect key="frame" x="96" y="5" width="128" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="First"/>
@@ -181,7 +184,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="GO5-Pc-7pf">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="468"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" name="clrTableBackground"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CommandCell" textLabel="0bm-wS-K8m" detailTextLabel="cJd-Nx-IDM" style="IBUITableViewCellStyleValue1" id="7go-UY-25x" customClass="CommandCell" customModule="tldr_viewer" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="320" height="44"/>
@@ -206,7 +209,7 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" name="clrCellBackground"/>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="MessageAndButtonCell" rowHeight="108" id="eIi-j4-Fbh" userLabel="MessageAndButtonCell" customClass="MessageAndButtonCell" customModule="tldr_viewer" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="72" width="320" height="108"/>
@@ -216,7 +219,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qlS-pa-0x3">
-                                            <rect key="frame" x="26" y="12" width="268" height="20.5"/>
+                                            <rect key="frame" x="139" y="12" width="42" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -234,10 +237,12 @@
                                         <constraint firstItem="0JY-vo-1CC" firstAttribute="centerX" secondItem="tMq-Ae-sJL" secondAttribute="centerX" id="e8g-St-5PT"/>
                                         <constraint firstItem="0JY-vo-1CC" firstAttribute="top" secondItem="qlS-pa-0x3" secondAttribute="bottom" constant="5" id="fR4-xD-0sA"/>
                                         <constraint firstItem="qlS-pa-0x3" firstAttribute="top" secondItem="tMq-Ae-sJL" secondAttribute="top" constant="12" id="on4-vB-mne"/>
-                                        <constraint firstItem="qlS-pa-0x3" firstAttribute="leading" secondItem="tMq-Ae-sJL" secondAttribute="leadingMargin" constant="10" id="rqh-Gq-C38"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="qlS-pa-0x3" secondAttribute="trailing" constant="10" id="zVl-0Y-AbV"/>
+                                        <constraint firstItem="qlS-pa-0x3" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="tMq-Ae-sJL" secondAttribute="leadingMargin" constant="10" id="rqh-Gq-C38"/>
+                                        <constraint firstItem="qlS-pa-0x3" firstAttribute="centerX" secondItem="tMq-Ae-sJL" secondAttribute="centerX" id="uoH-19-Crh"/>
+                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="qlS-pa-0x3" secondAttribute="trailing" constant="10" id="zVl-0Y-AbV"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" name="clrCellBackground"/>
                                 <connections>
                                     <outlet property="button" destination="0JY-vo-1CC" id="y2K-Dw-bjn"/>
                                     <outlet property="messageLabel" destination="qlS-pa-0x3" id="nfO-fc-1OK"/>
@@ -260,6 +265,7 @@
                                         <constraint firstAttribute="bottom" secondItem="41H-FU-yEF" secondAttribute="bottom" constant="12" id="pw5-yS-Equ"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" name="clrCellBackground"/>
                                 <connections>
                                     <outlet property="activityIndicator" destination="41H-FU-yEF" id="Cbp-hY-7L8"/>
                                 </connections>
@@ -284,6 +290,7 @@
                                         <constraint firstItem="MgI-xo-OTV" firstAttribute="top" secondItem="Bl0-pW-xZd" secondAttribute="top" constant="12" id="uyz-ED-cpf"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" name="clrCellBackground"/>
                                 <connections>
                                     <outlet property="messageLabel" destination="MgI-xo-OTV" id="Q8w-jn-QVO"/>
                                 </connections>
@@ -294,6 +301,7 @@
                             <outlet property="delegate" destination="KVq-bc-a3X" id="Te7-PJ-5h1"/>
                         </connections>
                     </tableView>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <connections>
                         <segue destination="vC3-pB-5Vb" kind="showDetail" identifier="showDetail" id="BFu-YO-M7a"/>
                     </connections>
@@ -312,7 +320,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="IfW-Un-kZd">
                                 <rect key="frame" x="0.0" y="64" width="320" height="504"/>
-                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="TextCellBasic" rowHeight="61" id="han-Iq-36I" customClass="TextCellBasic" customModule="tldr_viewer" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="55.5" width="320" height="61"/>
@@ -336,6 +344,7 @@
                                                 <constraint firstAttribute="bottom" secondItem="7DR-W7-YYl" secondAttribute="bottom" constant="6" id="tQ7-GI-cE5"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" name="clrCellBackground"/>
                                         <connections>
                                             <outlet property="textView" destination="7DR-W7-YYl" id="AjD-Qu-q3H"/>
                                         </connections>
@@ -369,6 +378,7 @@
                                                 <constraint firstItem="Hn4-KQ-S6E" firstAttribute="leading" secondItem="uiU-u0-W8d" secondAttribute="trailing" constant="12" id="uRy-jG-cCo"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" name="clrCellBackground"/>
                                         <connections>
                                             <outlet property="detailLabel" destination="Hn4-KQ-S6E" id="LPb-wb-jv1"/>
                                             <outlet property="textView" destination="uiU-u0-W8d" id="Ms5-LA-KiR"/>
@@ -381,7 +391,7 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" name="clrTableBackground"/>
                         <constraints>
                             <constraint firstItem="IfW-Un-kZd" firstAttribute="top" secondItem="sHi-qn-Avm" secondAttribute="topMargin" id="ISf-de-WRa"/>
                             <constraint firstAttribute="bottom" secondItem="IfW-Un-kZd" secondAttribute="bottom" id="T4E-a1-m4F"/>
@@ -396,6 +406,7 @@
                             </mask>
                         </variation>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" title="Info" id="CEb-mk-Sqg">
                         <barButtonItem key="leftBarButtonItem" systemItem="done" id="7hL-XG-ziM">
                             <connections>
@@ -417,7 +428,7 @@
             <objects>
                 <navigationController id="vC3-pB-5Vb" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
-                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="DjV-YW-jjY">
+                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translucent="NO" id="DjV-YW-jjY">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -433,6 +444,7 @@
         <scene sceneID="hHt-c0-AN3">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="87T-K0-dVu" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Zoa-Ye-cNt">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="56"/>
@@ -450,8 +462,20 @@
     </scenes>
     <resources>
         <image name="info" width="22" height="22"/>
+        <namedColor name="clrBackground">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="clrBackgroundTint">
+            <color red="0.0" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="clrCellBackground">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="clrTableBackground">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="BFu-YO-M7a"/>
+        <segue reference="Tll-UG-LXB"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -39,11 +39,15 @@ class ListViewController: UIViewController {
         
         self.viewModel = ListViewModel()
         
-        self.view.backgroundColor = Color.teal.uiColor()
         self.segmentedControl.selectedSegmentIndex = viewModel.selectedDataSourceIndex
         self.splitViewController?.delegate = self
+        self.splitViewController?.preferredDisplayMode = .allVisible
         
         self.searchBar?.placeholder = viewModel.searchPlaceholder
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
         doShowOrHideSearchBar()
     }
@@ -53,7 +57,7 @@ class ListViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showInfoPopover" {
             // this sets the color of the popover arrow on iPad, to match the UINavigationBar color of the destination VC
-            segue.destination.popoverPresentationController?.backgroundColor = Color.teal.uiColor()
+            segue.destination.popoverPresentationController?.backgroundColor = Color.backgroundTint.uiColor()
         } else if segue.identifier == "embed" {
             // the embedded UITableViewController
             if let embeddedVC = segue.destination as? ListTableViewController {
@@ -113,10 +117,11 @@ extension ListViewController: UISearchBarDelegate {
 extension ListViewController: UISplitViewControllerDelegate {
     // not called for iPhone 6+ or iPad
     func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
+        // return false, UIKit performs the default collapsing behaviour, showing the Detail VC
+        // return true, UIKit doesn't perform its default collapsing behaviour, leaving the Master VC present
+        
+        // so return true if no command is selected, to return to the List VC;
+        // otherwise return false, to keep the Detail VC.
         return !self.viewModel.showDetailWhenHorizontallyCompact()
-    }
-    
-    func splitViewController(_ svc: UISplitViewController, shouldHide vc: UIViewController, in orientation: UIInterfaceOrientation) -> Bool {
-        return false;
     }
 }

@@ -24,14 +24,15 @@ private class ToastLabel: UILabel {
     }
     
     private func initialise() {
-        textColor = Color.teal.uiColor()
+        textColor = Color.bodyHighlight.uiColor()
         font = UIFont.tldrBody()
         preferredMaxLayoutWidth = UIScreen.main.bounds.width * 0.8
         numberOfLines = 0
 
         clipsToBounds = true
         layer.borderWidth = 2
-        layer.borderColor = Color.teal.uiColor().cgColor
+        // TODO: is this colour correct? (Feels wrong)
+        layer.borderColor = Color.segmentBackground.uiColor().cgColor
         layer.cornerRadius = 10
         layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         
@@ -84,6 +85,7 @@ class DetailViewController: UIViewController {
         let configuration = WKWebViewConfiguration()
         configuration.setURLSchemeHandler(self, forURLScheme: "tldr")
         self.webView = WKWebView(frame: .zero, configuration: configuration)
+        self.webView.backgroundColor = .clear
         
         // disable webview magnification
         self.webView.scrollView.delegate = self
@@ -267,6 +269,19 @@ extension DetailViewController: WKNavigationDelegate {
             decisionHandler(.cancel)
         }
     }
+    
+    // TODO: fix this terrible hack - show the webView after a delay, to avoid an annoying white flash
+    // https://feedbackassistant.apple.com/feedback/6605638
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        self.webView.isHidden = true
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + DispatchTimeInterval.milliseconds(50)) {
+            self.webView.isHidden = false
+        }
+    }
+    // End terrible hack
 }
 
 extension DetailViewController: WKURLSchemeHandler {
