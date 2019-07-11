@@ -69,13 +69,12 @@ class DetailViewController: UIViewController {
 
     var viewModel: DetailViewModel? {
         didSet {
-            viewModel?.updateSignal = {
-                self.configureView()
-            }
+            viewModel?.delegate = self
             viewModel?.setPasteboardValue = { value, message in
                 self.setPasteboard(string: value, message: message)
             }
-            self.configureView()
+            configureFavourite()
+            configureContent()
         }
     }
     
@@ -84,30 +83,31 @@ class DetailViewController: UIViewController {
         
         let configuration = WKWebViewConfiguration()
         configuration.setURLSchemeHandler(self, forURLScheme: "tldr")
-        self.webView = WKWebView(frame: .zero, configuration: configuration)
-        self.webView.backgroundColor = .clear
+        webView = WKWebView(frame: .zero, configuration: configuration)
+        webView.backgroundColor = .clear
         
         // disable webview magnification
-        self.webView.scrollView.delegate = self
-        self.webView.navigationDelegate = self
+        webView.scrollView.delegate = self
+        webView.navigationDelegate = self
         
-        self.webView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(self.webView)
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(webView)
         
-        self.webView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-        self.webView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-        self.webView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+        webView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        webView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        webView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
 
         // two top constraints for the web view
-        self.webViewToTopAnchorConstraint = self.webView.topAnchor.constraint(equalTo: self.view.topAnchor)
-        self.webViewToSegmentedControlConstraint = self.webView.topAnchor.constraint(equalTo: self.platformsSegmentedControl.bottomAnchor, constant: 3)
+        webViewToTopAnchorConstraint = webView.topAnchor.constraint(equalTo: view.topAnchor)
+        webViewToSegmentedControlConstraint = webView.topAnchor.constraint(equalTo: platformsSegmentedControl.bottomAnchor, constant: 3)
         
-        self.messageView.isHidden = true
+        messageView.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.configureView()
+        configureFavourite()
+        configureContent()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -131,7 +131,7 @@ class DetailViewController: UIViewController {
             let previousStyle = previousTraitCollection?.userInterfaceStyle
             
             if previousStyle != traitCollection.userInterfaceStyle {
-                configureView()
+                configureContent()
             }
         }
     }
@@ -142,13 +142,23 @@ class DetailViewController: UIViewController {
         viewModel.select(platformIndex: self.platformsSegmentedControl.selectedSegmentIndex)
     }
     
-    private func configureView() {
+    private func configureFavourite() {
         if viewIfLoaded == nil {
             return
         }
         
         DispatchQueue.main.async {
-            self.doConfigureView()
+            self.doConfigureFavourite()
+        }
+    }
+    
+    private func configureContent() {
+        if viewIfLoaded == nil {
+            return
+        }
+        
+        DispatchQueue.main.async {
+            self.doConfigureContent()
         }
     }
     
@@ -183,7 +193,7 @@ class DetailViewController: UIViewController {
         }
     }
     
-    private func doConfigureView() {
+    private func doConfigureContent() {
         var htmlString: String?
         var message: NSAttributedString?
         var sceneTitle: String
@@ -227,7 +237,9 @@ class DetailViewController: UIViewController {
         
         self.title = sceneTitle
         self.doShowOrHideSegmentedControl(showSegmentedControl)
-        
+    }
+    
+    private func doConfigureFavourite() {
         if let viewModel = viewModel {
             let imageLarge = UIImage(imageLiteralResourceName: viewModel.favouriteButtonIconLarge)
             let imageSmall = UIImage(imageLiteralResourceName: viewModel.favouriteButtonIconSmall)
@@ -261,6 +273,16 @@ class DetailViewController: UIViewController {
         self.platformsSegmentedControl.isHidden = !show
         self.webViewToSegmentedControlConstraint.isActive = show
         self.webViewToTopAnchorConstraint.isActive = !show
+    }
+}
+
+extension DetailViewController: DetailViewModelDelegate {
+    func updateFavourite() {
+        configureFavourite()
+    }
+    
+    func updateContent() {
+        configureContent()
     }
 }
 

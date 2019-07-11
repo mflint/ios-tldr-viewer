@@ -8,9 +8,13 @@
 
 import Foundation
 
+protocol DetailViewModelDelegate: class {
+    func updateFavourite()
+    func updateContent()
+}
+
 class DetailViewModel {
-    // no-op closures until the ViewController provides its own
-    var updateSignal: () -> Void = {}
+    weak var delegate: DetailViewModelDelegate?
     
     // set a value in the UIKit pasteboard
     var setPasteboardValue: (String, String) -> Void = { value, message in }
@@ -45,6 +49,8 @@ class DetailViewModel {
             
             self.platforms = platforms
             setupFavourite()
+            delegate?.updateContent()
+            delegate?.updateFavourite()
         }
     }
     
@@ -66,7 +72,7 @@ class DetailViewModel {
     func select(platformIndex: Int) {
         if (platformIndex >= 0 && platformIndex <= self.platforms.count-1) {
             self.selectedPlatform = self.platforms[platformIndex]
-            updateSignal()
+            delegate?.updateContent()
         }
     }
     
@@ -116,14 +122,13 @@ class DetailViewModel {
         
         if let command = DataSource.sharedInstance.commandWith(name: commandName) {
             self.command = command
-            updateSignal()
             onCommandDisplayed()
         }
     }
     
     @objc func favouriteChange(notification: Notification) {
         setupFavourite()
-        updateSignal()
+        delegate?.updateFavourite()
     }
     
     private func setupFavourite() {
