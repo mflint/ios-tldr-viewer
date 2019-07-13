@@ -72,8 +72,8 @@ class DetailViewController: UIViewController {
             viewModel?.setPasteboardValue = { value, message in
                 self.setPasteboard(string: value, message: message)
             }
-            configureFavourite()
-            configureContent()
+            updateFavourite()
+            updateCommand()
         }
     }
     
@@ -105,8 +105,9 @@ class DetailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        configureFavourite()
-        configureContent()
+        updateFavourite()
+        updateCommand()
+        updatePlatformContent()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -130,7 +131,7 @@ class DetailViewController: UIViewController {
             let previousStyle = previousTraitCollection?.userInterfaceStyle
             
             if previousStyle != traitCollection.userInterfaceStyle {
-                configureContent()
+                updatePlatformContent()
             }
         }
     }
@@ -139,26 +140,6 @@ class DetailViewController: UIViewController {
         guard let viewModel = viewModel else { return }
         
         viewModel.select(platformIndex: self.platformsSegmentedControl.selectedSegmentIndex)
-    }
-    
-    private func configureFavourite() {
-        if viewIfLoaded == nil {
-            return
-        }
-        
-        DispatchQueue.main.async {
-            self.doConfigureFavourite()
-        }
-    }
-    
-    private func configureContent() {
-        if viewIfLoaded == nil {
-            return
-        }
-        
-        DispatchQueue.main.async {
-            self.doConfigureContent()
-        }
     }
     
     private func setPasteboard(string: String, message: String) {
@@ -192,13 +173,24 @@ class DetailViewController: UIViewController {
         }
     }
     
-    private func doConfigureContent() {
+    private func doConfigureCommand() {
+        if let viewModel = viewModel {
+            if viewModel.showPlatforms {
+                doConfigureSegmentedControl(viewModel)
+                doShowOrHideSegmentedControl(true)
+            } else {
+                doShowOrHideSegmentedControl(false)
+            }
+        }
+    }
+    
+    private func doConfigurePlatformContent() {
         var htmlString: String?
         var message: NSAttributedString?
         var sceneTitle: String
-        var showSegmentedControl = false
 
-        if let viewModel = viewModel, let platformViewModel = viewModel.selectedPlatform {
+        if let viewModel = viewModel,
+            let platformViewModel = viewModel.selectedPlatform {
             if (platformViewModel.message != nil) {
                 message = platformViewModel.message
                 htmlString = nil
@@ -207,11 +199,6 @@ class DetailViewController: UIViewController {
                 htmlString = platformViewModel.detailHTML!
             }
             sceneTitle = viewModel.navigationBarTitle
-            
-            showSegmentedControl = viewModel.showPlatforms
-            if (showSegmentedControl) {
-                doConfigureSegmentedControl(viewModel)
-            }
         } else {
             message = Theme.detailAttributed(string: Localizations.CommandDetail.NothingSelected)
             htmlString = nil
@@ -239,7 +226,6 @@ class DetailViewController: UIViewController {
         }
         
         title = sceneTitle
-        doShowOrHideSegmentedControl(showSegmentedControl)
     }
     
     private func doConfigureFavourite() {
@@ -281,11 +267,33 @@ class DetailViewController: UIViewController {
 
 extension DetailViewController: DetailViewModelDelegate {
     func updateFavourite() {
-        configureFavourite()
+        if viewIfLoaded == nil {
+            return
+        }
+        
+        DispatchQueue.main.async {
+            self.doConfigureFavourite()
+        }
     }
     
-    func updateContent() {
-        configureContent()
+    func updateCommand() {
+        if viewIfLoaded == nil {
+            return
+        }
+        
+        DispatchQueue.main.async {
+            self.doConfigureCommand()
+        }
+    }
+    
+    func updatePlatformContent() {
+        if viewIfLoaded == nil {
+            return
+        }
+        
+        DispatchQueue.main.async {
+            self.doConfigurePlatformContent()
+        }
     }
 }
 

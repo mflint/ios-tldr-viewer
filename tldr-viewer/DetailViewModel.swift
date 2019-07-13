@@ -9,8 +9,14 @@
 import Foundation
 
 protocol DetailViewModelDelegate: class {
+    /// the "favourite" status of the command has changed, and should be redrawn
     func updateFavourite()
-    func updateContent()
+    
+    /// the command has changed, so the title and list of platforms should be redrawn
+    func updateCommand()
+    
+    /// the selected platform has changed, so the html content should be redrawn
+    func updatePlatformContent()
 }
 
 class DetailViewModel {
@@ -30,7 +36,11 @@ class DetailViewModel {
         }
     }
     var showPlatforms: Bool = false
-    var selectedPlatform: DetailPlatformViewModel!
+    var selectedPlatform: DetailPlatformViewModel! {
+        didSet {
+            delegate?.updatePlatformContent()
+        }
+    }
     
     var favourite: Bool = false
     var favouriteButtonIconSmall: String!
@@ -41,6 +51,10 @@ class DetailViewModel {
         didSet {
             self.navigationBarTitle = self.command.name
             
+            setupFavourite()
+            delegate?.updateCommand()
+            delegate?.updateFavourite()
+            
             var platforms: [DetailPlatformViewModel] = []
             for (index, platform) in self.command.platforms.enumerated() {
                 let platformVM = DetailPlatformViewModel(dataSource: dataSource, command: self.command, platform: platform, platformIndex: index)
@@ -48,9 +62,6 @@ class DetailViewModel {
             }
             
             self.platforms = platforms
-            setupFavourite()
-            delegate?.updateContent()
-            delegate?.updateFavourite()
         }
     }
     
@@ -72,7 +83,7 @@ class DetailViewModel {
     func select(platformIndex: Int) {
         if (platformIndex >= 0 && platformIndex <= self.platforms.count-1) {
             self.selectedPlatform = self.platforms[platformIndex]
-            delegate?.updateContent()
+            delegate?.updatePlatformContent()
         }
     }
     
