@@ -7,6 +7,12 @@ build/
 DerivedData
 tldr-viewer/en-US.lproj/Localizable.strings
 bin/
+tldr-viewer.ipa
+tldr-viewer.app.dSYM.zip
+
+## other Fastlane output
+fastlane/README.md
+fastlane/report.xml
 
 ## Various settings
 *.pbxuser

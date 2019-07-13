@@ -91,18 +91,6 @@ public struct Localizations {
             }
         }
 
-        public struct Version {
-
-            /// Base translation: Version
-            public static var Title : String = NSLocalizedString("INFO.VERSION.TITLE", comment: "")
-
-            /// Base translation: %@
-            public static func Detail(_ value1 : String) -> String {
-                return String(format: NSLocalizedString("INFO.VERSION.DETAIL", comment: ""), value1)
-            }
-
-        }
-
         public struct Author {
 
             /// Base translation: © %@ Green Light Apps
@@ -125,16 +113,28 @@ public struct Localizations {
 
         }
 
+        public struct Version {
+
+            /// Base translation: Version
+            public static var Title : String = NSLocalizedString("INFO.VERSION.TITLE", comment: "")
+
+            /// Base translation: %@
+            public static func Detail(_ value1 : String) -> String {
+                return String(format: NSLocalizedString("INFO.VERSION.DETAIL", comment: ""), value1)
+            }
+
+        }
+
         public struct OpenSource {
 
-            /// Base translation: Fork me
-            public static var LinkAnchor : String = NSLocalizedString("INFO.OPEN_SOURCE.LINK_ANCHOR", comment: "")
+            /// Base translation: Open Source app
+            public static var Header : String = NSLocalizedString("INFO.OPEN_SOURCE.HEADER", comment: "")
 
             /// Base translation: Fork me on GitHub!
             public static var Message : String = NSLocalizedString("INFO.OPEN_SOURCE.MESSAGE", comment: "")
 
-            /// Base translation: Open Source app
-            public static var Header : String = NSLocalizedString("INFO.OPEN_SOURCE.HEADER", comment: "")
+            /// Base translation: Fork me
+            public static var LinkAnchor : String = NSLocalizedString("INFO.OPEN_SOURCE.LINK_ANCHOR", comment: "")
 
         }
 
@@ -151,6 +151,16 @@ public struct Localizations {
 
             /// Base translation: tldr-pages
             public static var LinkAnchor : String = NSLocalizedString("INFO.ABOUT.LINK_ANCHOR", comment: "")
+
+        }
+
+        public struct BugReports {
+
+            /// Base translation: Bug reports, requests, pull requests welcome at the GitHub Issues page.
+            public static var Message : String = NSLocalizedString("INFO.BUG_REPORTS.MESSAGE", comment: "")
+
+            /// Base translation: GitHub Issues
+            public static var LinkAnchor : String = NSLocalizedString("INFO.BUG_REPORTS.LINK_ANCHOR", comment: "")
 
         }
 
@@ -177,45 +187,35 @@ public struct Localizations {
 
             }
         }
-
-        public struct BugReports {
-
-            /// Base translation: Bug reports, requests, pull requests welcome at the GitHub Issues page.
-            public static var Message : String = NSLocalizedString("INFO.BUG_REPORTS.MESSAGE", comment: "")
-
-            /// Base translation: GitHub Issues
-            public static var LinkAnchor : String = NSLocalizedString("INFO.BUG_REPORTS.LINK_ANCHOR", comment: "")
-
-        }
     }
 
     public struct CommandList {
 
-
-        public struct Search {
-
-
-            public struct NothingFound {
-
-                /// Base translation: tldr
-                public static var ForHighlight : String = NSLocalizedString("COMMAND_LIST.SEARCH.NOTHING_FOUND.FOR_HIGHLIGHT", comment: "")
-
-                /// Base translation: Nothing found for '%@'.  tldr is a community effort, and replies on people like you to contribute content. 
-                public static func For(_ value1 : String) -> String {
-                    return String(format: NSLocalizedString("COMMAND_LIST.SEARCH.NOTHING_FOUND.FOR", comment: ""), value1)
-                }
-
-                /// Base translation: Contribute new content
-                public static var ContributeContent : String = NSLocalizedString("COMMAND_LIST.SEARCH.NOTHING_FOUND.CONTRIBUTE_CONTENT", comment: "")
-
-            }
-        }
 
         public struct Favourites {
 
             /// Base translation: No favourites yet!  Tap the ♡ button to favourite a command.
             public static var None : String = NSLocalizedString("COMMAND_LIST.FAVOURITES.NONE", comment: "")
 
+        }
+
+        public struct Search {
+
+
+            public struct NothingFound {
+
+                /// Base translation: Nothing found for '%@'.  tldr is a community effort, and relies on people like you to contribute content. 
+                public static func For(_ value1 : String) -> String {
+                    return String(format: NSLocalizedString("COMMAND_LIST.SEARCH.NOTHING_FOUND.FOR", comment: ""), value1)
+                }
+
+                /// Base translation: tldr
+                public static var ForHighlight : String = NSLocalizedString("COMMAND_LIST.SEARCH.NOTHING_FOUND.FOR_HIGHLIGHT", comment: "")
+
+                /// Base translation: Contribute new content
+                public static var ContributeContent : String = NSLocalizedString("COMMAND_LIST.SEARCH.NOTHING_FOUND.CONTRIBUTE_CONTENT", comment: "")
+
+            }
         }
 
         public struct AllCommands {

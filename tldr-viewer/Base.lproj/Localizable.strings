@@ -21,7 +21,7 @@
 "COMMAND_LIST.ERROR.COULD_NOT_READ_INDEX_FILE"="Could not the read index file";
 "COMMAND_LIST.INDEX_OLD.NUMBER_OF_DAYS"="The index is %d days old.";
 "COMMAND_LIST.INDEX_OLD.UPDATE_NOW"="Update index now";
-"COMMAND_LIST.SEARCH.NOTHING_FOUND.FOR"="Nothing found for '%@'.\n\ntldr is a community effort, and replies on people like you to contribute content.\n";
+"COMMAND_LIST.SEARCH.NOTHING_FOUND.FOR"="Nothing found for '%@'.\n\ntldr is a community effort, and needs people like you to contribute content.\n";
 "COMMAND_LIST.SEARCH.NOTHING_FOUND.FOR_HIGHLIGHT"="tldr";
 "COMMAND_LIST.SEARCH.NOTHING_FOUND.CONTRIBUTE_CONTENT"="Contribute new content";
 
