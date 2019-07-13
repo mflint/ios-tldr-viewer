@@ -92,14 +92,15 @@ class DetailPlatformViewModel {
     }
     
     private func handleSuccess(_ markdownString: String) {
+        let changedMarkdownAndSeeAlso = generateSeeAlso(markdownString)
+        
         var markdown = Markdown()
-        var html = markdown.transform(markdownString)
-        html = linkifyCodeBlocks(markdown: markdownString, html: html)
+        var html = markdown.transform(changedMarkdownAndSeeAlso.markdown)
+        html = linkifyCodeBlocks(markdown: changedMarkdownAndSeeAlso.markdown, html: html)
             .replacingOccurrences(of: "{{", with: "<span class='parameter'>")
             .replacingOccurrences(of: "}}", with: "</span>")
         
-        let seeAlso = generateSeeAlso(markdownString)
-        unstyledDetailHTML = html + seeAlso
+        unstyledDetailHTML = html + changedMarkdownAndSeeAlso.seeAlsoHTML
         
         self.message = nil
     }
@@ -128,7 +129,11 @@ class DetailPlatformViewModel {
         return result
     }
     
-    private func generateSeeAlso(_ markdown: String) -> String {
+    /// Searches the markdown string for mentions of other commands. If other commands are found
+    /// (like `csvcut` references `cut`) then this function generates some HTML for a "see also"
+    /// section, and changes the reference in the markdown to a hyperlink which opens the linked
+    /// command
+    private func generateSeeAlso(_ markdown: String) -> (markdown:String, seeAlsoHTML:String) {
         var seeAlsoCommands = [String:Command]()
         let codeBlocksAndRanges = markdown.capturedGroups(withRegex: "`(.*?)`")
         
@@ -143,6 +148,7 @@ class DetailPlatformViewModel {
         
         var seeAlsoHTML = ""
         
+        // make the "see also" html
         if seeAlsoCommands.count > 0 {
             seeAlsoHTML += "<div class=\"seeAlso\">"
             seeAlsoHTML += "<h2>\(Localizations.CommandDetail.SeeAlso)</h2>"
@@ -155,6 +161,15 @@ class DetailPlatformViewModel {
             seeAlsoHTML += "</dl></div>"
         }
         
-        return seeAlsoHTML
+        // change the linked commands in the markdown from a codeblock:
+        //   `cut`
+        // to a hyperlink:
+        //   [cut](cut)
+        var changedMarkdown = markdown
+        for seeAlsoCommandName in seeAlsoCommands.keys {
+            changedMarkdown = changedMarkdown.replacingOccurrences(of: "`\(seeAlsoCommandName)`", with: "[\(seeAlsoCommandName)](\(seeAlsoCommandName))")
+        }
+        
+        return (markdown:changedMarkdown, seeAlsoHTML:seeAlsoHTML)
     }
 }
