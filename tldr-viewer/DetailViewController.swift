@@ -31,13 +31,12 @@ private class ToastLabel: UILabel {
 
         clipsToBounds = true
         layer.borderWidth = 2
-        // TODO: is this colour correct? (Feels wrong)
-        layer.borderColor = Color.segmentBackground.uiColor().cgColor
+        layer.borderColor = Color.bodyHighlight.uiColor().cgColor
         layer.cornerRadius = 10
         layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         
         isOpaque = true
-        backgroundColor = UIColor.white
+        backgroundColor = Color.background.uiColor()
         
         invalidateIntrinsicContentSize()
     }
