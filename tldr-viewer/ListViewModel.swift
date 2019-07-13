@@ -11,6 +11,7 @@ import UIKit
 
 class ListViewModel: NSObject {
     // no-op closures until the ViewController provides its own
+    var updateSegmentSignal: () -> Void = {}
     var updateSignal: (_ indexPath: IndexPath?) -> Void = {(indexPath) in}
     var showDetail: (_ detailViewModel: DetailViewModel) -> Void = {(vm) in}
     var cancelSearchSignal: () -> Void = {}
@@ -53,6 +54,10 @@ class ListViewModel: NSObject {
 
             Preferences.sharedInstance.setCurrentDataSource(selectedDataSource.type)
             
+            // update the selected datasource (segment control) in the UI
+            updateSegmentSignal()
+            
+            // and update the list of commands
             update()
         }
     }
@@ -98,6 +103,8 @@ class ListViewModel: NSObject {
         guard let userInfo = notification.userInfo else { return }
         guard let commandName = userInfo[Constant.ExternalCommandChangeNotification.commandNameKey] as? String else { return }
         
+        // switch back to the main datasource (first segment in the UI) because
+        // this new command might not be in the favourites list
         selectedDataSourceIndex = 0
         
         if let searchableDataSource = selectedDataSource as? SearchableDataSourceType {

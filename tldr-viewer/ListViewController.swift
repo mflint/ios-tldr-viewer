@@ -23,8 +23,16 @@ class ListViewController: UIViewController {
     internal var viewModel: ListViewModel! {
         didSet {
             viewModel.cancelSearchSignal = {
-                self.searchBar?.resignFirstResponder()
-                self.searchBar?.text = self.viewModel.searchText
+                DispatchQueue.main.async {
+                    self.searchBar?.resignFirstResponder()
+                    self.searchBar?.text = self.viewModel.searchText
+                }
+            }
+            
+            viewModel.updateSegmentSignal = {
+                DispatchQueue.main.async {
+                    self.segmentedControl.selectedSegmentIndex = self.viewModel.selectedDataSourceIndex
+                }
             }
             
             segmentedControl.removeAllSegments()
