@@ -45,17 +45,19 @@ class ListViewController: UIViewController {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.viewModel = ListViewModel()
+        viewModel = ListViewModel()
         
-        self.segmentedControl.selectedSegmentIndex = viewModel.selectedDataSourceIndex
-        self.splitViewController?.delegate = self
-        self.splitViewController?.preferredDisplayMode = .allVisible
+        segmentedControl.selectedSegmentIndex = viewModel.selectedDataSourceIndex
+        splitViewController?.delegate = self
+        splitViewController?.preferredDisplayMode = .allVisible
         
-        self.searchBar?.placeholder = viewModel.searchPlaceholder
+        searchBar?.placeholder = viewModel.searchPlaceholder
+        
+        navigationController?.delegate = self
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         doShowOrHideSearchBar()
     }
@@ -131,5 +133,13 @@ extension ListViewController: UISplitViewControllerDelegate {
         // so return true if no command is selected, to return to the List VC;
         // otherwise return false, to keep the Detail VC.
         return !self.viewModel.showDetailWhenHorizontallyCompact()
+    }
+}
+
+extension ListViewController: UINavigationControllerDelegate {
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        // cancel the search if we start navigating, because in iOS 13 beta bug where
+        // there's an ugly grey NavigationBar briefly shown when the detail VC is popped
+        searchBar?.resignFirstResponder()
     }
 }
