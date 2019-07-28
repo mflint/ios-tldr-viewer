@@ -1,5 +1,5 @@
 //
-//  RefreshableDataSourceType.swift
+//  RefreshableDataSource.swift
 //  tldr-viewer
 //
 //  Created by Matthew Flint on 27/01/2017.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol RefreshableDataSourceType {
+protocol RefreshableDataSource {
     func beginRequest()
     var requesting: Bool { get set }
     func lastUpdateTime() -> Date?

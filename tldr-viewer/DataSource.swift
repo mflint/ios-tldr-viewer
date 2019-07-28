@@ -9,7 +9,7 @@
 import Foundation
 import Zip
 
-public class DataSource: DataSourceType, RefreshableDataSourceType, SearchableDataSourceType {
+public class DataSource: DataSourceType, RefreshableDataSource, SearchableDataSource {
     private let commandNameBlackList = ["fuck"] // this is a family show
     
     private let documentsDirectory : URL!
@@ -25,7 +25,7 @@ public class DataSource: DataSourceType, RefreshableDataSourceType, SearchableDa
     var requesting = false
     var requestError: String?
     private var commands = [Command]()
-    private var commandsByName = [String:Command]()
+    private var commandsByName = [String:[Command]]()
     
     private init() {
         documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
@@ -65,15 +65,15 @@ public class DataSource: DataSourceType, RefreshableDataSourceType, SearchableDa
         return commands
     }
     
-    func commandsWith(filter: String) -> [Command] {
+    func commandsWith(filterString: String) -> [Command] {
         // if the search string is empty, return everything
-        if filter.count == 0 {
+        if filterString.isEmpty {
             return commands
         }
         
-        let lowercasedFilter = filter.lowercased()
+        let lowercasedFilterString = filterString.lowercased()
         return commandsWith(filter: { (command) -> Bool in
-            return command.name.lowercased().contains(lowercasedFilter)
+            return command.name.lowercased().contains(lowercasedFilterString)
         })
     }
     
@@ -81,8 +81,8 @@ public class DataSource: DataSourceType, RefreshableDataSourceType, SearchableDa
         return commands.filter(filter)
     }
     
-    func commandWith(name: String) -> Command? {
-        return commandsByName[name]
+    func commandsWith(name: String) -> [Command] {
+        return commandsByName[name] ?? []
     }
     
     private func processResponse(response: TLDRResponse) {
@@ -183,9 +183,9 @@ public class DataSource: DataSourceType, RefreshableDataSourceType, SearchableDa
         return nil
     }
     
-    private func commandsFrom(indexFile: Array<Dictionary<String, AnyObject>>) -> ([Command],[String:Command]) {
+    private func commandsFrom(indexFile: Array<Dictionary<String, AnyObject>>) -> ([Command],[String:[Command]]) {
         var commands = [Command]()
-        var commandsByName = [String:Command]()
+        var commandsByName = [String:[Command]]()
         
         for commandJSON in indexFile {
             guard (commandJSON["language"] as! Array<String>).contains("en") else { continue }
@@ -194,15 +194,21 @@ public class DataSource: DataSourceType, RefreshableDataSourceType, SearchableDa
             
             guard !commandNameBlackList.contains(name) else { continue }
             
-            var platforms = [Platform]()
+            var commandVariants = [CommandVariant]()
             for platformName in commandJSON["platform"] as! Array<String> {
                 let platform = Platform.get(name: platformName)
-                platforms.append(platform)
+                let commandVariant = CommandVariant(commandName: name, platform: platform)
+                commandVariants.append(commandVariant)
             }
-            let command = Command(name: name , platforms: Platform.sort(platforms: platforms))
+            commandVariants.sort()
+            
+            let command = Command(name: name, variants: commandVariants)
             
             commands.append(command)
-            commandsByName[name] = command
+            
+            var commandsWithName = commandsByName[name, default: []]
+            commandsWithName.append(command)
+            commandsByName[name] = commandsWithName
         }
         
         return (commands, commandsByName)

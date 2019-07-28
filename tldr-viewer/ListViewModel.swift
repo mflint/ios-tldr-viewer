@@ -27,7 +27,7 @@ class ListViewModel: NSObject {
     var sectionViewModels = [SectionViewModel]()
     var sectionIndexes = [String]()
     
-    var searchableDataSource: SearchableDataSourceType!
+    var searchableDataSource: SearchableDataSource!
     var dataSources: [DataSourceType]!
     var dataSourceNames: [String]!
     
@@ -42,7 +42,7 @@ class ListViewModel: NSObject {
                 self.update()
             }
             
-            if let _ = selectedDataSource as? SearchableDataSourceType {
+            if let _ = selectedDataSource as? SearchableDataSource {
                 canSearch = true
                 canRefresh = true
             } else {
@@ -50,7 +50,7 @@ class ListViewModel: NSObject {
                 canRefresh = false
             }
             
-            refreshableDataSource = selectedDataSource as? RefreshableDataSourceType
+            refreshableDataSource = selectedDataSource as? RefreshableDataSource
 
             Preferences.sharedInstance.setCurrentDataSource(selectedDataSource.type)
             
@@ -62,7 +62,7 @@ class ListViewModel: NSObject {
         }
     }
     
-    private var refreshableDataSource: RefreshableDataSourceType?
+    private var refreshableDataSource: RefreshableDataSource?
     private var cellViewModels = [BaseCellViewModel]()
     
     override init() {
@@ -75,7 +75,7 @@ class ListViewModel: NSObject {
         dataSourceNames = []
         for dataSource in dataSources {
             dataSourceNames.append(dataSource.name)
-            if let searchable = dataSource as? SearchableDataSourceType {
+            if let searchable = dataSource as? SearchableDataSource {
                 searchableDataSource = searchable
             }
         }
@@ -83,7 +83,7 @@ class ListViewModel: NSObject {
         NotificationCenter.default.addObserver(self, selector: #selector(ListViewModel.externalCommandChange(notification:)), name: Constant.ExternalCommandChangeNotification.name, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(ListViewModel.detailShown(notification:)), name: Constant.DetailViewPresence.shownNotificationName, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(ListViewModel.detailHidden(notification:)), name: Constant.DetailViewPresence.hiddenNotificationName, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(DetailViewModel.favouriteChange(notification:)), name: Constant.FavouriteChangeNotification.name, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ListViewModel.favouriteChange(notification:)), name: Constant.FavouriteChangeNotification.name, object: nil)
         
         defer {
             let currentDataSourceType = Preferences.sharedInstance.currentDataSource()
@@ -107,8 +107,9 @@ class ListViewModel: NSObject {
         // this new command might not be in the favourites list
         selectedDataSourceIndex = 0
         
-        if let searchableDataSource = selectedDataSource as? SearchableDataSourceType {
-            if let command = searchableDataSource.commandWith(name: commandName) {
+        // TODO: handle duplicate commands - this currently just shows the firt command with a matching name
+        if let searchableDataSource = selectedDataSource as? SearchableDataSource {
+            if let command = searchableDataSource.commandsWith(name: commandName).first {
                 showCommand(commandName: command.name)
             }
         }
@@ -133,8 +134,8 @@ class ListViewModel: NSObject {
     private func update() {
         var vms = [BaseCellViewModel]()
         var commands: [Command]
-        if let searchableDataSource = selectedDataSource as? SearchableDataSourceType {
-            commands = searchableDataSource.commandsWith(filter: searchText)
+        if let searchableDataSource = selectedDataSource as? SearchableDataSource {
+            commands = searchableDataSource.commandsWith(filterString: searchText)
         } else {
             commands = selectedDataSource.allCommands()
         }

@@ -26,29 +26,25 @@ struct CommandCellViewModel: BaseCellViewModel {
         self.commandText = Theme.bodyAttributed(string: command.name)
         
         var platformString: String!
-        if let platforms = command.platforms {
-            let platformNames = platforms.map({ (platform) -> String in
-                return platform.displayName
+        let platformNames = command.variants.map({ (variant) -> String in
+                return variant.platform.displayName
             })
             
-            switch platformNames.count {
-            case 0:
-                platformString = ""
-            case 1:
-                platformString = Localizations.CommandList.CommandPlatforms.One(platformNames[0])
-            case 2:
-                platformString = Localizations.CommandList.CommandPlatforms.Two(platformNames[0], platformNames[1])
-            case 3:
-                platformString = Localizations.CommandList.CommandPlatforms.Three(platformNames[0], platformNames[1], platformNames[2])
-            case 4:
-                platformString = Localizations.CommandList.CommandPlatforms.Four(platformNames[0], platformNames[1], platformNames[2], platformNames[3])
-            case 5:
-                platformString = Localizations.CommandList.CommandPlatforms.Five(platformNames[0], platformNames[1], platformNames[2], platformNames[3], platformNames[4])
-            default:
-                platformString = Localizations.CommandList.CommandPlatforms.Six(platformNames[0], platformNames[1], platformNames[2], platformNames[3], platformNames[4], platformNames[5])
-            }
-        } else {
+        switch platformNames.count {
+        case 0:
             platformString = ""
+        case 1:
+            platformString = Localizations.CommandList.CommandPlatforms.One(platformNames[0])
+        case 2:
+            platformString = Localizations.CommandList.CommandPlatforms.Two(platformNames[0], platformNames[1])
+        case 3:
+            platformString = Localizations.CommandList.CommandPlatforms.Three(platformNames[0], platformNames[1], platformNames[2])
+        case 4:
+            platformString = Localizations.CommandList.CommandPlatforms.Four(platformNames[0], platformNames[1], platformNames[2], platformNames[3])
+        case 5:
+            platformString = Localizations.CommandList.CommandPlatforms.Five(platformNames[0], platformNames[1], platformNames[2], platformNames[3], platformNames[4])
+        default:
+            platformString = Localizations.CommandList.CommandPlatforms.Six(platformNames[0], platformNames[1], platformNames[2], platformNames[3], platformNames[4], platformNames[5])
         }
         
         self.platforms = Theme.detailAttributed(string: platformString)
