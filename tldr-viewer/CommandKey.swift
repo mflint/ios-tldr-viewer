@@ -16,10 +16,10 @@ struct CommandKey{
     let platformName: String?
 }
 
-extension CommandKey: ExpressibleByStringLiteral {
+extension CommandKey {
     private static let separator: Character = "🦌"
     
-    public init(stringLiteral value: String) {
+    public init(_ value: String) {
         let components = value.split(separator: CommandKey.separator)
         
         guard let commandName = components.first else {
