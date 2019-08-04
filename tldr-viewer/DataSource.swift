@@ -200,10 +200,30 @@ public class DataSource: DataSourcing {
             }
             
             // collapse that array into an array of Command objects
+            var pageFoldersToLanguageCode = [String : String]()
+            
             let foundCommands = sortedFiles.reduce(into: [Command]()) { (results, pathComponents) in
                 let commandName = pathComponents.0.replacingOccurrences(of: ".md", with: "")
                 let platform = Platform.get(name: pathComponents.1)
-                let languageCode = pathComponents.2
+                let pageFolder = pathComponents.2
+                
+                // check the "pages" folder name, and derive the language code
+                guard pageFolder.starts(with: "pages") else { return }
+                
+                var optionalLanguageCode = pageFoldersToLanguageCode[pageFolder]
+                if optionalLanguageCode == nil {
+                    if let dotIndex = pageFolder.firstIndex(of: ".") {
+                        let languageCodeIndex = pageFolder.index(after: dotIndex)
+                        optionalLanguageCode = String(pageFolder.suffix(from: languageCodeIndex))
+                    } else {
+                        // default to English
+                        optionalLanguageCode = "en"
+                    }
+                }
+                
+                guard let languageCode = optionalLanguageCode else { return }
+                
+                pageFoldersToLanguageCode[pageFolder] = languageCode
                 
                 // create a new Command if the last item in the list isn't the required one
                 var command: Command
