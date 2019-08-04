@@ -269,31 +269,31 @@ class DetailViewController: UIViewController {
 
 extension DetailViewController: DetailViewModelDelegate {
     func updateFavourite() {
-        if viewIfLoaded == nil {
-            return
-        }
-        
         DispatchQueue.main.async {
+            if self.viewIfLoaded == nil {
+                return
+            }
+            
             self.doConfigureFavourite()
         }
     }
     
     func updateCommand() {
-        if viewIfLoaded == nil {
-            return
-        }
-        
         DispatchQueue.main.async {
+            if self.viewIfLoaded == nil {
+                return
+            }
+            
             self.doConfigureCommand()
         }
     }
     
     func updatePlatformContent() {
-        if viewIfLoaded == nil {
-            return
-        }
-        
         DispatchQueue.main.async {
+            if self.viewIfLoaded == nil {
+                return
+            }
+            
             self.doConfigurePlatformContent()
         }
     }

@@ -9,35 +9,54 @@
 import Foundation
 import Zip
 
-public class DataSource: DataSourceType, RefreshableDataSource, SearchableDataSource {
-    private let commandNameBlackList = ["fuck"] // this is a family show
-    
+public class DataSource: DataSourcing {
     private let documentsDirectory : URL!
     private let zipFileURL : URL!
     private let indexFileURL : URL!
     
-    static let sharedInstance = DataSource()
-    let name = Localizations.CommandList.DataSources.All
-    let type = Preferences.DataSourceEnumType.all
+    private var delegates = WeakCollection<DataSourceDelegate>()
     
-    // no-op closures until the ViewModel provides its own
-    var updateSignal: () -> Void = {}
+    private(set) var commands = [Command]() {
+        didSet {
+            commandsByName = [String:Command]()
+            delegates.forEach { (delegate) in
+                delegate.dataSourceDidUpdate(dataSource: self)
+            }
+            
+            // now update the looup table in the background
+            DispatchQueue.global().async {
+                self.commandsByName = self.commands.reduce(into: [String: Command](), { (result, command) in
+                    result[command.name] = command
+                })
+            }
+        }
+    }
+    let isSearchable = false
+    let isRefreshable = true
     var requesting = false
     var requestError: String?
-    private var commands = [Command]()
-    private var commandsByName = [String:[Command]]()
+
+    private var commandsByName = [String:Command]()
     
-    private init() {
+    init() {
         documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         zipFileURL = documentsDirectory.appendingPathComponent("tldr.zip")
-        indexFileURL = documentsDirectory.appendingPathComponent("index.json")
-        
+        indexFileURL = documentsDirectory.appendingPathComponent("index.plist")
+    }
+    
+    func add(delegate: DataSourceDelegate) {
+        delegates.add(delegate)
+    }
+    
+    /// loads the contents of the `index.plist` file. If the file cannot be read,
+    /// then it begins a network request to refresh the data
+    func loadInitialCommands() {
         if !loadCommandsFromIndexFile() {
-            beginRequest()
+            refresh()
         }
     }
     
-    func beginRequest() {
+    func refresh() {
         if requesting {
             return
         }
@@ -49,7 +68,9 @@ public class DataSource: DataSourceType, RefreshableDataSource, SearchableDataSo
             self.processResponse(response: response)
         }
         
-        updateSignal()
+        delegates.forEach { (delegate) in
+            delegate.dataSourceDidUpdate(dataSource: self)
+        }
     }
     
     func lastUpdateTime() -> Date? {
@@ -61,46 +82,30 @@ public class DataSource: DataSourceType, RefreshableDataSource, SearchableDataSo
         }
     }
     
-    func allCommands() -> [Command] {
-        return commands
-    }
-    
-    func commandsWith(filterString: String) -> [Command] {
-        // if the search string is empty, return everything
-        if filterString.isEmpty {
-            return commands
-        }
-        
-        let lowercasedFilterString = filterString.lowercased()
-        return commandsWith(filter: { (command) -> Bool in
-            return command.name.lowercased().contains(lowercasedFilterString)
-        })
-    }
-    
-    func commandsWith(filter: (Command) -> Bool) -> [Command] {
-        return commands.filter(filter)
-    }
-    
-    func commandsWith(name: String) -> [Command] {
-        return commandsByName[name] ?? []
+    func commandWith(name: String) -> Command? {
+        return commandsByName[name] ?? nil
     }
     
     private func processResponse(response: TLDRResponse) {
+        requesting = false
+        
         if let error = response.error {
             handle(error: error)
         } else {
             handleSuccess(data: response.data)
         }
-        
-        requesting = false
-        updateSignal()
     }
     
     private func handle(error: Error) {
         requestError = Localizations.CommandList.Error.CouldNotDownload
+        commands = []
     }
     
     private func handleSuccess(data: Data) {
+        if !deleteExisting() {
+            return
+        }
+        
         if !save(zipData:data) {
             return
         }
@@ -109,10 +114,12 @@ public class DataSource: DataSourceType, RefreshableDataSource, SearchableDataSo
             return
         }
         
-        if loadCommandsFromIndexFile() {
-            DispatchQueue.global(qos: .background).async {
-                self.addToSpotlightIndex()
-            }
+        if !indexCommandsFromDirectory() {
+            return
+        }
+        
+        DispatchQueue.global(qos: .background).async {
+            self.addToSpotlightIndex()
         }
     }
     
@@ -133,7 +140,22 @@ public class DataSource: DataSourceType, RefreshableDataSource, SearchableDataSo
             return false
         }
         
-        (self.commands, self.commandsByName) = commandsFrom(indexFile: indexFileContents)
+        commands = indexFileContents
+        
+        return true
+    }
+    
+    private func deleteExisting() -> Bool {
+        do {
+            // delete existing contents of documents directory
+            let existingContents = try FileManager.default.contentsOfDirectory(at: documentsDirectory, includingPropertiesForKeys:nil, options: [])
+            for existingContent in existingContents {
+                try FileManager.default.removeItem(at: existingContent)
+            }
+        } catch {
+            requestError = Localizations.CommandList.Error.CouldNotSaveDownload
+            return false
+        }
         
         return true
     }
@@ -160,57 +182,103 @@ public class DataSource: DataSourceType, RefreshableDataSource, SearchableDataSo
         }
     }
     
-    private func indexFileContents() -> Array<Dictionary<String, AnyObject>>? {
-        
+    private func indexCommandsFromDirectory() -> Bool {
+        do {
+            // get an array of URLs for each markdown file
+            var files = [URL]()
+            try findMarkdownFiles(in: documentsDirectory, collect: &files)
+            
+            // get a sorted array of tuples
+            // 0: markdown filename
+            // 1: platform name
+            // 2: pages folder with optional language code
+            let sortedFiles = files.map { (url) -> (String, String, String) in
+                let components = url.pathComponents.reversed()[0...2]
+                return (components[0], components[1], components[2])
+            }.sorted { (first, second) -> Bool in
+                return first < second
+            }
+            
+            // collapse that array into an array of Command objects
+            let foundCommands = sortedFiles.reduce(into: [Command]()) { (results, pathComponents) in
+                let commandName = pathComponents.0.replacingOccurrences(of: ".md", with: "")
+                let platform = Platform.get(name: pathComponents.1)
+                let languageCode = pathComponents.2
+                
+                // create a new Command if the last item in the list isn't the required one
+                var command: Command
+                if let lastCommand = results.last {
+                    if lastCommand.name != commandName {
+                        command = Command(name: commandName)
+                        results.append(command)
+                    } else {
+                        command = lastCommand
+                    }
+                } else {
+                    command = Command(name: commandName)
+                    results.append(command)
+                }
+                
+                // create a new CommandVariant if the last variant in this command
+                // isn't the required one
+                var variant: CommandVariant
+                if let lastVariant = command.variants.last {
+                    if lastVariant.platform != platform {
+                        variant = CommandVariant(commandName: commandName, platform: platform)
+                        command.variants.append(variant)
+                    } else {
+                        variant = lastVariant
+                    }
+                } else {
+                    variant = CommandVariant(commandName: commandName, platform: platform)
+                    command.variants.append(variant)
+                }
+                
+                // add language code to the variant
+                variant.languageCodes.append(languageCode)
+                
+                // and update the [Command] struct
+                command.variants[command.variants.count - 1] = variant
+                results[results.count - 1] = command
+            }
+            
+            commands = foundCommands
+            
+            // now write the command array to a plist
+            let encodedCommandIndex = try! PropertyListEncoder().encode(commands)
+            try encodedCommandIndex.write(to: indexFileURL)
+
+            return true
+        }
+        catch {
+            commands = []
+            requestError = Localizations.CommandList.Error.CouldNotIndexFiles
+            return false
+        }
+    }
+    
+    private func findMarkdownFiles(in directory: URL, collect: inout [URL]) throws {
+        let contents = try FileManager.default.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil, options: [])
+        for content in contents {
+            var isDirectory : ObjCBool = false
+            if FileManager.default.fileExists(atPath: content.relativePath, isDirectory: &isDirectory) {
+                if isDirectory.boolValue {
+                    try findMarkdownFiles(in: content, collect: &collect)
+                } else if content.absoluteString.contains(".md") {
+                    collect.append(content)
+                }
+            }
+        }
+    }
+    
+    private func indexFileContents() -> [Command]? {
         do {
             let indexData = try Data(contentsOf: indexFileURL)
-            let jsonResult = try JSONSerialization.jsonObject(with: indexData, options: [])
-            
-            // sometimes we get an array as the top level object...
-            if let jsonResult = jsonResult as? Array<Dictionary<String, AnyObject>> {
-                return jsonResult
-            }
-            
-            // ... sometimes that array is inside a map ¯\_(ツ)_/¯
-            if let jsonResult = jsonResult as? Dictionary<String, Array<Dictionary<String, AnyObject>>> {
-                return jsonResult["commands"]
-            }
-        }  catch let error as NSError {
+            return try PropertyListDecoder().decode([Command].self, from: indexData)
+        }  catch {
             requestError = Localizations.CommandList.Error.CouldNotReadIndexFile
-            print (error)
         }
         
         return nil
-    }
-    
-    private func commandsFrom(indexFile: Array<Dictionary<String, AnyObject>>) -> ([Command],[String:[Command]]) {
-        var commands = [Command]()
-        var commandsByName = [String:[Command]]()
-        
-        for commandJSON in indexFile {
-            guard (commandJSON["language"] as! Array<String>).contains("en") else { continue }
-
-            let name = commandJSON["name"] as! String
-            
-            guard !commandNameBlackList.contains(name) else { continue }
-            
-            var commandVariants = [CommandVariant]()
-            for platformName in commandJSON["platform"] as! Array<String> {
-                let platform = Platform.get(name: platformName)
-                let commandVariant = CommandVariant(commandName: name, platform: platform)
-                commandVariants.append(commandVariant)
-            }
-            commandVariants.sort()
-            
-            let command = Command(name: name, variants: commandVariants)
-            
-            commands.append(command)
-            
-            var commandsWithName = commandsByName[name, default: []]
-            commandsWithName.append(command)
-            commandsByName[name] = commandsWithName
-        }
-        
-        return (commands, commandsByName)
     }
 }

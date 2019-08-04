@@ -18,9 +18,8 @@ class Shortcuts {
         for commandName in Preferences.sharedInstance.latest().makeIterator() {
             let shortcutItem = UIMutableApplicationShortcutItem(type: "", localizedTitle: commandName)
             
-            // TODO: handle duplicate commands
             // TODO: this should show the summary from the correct variant, not the first variant
-            if let command = DataSource.sharedInstance.commandsWith(name: commandName).first,
+            if let command = DataSources.sharedInstance.baseDataSource.commandWith(name: commandName),
                 let commandVariant = command.variants.first {
                 shortcutItem.localizedSubtitle = commandVariant.summary()
                 

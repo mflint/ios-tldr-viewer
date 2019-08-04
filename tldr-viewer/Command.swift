@@ -8,10 +8,10 @@
 
 import Foundation
 
-struct Command {
+struct Command: Codable {
     let name: String
-    let variants: [CommandVariant]
-    
+    var variants = [CommandVariant]()
+
     // TODO: change this signature to match sort(by areInIncreasingOrder: (Element, Element) throws -> Bool)
     static func sort(commands: [Command]) -> [Command] {
         return commands.sorted(by: { (first, second) -> Bool in

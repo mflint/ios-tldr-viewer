@@ -8,9 +8,10 @@
 
 import Foundation
 
-struct CommandVariant {
+struct CommandVariant: Codable {
     let commandName: String
     let platform: Platform
+    var languageCodes = [String]()
     
     func summary() -> String {
         let detailDataSource = DetailDataSource(self)

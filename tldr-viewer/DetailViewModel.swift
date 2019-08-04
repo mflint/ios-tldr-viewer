@@ -53,7 +53,6 @@ class DetailViewModel {
     var favourite: Bool = false
     var favouriteButtonIconSmall: String!
     var favouriteButtonIconLarge: String!
-    private let dataSource: SearchableDataSource
     
     private var command: Command! {
         willSet {
@@ -68,7 +67,7 @@ class DetailViewModel {
             
             var variantViewModels = [DetailPlatformViewModel]()
             for variant in command.variants {
-                let platformVM = DetailPlatformViewModel(dataSource: dataSource, commandVariant: variant)
+                let platformVM = DetailPlatformViewModel(commandVariant: variant)
                 variantViewModels.append(platformVM)
             }
             
@@ -76,9 +75,7 @@ class DetailViewModel {
         }
     }
     
-    init(dataSource: SearchableDataSource, command: Command) {
-        self.dataSource = dataSource
-        
+    init(command: Command) {
         NotificationCenter.default.addObserver(self, selector: #selector(DetailViewModel.externalCommandChange(notification:)), name: Constant.ExternalCommandChangeNotification.name, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(DetailViewModel.favouriteChange(notification:)), name: Constant.FavouriteChangeNotification.name, object: nil)
         
@@ -108,10 +105,12 @@ class DetailViewModel {
     }
     
     func onFavouriteToggled() {
+        let favourtes = DataSources.sharedInstance.favouritesDataSource
+        
         if favourite {
-            FavouriteDataSource.sharedInstance.remove(commandName: command.name)
+            favourtes.remove(commandName: command.name)
         } else {
-            FavouriteDataSource.sharedInstance.add(commandName: command.name)
+            favourtes.add(commandName: command.name)
         }
     }
     
@@ -128,9 +127,9 @@ class DetailViewModel {
     /// handle a user tap on a hyperlink, while viewing command details
     /// - Parameter absoluteURLString: the tapped URL string (which might match a command-name)
     func handleAbsoluteURL(_ absoluteURLString: String) -> Bool {
-        // TODO: handle duplicate commands
         // TODO: handle variants
-        if dataSource.commandsWith(name: absoluteURLString).count > 0 {
+        let dataSource = DataSources.sharedInstance.baseDataSource
+        if dataSource.commandWith(name: absoluteURLString) != nil {
             // command exists, so handle it here
             NotificationCenter.default.post(name: Constant.ExternalCommandChangeNotification.name, object: nil, userInfo: [Constant.ExternalCommandChangeNotification.commandNameKey : absoluteURLString as NSSecureCoding])
             return false
@@ -144,13 +143,11 @@ class DetailViewModel {
     /// Something caused the selected command to change, and this function handles that change
     /// - Parameter notification: notification containing the new command details
     @objc func externalCommandChange(notification: Notification) {
-        // TODO: handle duplicate commands
         guard let userInfo = notification.userInfo else { return }
         guard let commandName = userInfo[Constant.ExternalCommandChangeNotification.commandNameKey] as? String else { return }
 
-        // TODO: handle duplicate commands
         // TODO: handle variants
-        if let command = DataSource.sharedInstance.commandsWith(name: commandName).first {
+        if let command = DataSources.sharedInstance.baseDataSource.commandWith(name: commandName) {
             self.command = command
             onCommandDisplayed()
         }
@@ -162,7 +159,7 @@ class DetailViewModel {
     }
     
     private func setupFavourite() {
-        favourite = FavouriteDataSource.sharedInstance.favouriteCommandNames.contains(command.name)
+        favourite = DataSources.sharedInstance.favouritesDataSource.isFavourite(commandName: command.name)
         favouriteButtonIconSmall = favourite ? "heart-small" : "heart-o-small"
         favouriteButtonIconLarge = favourite ? "heart-large" : "heart-o-large"
     }

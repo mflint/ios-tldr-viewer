@@ -57,12 +57,10 @@ class DetailPlatformViewModel {
     // raw examples in this manpage
     var examples: [String]?
     
-    private let dataSource: SearchableDataSource
     private let commandVariant: CommandVariant
     private var unstyledDetailHTML: String?
     
-    init(dataSource: SearchableDataSource, commandVariant: CommandVariant) {
-        self.dataSource = dataSource
+    init(commandVariant: CommandVariant) {
         self.commandVariant = commandVariant
 
         self.platformName = commandVariant.platform.displayName
@@ -133,26 +131,20 @@ class DetailPlatformViewModel {
         var seeAlsoCommands = [Command]()
         let codeBlocksAndRanges = markdown.capturedGroups(withRegex: "`(.*?)`")
         
+        // this dataSource is used for finding related Commands
+        let dataSource = DataSources.sharedInstance.filteredDataSource
+        
         for codeBlockAndRange in codeBlocksAndRanges {
             let codeBlock = codeBlockAndRange.substring
             
             // check this codeblock doesn't reference the current command -
             // we don't want to generate hyperlinks to ourself
             if codeBlock != commandVariant.commandName {
-                let matchingCommands = dataSource.commandsWith(name: codeBlock)
-                for matchingCommand in matchingCommands {
+                let matchingCommands = dataSource.commands.filter { (command) -> Bool in
+                    command.name == codeBlock
+                }
+                if let matchingCommand = matchingCommands.first {
                     seeAlsoCommands.append(matchingCommand)
-                    /*
-                    // find the platforms for this matching command
-                    let matchingCommandVariants = matchingCommand.variants.filter { (commandVariant) -> Bool in
-                        commandVariant.platform == self.commandVariant.platform
-                    }
-                    
-                    // include this matching command if it has matching platform
-                    if let matchingCommandVariant = matchingCommandVariants.first {
-                        seeAlsoCommandVariants.append(matchingCommandVariant)
-                    }
-                     */
                 }
             }
         }

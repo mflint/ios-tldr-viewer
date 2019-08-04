@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Platform {
+struct Platform: Codable {
     var name: String
     var displayName: String
     var sortOrder: Int
