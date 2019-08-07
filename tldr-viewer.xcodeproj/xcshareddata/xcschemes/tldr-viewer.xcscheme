@@ -41,29 +41,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "348890271C81F708002A149B"
-               BuildableName = "tldr-pagesUITests.xctest"
-               BlueprintName = "tldr-pagesUITests"
-               ReferencedContainer = "container:tldr-viewer.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "348724F322C77BB2004D4FD1"
-               BuildableName = "tldr-pages-screenshot.xctest"
-               BlueprintName = "tldr-pages-screenshot"
-               ReferencedContainer = "container:tldr-viewer.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "3487250122C77BF7004D4FD1"
-               BuildableName = "tldr-viewer-snapshottests.xctest"
-               BlueprintName = "tldr-viewer-snapshottests"
+               BlueprintIdentifier = "34C4F85F22F75B4D00E5022E"
+               BuildableName = "tldr-pages-tests.xctest"
+               BlueprintName = "tldr-pages-tests"
                ReferencedContainer = "container:tldr-viewer.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -89,6 +69,12 @@
             ReferencedContainer = "container:tldr-viewer.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "-AppleLanguages (en)"
+            isEnabled = "YES">
+         </CommandLineArgument>
+      </CommandLineArguments>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

@@ -15,7 +15,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        // Override point for customization after application launch.
+        // don't launch main UI if running unit tests
+        guard NSClassFromString("XCTestCase") == nil else {
+            window = nil
+            return false
+        }
+        
         Theme.setup()
         
         return true

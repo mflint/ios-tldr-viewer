@@ -11,13 +11,6 @@ import Foundation
 struct Command: Codable {
     let name: String
     var variants = [CommandVariant]()
-
-    // TODO: change this signature to match sort(by areInIncreasingOrder: (Element, Element) throws -> Bool)
-    static func sort(commands: [Command]) -> [Command] {
-        return commands.sorted(by: { (first, second) -> Bool in
-            return first.name.compare(second.name) == ComparisonResult.orderedAscending
-        })
-    }
 }
 
 extension Command: Comparable {
