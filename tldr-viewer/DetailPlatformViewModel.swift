@@ -7,8 +7,10 @@
 //
 
 import Foundation
+import Down
 
 extension String {
+    // TODO: why don't the returned ranges play nicely with unicode strings?
     func capturedGroups(withRegex pattern: String) -> [(substring: String, range: Range<String.Index>)] {
         var results = [(String, Range<String.Index>)]()
         
@@ -27,9 +29,9 @@ extension String {
             
             for i in 1...lastRangeIndex {
                 let capturedGroupRange = match.range(at: i)
-                let matchedString = (self as NSString).substring(with: capturedGroupRange)
-                
                 let swiftRange = Range(capturedGroupRange, in: self)!
+                let matchedString = String(self[swiftRange])
+                
                 results.append((matchedString, swiftRange))
             }
         }
@@ -93,9 +95,9 @@ class DetailPlatformViewModel {
     
     private func handleSuccess(_ markdownString: String) {
         let changedMarkdownAndSeeAlso = generateSeeAlso(markdownString)
+        let down = Down(markdownString: changedMarkdownAndSeeAlso.markdown)
+        var html = (try? down.toHTML()) ?? Localizations.CommandDetail.Error.CouldParse
         
-        var markdown = Markdown()
-        var html = markdown.transform(changedMarkdownAndSeeAlso.markdown)
         html = linkifyCodeBlocks(markdown: changedMarkdownAndSeeAlso.markdown, html: html)
             .replacingOccurrences(of: "{{", with: "<span class='parameter'>")
             .replacingOccurrences(of: "}}", with: "</span>")
@@ -123,7 +125,7 @@ class DetailPlatformViewModel {
         for index in (0..<examples.count).reversed() {
             let codeBlock = codeTagRanges[index].substring
             let replacement = "<a class='copylink' href=\"tldr://pasteboard/\(index)\">\(codeBlock)</a>"
-            result = result.replacingCharacters(in: codeTagRanges[index].range, with: replacement)
+            result = result.replacingOccurrences(of: codeTagRanges[index].substring, with: replacement)
         }
         
         return result

@@ -20,8 +20,8 @@ class InfoViewModel {
         
         groups.append(GroupViewModel(groupTitle: Localizations.Info.About.Header, cellViewModels:[aboutCell(), versionCell(), authorCell()]))
         groups.append(GroupViewModel(groupTitle: Localizations.Info.Contact.Header, cellViewModels: [leaveReview(), bugReports(), contactCell()]))
-        groups.append(GroupViewModel(groupTitle: Localizations.Info.Thanks.Header, cellViewModels: [thanks1(), thanks2(), thanks3(), thanks4()]))
         groups.append(GroupViewModel(groupTitle: Localizations.Info.OpenSource.Header, cellViewModels: [forkMe()]))
+        groups.append(GroupViewModel(groupTitle: Localizations.Info.Thanks.Header, cellViewModels: [thanks1(), thanks2(), thanks3(), thanks4(), thanks5()]))
         
         groupViewModels = groups
     }
@@ -61,22 +61,27 @@ class InfoViewModel {
     }
     
     private func thanks1() -> BaseCellViewModel {
-        let message = attributedString(text: Localizations.Info.Thanks._1.Message, anchors: [Localizations.Info.Thanks._1.LinkAnchor], urls: ["https://github.com/tldr-pages/tldr"])
+        let message = attributedString(text: Localizations.Info.Thanks.TldrPages.Message, anchors: [Localizations.Info.Thanks.TldrPages.LinkAnchor], urls: ["https://github.com/tldr-pages/tldr"])
         return TextCellViewModel(attributedText: message)
     }
     
     private func thanks2() -> BaseCellViewModel {
-        let message = attributedString(text: Localizations.Info.Thanks._2.Message, anchors: [Localizations.Info.Thanks._2.LinkAnchor], urls: ["https://github.com/kristopherjohnson/Markingbird"])
+        let message = attributedString(text: Localizations.Info.Thanks.DownLibrary.Message, anchors: [Localizations.Info.Thanks.DownLibrary.LinkAnchor1, Localizations.Info.Thanks.DownLibrary.LinkAnchor2], urls: ["https://github.com/iwasrobbed/Down", "https://github.com/commonmark/cmark"])
         return TextCellViewModel(attributedText: message)
     }
     
     private func thanks3() -> BaseCellViewModel {
-        let message = attributedString(text: Localizations.Info.Thanks._3.Message, anchors: [Localizations.Info.Thanks._3.LinkAnchor.Deviantart, Localizations.Info.Thanks._3.LinkAnchor.Redbubble], urls: ["http://arabidopsis.deviantart.com/art/Teal-Deer-II-158802763", "http://www.redbubble.com/people/arabidopsis/works/5386340-1-teal-deer-too-long-didnt-read"])
+        let message = attributedString(text: Localizations.Info.Thanks.ZipLibrary.Message, anchors: [Localizations.Info.Thanks.ZipLibrary.LinkAnchor], urls: ["https://github.com/marmelroy/Zip"])
         return TextCellViewModel(attributedText: message)
     }
     
     private func thanks4() -> BaseCellViewModel {
-        let message = attributedString(text: Localizations.Info.Thanks._4.Message, anchors: [], urls: [])
+        let message = attributedString(text: Localizations.Info.Thanks.Artwork.Message, anchors: [Localizations.Info.Thanks.Artwork.LinkAnchor.Deviantart, Localizations.Info.Thanks.Artwork.LinkAnchor.Redbubble], urls: ["http://arabidopsis.deviantart.com/art/Teal-Deer-II-158802763", "http://www.redbubble.com/people/arabidopsis/works/5386340-1-teal-deer-too-long-didnt-read"])
+        return TextCellViewModel(attributedText: message)
+    }
+    
+    private func thanks5() -> BaseCellViewModel {
+        let message = attributedString(text: Localizations.Info.Thanks.Contributors.Message, anchors: [], urls: [])
         return TextCellViewModel(attributedText: message)
     }
     

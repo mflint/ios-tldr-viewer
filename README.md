@@ -6,7 +6,7 @@ An iOS client for "TLDR-pages".
 Changelog
 ---------
 
-* 1.9.0: Update to support iOS 13 and "dark mode"
+* 1.9.0: Update to support iOS 13 and "dark mode"; change of internal Markdown parser
 * 1.8.2: Update for Swift 5; fix alignment problem with "Copied to pasteboard" message; filter out duplicate commands when they exist in multiple languages with different names
 * 1.8.1: Minor update to support a future change in the main 'tldr-pages' project
 * 1.8.0: Tap code examples to copy to pasteboard; removes Fabric
