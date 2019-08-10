@@ -34,61 +34,25 @@ public struct Localizations {
             /// Base translation: Could not find tl;dr
             public static var CouldNotFindTldr : String = NSLocalizedString("COMMAND_DETAIL.ERROR.COULD_NOT_FIND_TLDR", comment: "")
 
+            /// Base translation: Could not display tl;dr
+            public static var CouldParse : String = NSLocalizedString("COMMAND_DETAIL.ERROR.COULD_PARSE", comment: "")
+
         }
     }
 
     public struct Info {
 
 
-        public struct Thanks {
+        public struct Author {
 
-            /// Base translation: Thanks to
-            public static var Header : String = NSLocalizedString("INFO.THANKS.HEADER", comment: "")
-
-
-            public struct _3 {
-
-                /// Base translation: 'Arabidopsis' for the gorgeous teal-deer artwork, found on DeviantArt. It's available on a shirt via Redbubble. (All profits go to the artist)
-                public static var Message : String = NSLocalizedString("INFO.THANKS.3.MESSAGE", comment: "")
-
-
-                public struct LinkAnchor {
-
-                    /// Base translation: DeviantArt
-                    public static var Deviantart : String = NSLocalizedString("INFO.THANKS.3.LINK_ANCHOR.DEVIANTART", comment: "")
-
-                    /// Base translation: Redbubble
-                    public static var Redbubble : String = NSLocalizedString("INFO.THANKS.3.LINK_ANCHOR.REDBUBBLE", comment: "")
-
-                }
+            /// Base translation: © %@ Green Light Apps
+            public static func Detail(_ value1 : String) -> String {
+                return String(format: NSLocalizedString("INFO.AUTHOR.DETAIL", comment: ""), value1)
             }
 
-            public struct _1 {
+            /// Base translation: Author
+            public static var Title : String = NSLocalizedString("INFO.AUTHOR.TITLE", comment: "")
 
-                /// Base translation: Romain Prieto and all other contributors to tldr-pages.
-                public static var Message : String = NSLocalizedString("INFO.THANKS.1.MESSAGE", comment: "")
-
-                /// Base translation: tldr-pages
-                public static var LinkAnchor : String = NSLocalizedString("INFO.THANKS.1.LINK_ANCHOR", comment: "")
-
-            }
-
-            public struct _4 {
-
-                /// Base translation: People who have reported issues and contributed code: kleerkoat, melgu, Marco Bonelli, Danny Mösch
-                public static var Message : String = NSLocalizedString("INFO.THANKS.4.MESSAGE", comment: "")
-
-            }
-
-            public struct _2 {
-
-                /// Base translation: Kristopher Johnson for Markingbird, a Markdown processor in Swift.
-                public static var Message : String = NSLocalizedString("INFO.THANKS.2.MESSAGE", comment: "")
-
-                /// Base translation: Markingbird
-                public static var LinkAnchor : String = NSLocalizedString("INFO.THANKS.2.LINK_ANCHOR", comment: "")
-
-            }
         }
 
         public struct Version {
@@ -103,6 +67,70 @@ public struct Localizations {
 
         }
 
+        public struct Thanks {
+
+            /// Base translation: Thanks to
+            public static var Header : String = NSLocalizedString("INFO.THANKS.HEADER", comment: "")
+
+
+            public struct Contributors {
+
+                /// Base translation: People who have reported issues and contributed code: kleerkoat, melgu, Marco Bonelli, Danny Mösch
+                public static var Message : String = NSLocalizedString("INFO.THANKS.CONTRIBUTORS.MESSAGE", comment: "")
+
+            }
+
+            public struct DownLibrary {
+
+                /// Base translation: Rob Phillips for Down, a Markdown processor in Swift, based on cmark.
+                public static var Message : String = NSLocalizedString("INFO.THANKS.DOWN_LIBRARY.MESSAGE", comment: "")
+
+                /// Base translation: Down
+                public static var LinkAnchor1 : String = NSLocalizedString("INFO.THANKS.DOWN_LIBRARY.LINK_ANCHOR1", comment: "")
+
+                /// Base translation: cmark
+                public static var LinkAnchor2 : String = NSLocalizedString("INFO.THANKS.DOWN_LIBRARY.LINK_ANCHOR2", comment: "")
+
+            }
+
+            public struct TldrPages {
+
+                /// Base translation: Romain Prieto and all other contributors to tldr-pages.
+                public static var Message : String = NSLocalizedString("INFO.THANKS.TLDR_PAGES.MESSAGE", comment: "")
+
+                /// Base translation: tldr-pages
+                public static var LinkAnchor : String = NSLocalizedString("INFO.THANKS.TLDR_PAGES.LINK_ANCHOR", comment: "")
+
+            }
+
+            public struct Artwork {
+
+                /// Base translation: 'Arabidopsis' for the gorgeous teal-deer artwork, found on DeviantArt. It's available on a shirt via Redbubble. (All profits go to the artist)
+                public static var Message : String = NSLocalizedString("INFO.THANKS.ARTWORK.MESSAGE", comment: "")
+
+
+                public struct LinkAnchor {
+
+                    /// Base translation: Redbubble
+                    public static var Redbubble : String = NSLocalizedString("INFO.THANKS.ARTWORK.LINK_ANCHOR.REDBUBBLE", comment: "")
+
+                    /// Base translation: DeviantArt
+                    public static var Deviantart : String = NSLocalizedString("INFO.THANKS.ARTWORK.LINK_ANCHOR.DEVIANTART", comment: "")
+
+                }
+            }
+
+            public struct ZipLibrary {
+
+                /// Base translation: Roy Marmelstein for Zip, a Swift framework for unzipping files.
+                public static var Message : String = NSLocalizedString("INFO.THANKS.ZIP_LIBRARY.MESSAGE", comment: "")
+
+                /// Base translation: Zip
+                public static var LinkAnchor : String = NSLocalizedString("INFO.THANKS.ZIP_LIBRARY.LINK_ANCHOR", comment: "")
+
+            }
+        }
+
         public struct LeaveReview {
 
             /// Base translation: Do you find this app useful? Please leave a review in the App Store.
@@ -110,18 +138,6 @@ public struct Localizations {
 
             /// Base translation: review in the App Store
             public static var LinkAnchor : String = NSLocalizedString("INFO.LEAVE_REVIEW.LINK_ANCHOR", comment: "")
-
-        }
-
-        public struct Author {
-
-            /// Base translation: © %@ Green Light Apps
-            public static func Detail(_ value1 : String) -> String {
-                return String(format: NSLocalizedString("INFO.AUTHOR.DETAIL", comment: ""), value1)
-            }
-
-            /// Base translation: Author
-            public static var Title : String = NSLocalizedString("INFO.AUTHOR.TITLE", comment: "")
 
         }
 
@@ -154,16 +170,6 @@ public struct Localizations {
 
         }
 
-        public struct BugReports {
-
-            /// Base translation: Bug reports, requests, pull requests welcome at the GitHub Issues page.
-            public static var Message : String = NSLocalizedString("INFO.BUG_REPORTS.MESSAGE", comment: "")
-
-            /// Base translation: GitHub Issues
-            public static var LinkAnchor : String = NSLocalizedString("INFO.BUG_REPORTS.LINK_ANCHOR", comment: "")
-
-        }
-
         public struct Contact {
 
             /// Base translation: Contact via email or Twitter.
@@ -187,10 +193,27 @@ public struct Localizations {
 
             }
         }
+
+        public struct BugReports {
+
+            /// Base translation: Bug reports, requests, pull requests welcome at the GitHub Issues page.
+            public static var Message : String = NSLocalizedString("INFO.BUG_REPORTS.MESSAGE", comment: "")
+
+            /// Base translation: GitHub Issues
+            public static var LinkAnchor : String = NSLocalizedString("INFO.BUG_REPORTS.LINK_ANCHOR", comment: "")
+
+        }
     }
 
     public struct CommandList {
 
+
+        public struct Favourites {
+
+            /// Base translation: No favourites yet!  Tap the ♡ button to favourite a command.
+            public static var None : String = NSLocalizedString("COMMAND_LIST.FAVOURITES.NONE", comment: "")
+
+        }
 
         public struct Search {
 
@@ -209,13 +232,6 @@ public struct Localizations {
                 public static var ContributeContent : String = NSLocalizedString("COMMAND_LIST.SEARCH.NOTHING_FOUND.CONTRIBUTE_CONTENT", comment: "")
 
             }
-        }
-
-        public struct Favourites {
-
-            /// Base translation: No favourites yet!  Tap the ♡ button to favourite a command.
-            public static var None : String = NSLocalizedString("COMMAND_LIST.FAVOURITES.NONE", comment: "")
-
         }
 
         public struct AllCommands {
@@ -278,8 +294,8 @@ public struct Localizations {
 
         public struct Error {
 
-            /// Base translation: Could not the read index file
-            public static var CouldNotReadIndexFile : String = NSLocalizedString("COMMAND_LIST.ERROR.COULD_NOT_READ_INDEX_FILE", comment: "")
+            /// Base translation: Could not save the download
+            public static var CouldNotSaveDownload : String = NSLocalizedString("COMMAND_LIST.ERROR.COULD_NOT_SAVE_DOWNLOAD", comment: "")
 
             /// Base translation: Could not index the tldr files
             public static var CouldNotIndexFiles : String = NSLocalizedString("COMMAND_LIST.ERROR.COULD_NOT_INDEX_FILES", comment: "")
@@ -287,8 +303,8 @@ public struct Localizations {
             /// Base translation: Could not unzip the download
             public static var CouldNotUnzipDownload : String = NSLocalizedString("COMMAND_LIST.ERROR.COULD_NOT_UNZIP_DOWNLOAD", comment: "")
 
-            /// Base translation: Could not save the download
-            public static var CouldNotSaveDownload : String = NSLocalizedString("COMMAND_LIST.ERROR.COULD_NOT_SAVE_DOWNLOAD", comment: "")
+            /// Base translation: Could not the read index file
+            public static var CouldNotReadIndexFile : String = NSLocalizedString("COMMAND_LIST.ERROR.COULD_NOT_READ_INDEX_FILE", comment: "")
 
             /// Base translation: Try again
             public static var TryAgain : String = NSLocalizedString("COMMAND_LIST.ERROR.TRY_AGAIN", comment: "")
@@ -313,14 +329,14 @@ public struct Localizations {
             /// Base translation: Solaris
             public static var Solaris : String = NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORM.SOLARIS", comment: "")
 
-            /// Base translation: Linux
-            public static var Linux : String = NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORM.LINUX", comment: "")
+            /// Base translation: macOS
+            public static var Osx : String = NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORM.OSX", comment: "")
 
             /// Base translation: Windows
             public static var Windows : String = NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORM.WINDOWS", comment: "")
 
-            /// Base translation: macOS
-            public static var Osx : String = NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORM.OSX", comment: "")
+            /// Base translation: Linux
+            public static var Linux : String = NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORM.LINUX", comment: "")
 
             /// Base translation: Common
             public static var Common : String = NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORM.COMMON", comment: "")

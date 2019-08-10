@@ -10,6 +10,10 @@ bin/
 tldr-viewer.ipa
 tldr-viewer.app.dSYM.zip
 
+## Carthage stuff
+Carthage/Build/*
+Carthage/Checkouts/*
+
 ## other Fastlane output
 fastlane/report.xml
 

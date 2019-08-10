@@ -30,7 +30,6 @@
 		342514A91C34BD82001D31F4 /* TLDRResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342514A81C34BD82001D31F4 /* TLDRResponse.swift */; };
 		342514AB1C34C5D8001D31F4 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342514AA1C34C5D8001D31F4 /* Command.swift */; };
 		342514AF1C353FD3001D31F4 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342514AE1C353FD3001D31F4 /* DetailViewModel.swift */; };
-		34358AEF1C357B7C00BB7DDB /* Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34358AEE1C357B7C00BB7DDB /* Markdown.swift */; };
 		34358AF51C3589D200BB7DDB /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34358AF41C3589D200BB7DDB /* WebKit.framework */; };
 		34358AF71C3592CC00BB7DDB /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34358AF61C3592CC00BB7DDB /* Theme.swift */; };
 		34358AFA1C35D81F00BB7DDB /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = 34358AF91C35D81F00BB7DDB /* style.css */; };
@@ -123,7 +122,6 @@
 		342514A81C34BD82001D31F4 /* TLDRResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TLDRResponse.swift; sourceTree = "<group>"; };
 		342514AA1C34C5D8001D31F4 /* Command.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		342514AE1C353FD3001D31F4 /* DetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
-		34358AEE1C357B7C00BB7DDB /* Markdown.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Markdown.swift; sourceTree = "<group>"; };
 		34358AF41C3589D200BB7DDB /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		34358AF61C3592CC00BB7DDB /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		34358AF91C35D81F00BB7DDB /* style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
@@ -313,7 +311,6 @@
 				342514A61C34BCEF001D31F4 /* TLDRRequest.swift */,
 				342514A81C34BD82001D31F4 /* TLDRResponse.swift */,
 				342514AA1C34C5D8001D31F4 /* Command.swift */,
-				34358AEE1C357B7C00BB7DDB /* Markdown.swift */,
 				34048D1B1C36CF8800E91EE7 /* Platform.swift */,
 				34FD9ABC1C388C83001DB968 /* GroupViewModel.swift */,
 				34FDB1891C3C8FCA00587386 /* SectionViewModel.swift */,
@@ -596,6 +593,7 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/Zip.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Down.framework",
 			);
 			name = "Run Script (carthage copy frameworks)";
 			outputPaths = (
@@ -635,7 +633,6 @@
 				34FD9ABD1C388C83001DB968 /* GroupViewModel.swift in Sources */,
 				342514841C349D96001D31F4 /* AppDelegate.swift in Sources */,
 				342514AF1C353FD3001D31F4 /* DetailViewModel.swift in Sources */,
-				34358AEF1C357B7C00BB7DDB /* Markdown.swift in Sources */,
 				34AFB62322F6CADF007153B3 /* DataSources.swift in Sources */,
 				3425149F1C34AA9F001D31F4 /* BaseCell.swift in Sources */,
 				34AFB61D22F6BE89007153B3 /* SwitchingDataSourceDecorator.swift in Sources */,

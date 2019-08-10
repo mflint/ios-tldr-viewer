@@ -31,6 +31,7 @@
 
 "COMMAND_DETAIL.NOTHING_SELECTED"="Nothing selected";
 "COMMAND_DETAIL.ERROR.COULD_NOT_FIND_TLDR"="Could not find tl;dr";
+"COMMAND_DETAIL.ERROR.COULD_PARSE"="Could not display tl;dr";
 "COMMAND_DETAIL.SEE_ALSO"="See also:";
 "COMMAND_DETAIL.COPIED_TO_PASTEBOARD"="Copied to pasteboard";
 
@@ -57,14 +58,17 @@
 "INFO.CONTACT.TWITTER.LINK_ANCHOR"="Twitter";
 
 "INFO.THANKS.HEADER"="Thanks to";
-"INFO.THANKS.1.MESSAGE"="Romain Prieto and all other contributors to tldr-pages.";
-"INFO.THANKS.1.LINK_ANCHOR"="tldr-pages";
-"INFO.THANKS.2.MESSAGE"="Kristopher Johnson for Markingbird, a Markdown processor in Swift.";
-"INFO.THANKS.2.LINK_ANCHOR"="Markingbird";
-"INFO.THANKS.3.MESSAGE"="'Arabidopsis' for the gorgeous teal-deer artwork, found on DeviantArt. It's available on a shirt via Redbubble. (All profits go to the artist)";
-"INFO.THANKS.3.LINK_ANCHOR.DEVIANTART"="DeviantArt";
-"INFO.THANKS.3.LINK_ANCHOR.REDBUBBLE"="Redbubble";
-"INFO.THANKS.4.MESSAGE"="People who have reported issues and contributed code: kleerkoat, melgu, Marco Bonelli, Danny Mösch";
+"INFO.THANKS.TLDR_PAGES.MESSAGE"="Romain Prieto and all other contributors to tldr-pages.";
+"INFO.THANKS.TLDR_PAGES.LINK_ANCHOR"="tldr-pages";
+"INFO.THANKS.DOWN_LIBRARY.MESSAGE"="Rob Phillips for Down, a Markdown processor in Swift, based on cmark.";
+"INFO.THANKS.DOWN_LIBRARY.LINK_ANCHOR1"="Down";
+"INFO.THANKS.DOWN_LIBRARY.LINK_ANCHOR2"="cmark";
+"INFO.THANKS.ZIP_LIBRARY.MESSAGE"="Roy Marmelstein for Zip, a Swift framework for unzipping files.";
+"INFO.THANKS.ZIP_LIBRARY.LINK_ANCHOR"="Zip";
+"INFO.THANKS.ARTWORK.MESSAGE"="'Arabidopsis' for the gorgeous teal-deer artwork, found on DeviantArt. It's available on a shirt via Redbubble. (All profits go to the artist)";
+"INFO.THANKS.ARTWORK.LINK_ANCHOR.DEVIANTART"="DeviantArt";
+"INFO.THANKS.ARTWORK.LINK_ANCHOR.REDBUBBLE"="Redbubble";
+"INFO.THANKS.CONTRIBUTORS.MESSAGE"="People who have reported issues and contributed code: kleerkoat, melgu, Marco Bonelli, Danny Mösch";
 
 "INFO.OPEN_SOURCE.HEADER"="Open Source app";
 "INFO.OPEN_SOURCE.MESSAGE"="Fork me on GitHub!";
