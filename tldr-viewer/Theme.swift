@@ -163,7 +163,6 @@ enum Color: String {
     /// ViewController shows platforms for a command (linux, macos, etc)
     case bodyDetail = "clrBodyDetail"
     
-    // TODO: can this go?
     /// only used as foreground colours in SegmentedControls
     case bodyTint = "clrBodyTint"
     

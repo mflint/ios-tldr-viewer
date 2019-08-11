@@ -13,5 +13,12 @@ protocol LocaleServicing {
 }
 
 struct LocaleService: LocaleServicing {
-    private(set) var preferredLanguages = Locale.preferredLanguages
+    var preferredLanguages: [String] {
+        var preferred = Locale.preferredLanguages
+        if !preferred.contains("en") {
+            preferred.append("en")
+        }
+        
+        return preferred
+    }
 }

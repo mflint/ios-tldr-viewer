@@ -8,16 +8,50 @@
 
 import Foundation
 
+/// `CommandVariant` represents a `Command` for a single `Platform`. eg. `head` for `osx`.
+/// This value will have at least one `languageCode`, possibly more.
 struct CommandVariant: Codable {
     let commandName: String
     let platform: Platform
+    
+    // TODO: change this type to `Set<String>` so we can't rely on any natural ordering of language codes
+    /// collection of language codes available for this `CommandVariant`
     var languageCodes = [String]()
     
-    func summary() -> String {
-        let detailDataSource = DetailDataSource(self)
+    /// returns a command summary in the given preferred language code; if there is
+    /// no summaru available for that language code, then returns a summary for
+    /// another of the user's preferred languages, according to `Locale`, or
+    /// English as a last resort
+    /// - Parameter languageCode: the preferred language code
+    func summary(preferredLanguage languageCode: String) -> String {
+        if let result = summary(languageCode: languageCode) {
+            return result
+        }
         
-        guard let markdown = detailDataSource.markdown else {
-            return ""
+        return summaryInPreferredLanguage()
+    }
+    
+    /// returns a command summary for one of the user's preferred language codes,
+    /// according to `Locale` or English as a last resort
+    func summaryInPreferredLanguage() -> String {
+        // TODO: this should do better language-matching
+        // eg. if the users preferred language is "pt-BR", then this
+        // function should also match "pt"
+        for otherLanguageCode in LocaleService().preferredLanguages {
+            if let result = summary(languageCode: otherLanguageCode) {
+                return result
+            }
+        }
+        
+        return ""
+    }
+    
+    private func summary(languageCode: String) -> String? {
+        let dataSources = DetailDataSource.dataSources(for: self)
+        
+        guard let detailDataSource = dataSources[languageCode],
+            let markdown = detailDataSource.markdown else {
+            return nil
         }
         
         /**

@@ -21,7 +21,7 @@ class Shortcuts {
             // TODO: this should show the summary from the correct variant, not the first variant
             if let command = DataSources.sharedInstance.baseDataSource.commandWith(name: commandName),
                 let commandVariant = command.variants.first {
-                shortcutItem.localizedSubtitle = commandVariant.summary()
+                shortcutItem.localizedSubtitle = commandVariant.summaryInPreferredLanguage()
                 
                 shortcutItem.icon = UIApplicationShortcutIcon(type: .favorite)
                 shortcutItem.userInfo = [Constant.Shortcut.commandNameKey: commandName as NSString]

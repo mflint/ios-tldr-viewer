@@ -60,6 +60,9 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var messageView: UIView!
     @IBOutlet weak var messageLabel: UILabel!
     
+    private var nextLanguageButton: UIBarButtonItem!
+    private var favouriteButton: UIBarButtonItem!
+    
     var webView: WKWebView!
     
     // these two conflicting constraints adjust the layout depending on whether the segmented control is shown. Only one should be enabled
@@ -101,6 +104,12 @@ class DetailViewController: UIViewController {
         webViewToSegmentedControlConstraint = webView.topAnchor.constraint(equalTo: platformsSegmentedControl.bottomAnchor, constant: 3)
         
         messageView.isHidden = true
+        
+        // right bar buttons
+        nextLanguageButton = UIBarButtonItem(title: nil, style: .plain, target: self, action: #selector(DetailViewController.onNextLanguage))
+        favouriteButton = UIBarButtonItem(image: nil, landscapeImagePhone: nil, style: .plain, target: self, action: #selector(DetailViewController.onFavouriteToggled))
+        
+        navigationItem.rightBarButtonItems = [favouriteButton, nextLanguageButton]
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -191,6 +200,7 @@ class DetailViewController: UIViewController {
 
         if let viewModel = viewModel {
             let platformViewModel = viewModel.selectedVariant
+            platformViewModel.delegate = self
             
             if (platformViewModel.message != nil) {
                 message = platformViewModel.message
@@ -226,6 +236,7 @@ class DetailViewController: UIViewController {
             webView.isHidden = true
         }
         
+        nextLanguageButton.title = viewModel?.selectedVariant.nextLanguageButtonTitle
         title = sceneTitle
     }
     
@@ -233,9 +244,13 @@ class DetailViewController: UIViewController {
         if let viewModel = viewModel {
             let imageLarge = UIImage(imageLiteralResourceName: viewModel.favouriteButtonIconLarge)
             let imageSmall = UIImage(imageLiteralResourceName: viewModel.favouriteButtonIconSmall)
-            let favouriteButton = UIBarButtonItem(image: imageLarge, landscapeImagePhone: imageSmall, style: .plain, target: self, action: #selector(DetailViewController.onFavouriteToggled))
-            navigationItem.rightBarButtonItem = favouriteButton
+            favouriteButton.image = imageLarge
+            favouriteButton.landscapeImagePhone = imageSmall
         }
+    }
+    
+    @objc private func onNextLanguage() {
+        viewModel?.selectedVariant.nextLanguage()
     }
     
     @objc private func onFavouriteToggled() {
@@ -334,4 +349,16 @@ extension DetailViewController: WKURLSchemeHandler {
     }
     
     func webView(_ webView: WKWebView, stop urlSchemeTask: WKURLSchemeTask) {}
+}
+
+extension DetailViewController: DetailPlatformViewModelDelegate {
+    func updated() {
+        DispatchQueue.main.async {
+            if self.viewIfLoaded == nil {
+                return
+            }
+            
+            self.doConfigurePlatformContent()
+        }
+    }
 }

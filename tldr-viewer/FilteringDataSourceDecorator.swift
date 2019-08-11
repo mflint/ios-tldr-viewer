@@ -69,7 +69,6 @@ class FilteringDataSourceDecorator: DataSourcing {
     }
 
     private func update() {
-        // TODO: platform and locale filtering first
         commands = underlyingDataSource.commands.reduce(into: [Command](), { (results, command) in
             // filter out command blacklist
             if commandNameBlackList.contains(command.name) { return }
