@@ -9,11 +9,6 @@
 import Foundation
 
 class Preferences {
-    enum DataSourceEnumType: String {
-        case all = "all"
-        case favourites = "favourites"
-    }
-    
     static let sharedInstance = Preferences()
     
     private let userDefaults = UserDefaults.standard
@@ -47,13 +42,13 @@ class Preferences {
         userDefaults.set(latest, forKey: Constant.PreferenceKey.latest)
     }
     
-    func currentDataSource() -> DataSourceEnumType {
+    func currentDataSource() -> DataSourceType {
         guard let rawValue = userDefaults.string(forKey: Constant.PreferenceKey.selectedDataSource) else { return .all }
-        guard let result = DataSourceEnumType(rawValue: rawValue) else { return .all }
+        guard let result = DataSourceType(rawValue: rawValue) else { return .all }
         return result
     }
     
-    func setCurrentDataSource(_ dataSource: DataSourceEnumType) {
+    func setCurrentDataSource(_ dataSource: DataSourceType) {
         userDefaults.set(dataSource.rawValue, forKey: Constant.PreferenceKey.selectedDataSource)
         userDefaults.synchronize()
     }

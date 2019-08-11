@@ -15,24 +15,20 @@ struct OldIndexCellViewModel: BaseCellViewModel, MessageAndButtonCellViewModel {
     var labelText: NSAttributedString!
     var buttonText: String!
     
-    private let dataSource: RefreshableDataSourceType
-    
-    static func create(dataSource: RefreshableDataSourceType) -> OldIndexCellViewModel? {
-        guard let lastUpdateTime = dataSource.lastUpdateTime() else {
+    static func create() -> OldIndexCellViewModel? {
+        guard let lastUpdateTime = DataSources.sharedInstance.baseDataSource.lastUpdateTime() else {
             return nil
         }
         
         let age = Date().timeIntervalSince(lastUpdateTime)
         if age > Date.timeIntervalForDays(5) {
-            return OldIndexCellViewModel(dataSource: dataSource, age:age)
+            return OldIndexCellViewModel(age:age)
         }
         
         return nil
     }
     
-    init(dataSource: RefreshableDataSourceType, age: TimeInterval) {
-        self.dataSource = dataSource
-        
+    init(age: TimeInterval) {
         let days = Date.daysForTimeInterval(age)
         let messageText = Localizations.CommandList.IndexOld.NumberOfDays(days)
         
@@ -46,6 +42,6 @@ struct OldIndexCellViewModel: BaseCellViewModel, MessageAndButtonCellViewModel {
     }
     
     func performButtonAction() {
-        dataSource.beginRequest()
+        DataSources.sharedInstance.baseDataSource.refresh()
     }
 }

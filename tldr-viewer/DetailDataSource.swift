@@ -12,12 +12,12 @@ struct DetailDataSource {
     let markdown: String?
     let errorString: String?
     
-    init(command: Command, platform: Platform) {
-        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0] 
+    init(_ commandVariant: CommandVariant) {
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let fileURL = documentsDirectory
             .appendingPathComponent("pages")
-            .appendingPathComponent(platform.name)
-            .appendingPathComponent(command.name)
+            .appendingPathComponent(commandVariant.platform.name)
+            .appendingPathComponent(commandVariant.commandName)
             .appendingPathExtension("md")
         
         do {

@@ -10,18 +10,23 @@ import Foundation
 import UIKit
 
 class Shortcuts {
+    /// recreate dynamic quick actions, which appear when 3D-touching the
+    /// app icon on the home screen. This makes actions for the most recently
+    /// viewed commands
     class func recreate() {
         var shortcutItems: [UIApplicationShortcutItem] = []
         for commandName in Preferences.sharedInstance.latest().makeIterator() {
             let shortcutItem = UIMutableApplicationShortcutItem(type: "", localizedTitle: commandName)
             
-            if let command = DataSource.sharedInstance.commandWith(name: commandName) {
-                shortcutItem.localizedSubtitle = command.summary()
+            // TODO: this should show the summary from the correct variant, not the first variant
+            if let command = DataSources.sharedInstance.baseDataSource.commandWith(name: commandName),
+                let commandVariant = command.variants.first {
+                shortcutItem.localizedSubtitle = commandVariant.summary()
+                
+                shortcutItem.icon = UIApplicationShortcutIcon(type: .favorite)
+                shortcutItem.userInfo = [Constant.Shortcut.commandNameKey: commandName as NSString]
+                shortcutItems.insert(shortcutItem, at: 0)
             }
-            
-            shortcutItem.icon = UIApplicationShortcutIcon(type: .favorite)
-            shortcutItem.userInfo = [Constant.Shortcut.commandNameKey: commandName as NSString]
-            shortcutItems.insert(shortcutItem, at: 0)
         }
         
         UIApplication.shared.shortcutItems = shortcutItems

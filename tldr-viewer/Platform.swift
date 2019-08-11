@@ -1,5 +1,5 @@
 //
-//  Platform.swift
+//  CommandPlatform.swift
 //  tldr-viewer
 //
 //  Created by Matthew Flint on 01/01/2016.
@@ -8,52 +8,38 @@
 
 import Foundation
 
-class Platform {
+struct Platform: Codable {
     var name: String
     var displayName: String
+    var sortOrder: Int
     
-    // this maps API platform names to display names. Anything not in this list will be capitalized
-    private static let platformMapping = [
-        "osx": Localizations.CommandList.CommandPlatform.Osx,
-        "sunos": Localizations.CommandList.CommandPlatform.Solaris,
-        "linux": Localizations.CommandList.CommandPlatform.Linux,
-        "windows": Localizations.CommandList.CommandPlatform.Windows,
-        "common": Localizations.CommandList.CommandPlatform.Common
+    private static var platforms = [
+        "common": Platform(name: "common", displayName: Localizations.CommandList.CommandPlatform.Common, sortOrder: 0),
+        "osx": Platform(name: "osx", displayName: Localizations.CommandList.CommandPlatform.Osx, sortOrder: 1),
+        "linux": Platform(name: "linux", displayName: Localizations.CommandList.CommandPlatform.Linux, sortOrder: 2),
+        "sunos": Platform(name: "sunos", displayName: Localizations.CommandList.CommandPlatform.Solaris, sortOrder: 3),
+        "windows": Platform(name: "windows", displayName: Localizations.CommandList.CommandPlatform.Windows, sortOrder: 4)
     ]
     
-    private static var platforms: [String:Platform] = [:]
-    
-    private init(name: String) {
+    private init(name: String, displayName: String, sortOrder: Int) {
         self.name = name
-        
-        if let mapped = Platform.platformMapping[name] {
-            self.displayName = mapped
-        } else {
-            self.displayName = name.capitalized
-        }
+        self.displayName = displayName
+        self.sortOrder = sortOrder
     }
     
-    class func get(name: String) -> Platform {
+    static func get(name: String) -> Platform {
         var platform = Platform.platforms[name]
         if (platform == nil) {
-            platform = Platform(name: name)
+            platform = platforms[name, default: Platform(name: name, displayName: name.capitalized, sortOrder: platforms.count)]
             Platform.platforms[name] = platform
         }
         
         return platform!
     }
-    
-    // in the API, the platforms are in alphabetic order so "linux" comes before "osx". I'm setting a different order here ("common" first, followed by "osx", then alphabetic afterwards) to appease the AppStore Review Gods
-    class func sort(platforms: [Platform]) -> [Platform] {
-        return platforms.sorted(by: { (first, second) -> Bool in
-            switch(first.name) {
-            case "common":
-                return true
-            case "osx":
-                return true
-            default:
-                return first.name.compare(second.name) == ComparisonResult.orderedAscending
-            }
-        })
+}
+
+extension Platform: Comparable {
+    static func < (lhs: Platform, rhs: Platform) -> Bool {
+        return lhs.sortOrder < rhs.sortOrder
     }
 }

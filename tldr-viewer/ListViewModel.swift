@@ -9,6 +9,50 @@
 import Foundation
 import UIKit
 
+/*
+ 
+    The list of commands is loaded by the `DataSource` class, and passes through
+    a series of decorators before arriving at the ListViewModel:
+    
+                                  +------------+
+                                  | DataSource |
+                                  +------+-----+
+                                         |
+                         +---------------+--------------+
+                         | FilteringDataSourceDecorator |
+                         +---------------+--------------+
+                                         |
+     +-----------------------------------+-----------------------------------+
+     |                    SwitchingDataSourceDecorator                       |
+     |                                                                       |
+     |  +------------------------------+   +------------------------------+  |
+     |  | SearchingDataSourceDecorator |   | FavouriteDataSourceDecorator |  |
+     |  +------------------------------+   +------------------------------+  |
+     +-----------------------------------+-----------------------------------+
+                                         |
+                                 +-------+-------+
+                                 | ListViewModel |
+                                 +---------------+
+
+    `DataSource` loads the raw command data from the `Documents` directory. It
+    can refresh data from the network if necessary.
+ 
+    `FilteringDataSourceDecorator` filters the command data, removing commands
+    that the user never wants to see. This might be due to their locale or their
+    preferred platforms.
+ 
+    `SwitchingDataSourceDecorator` is a type which can switch between multiple
+    other decorators. Currently is has two, one for each of the segmented controls
+    on the List Commands screen.
+ 
+    `SearchableDataSourceDecorator` filters the Command list based on the user's
+    search criteria.
+ 
+    `FavouritesDataSourceDecorator` filters the Command list based on the user's
+    favourite commands.
+ 
+ */
+
 class ListViewModel: NSObject {
     // no-op closures until the ViewController provides its own
     var updateSegmentSignal: () -> Void = {}
@@ -16,83 +60,76 @@ class ListViewModel: NSObject {
     var showDetail: (_ detailViewModel: DetailViewModel) -> Void = {(vm) in}
     var cancelSearchSignal: () -> Void = {}
 
-    var canSearch: Bool = false
-    var canRefresh: Bool = false
+    var canSearch: Bool {
+        return DataSources.sharedInstance.switchingDataSource.isSearchable
+    }
     
-    var lastUpdatedString: String!
-    var searchText: String = ""
+    var canRefresh: Bool {
+       return DataSources.sharedInstance.switchingDataSource.isRefreshable
+   }
+    
+    var lastUpdatedString: String {
+        if let lastUpdateTime = DataSources.sharedInstance.baseDataSource.lastUpdateTime() {
+            let lastUpdatedDateTime = dateFormatter.string(from: lastUpdateTime)
+            return Localizations.CommandList.AllCommands.UpdatedDateTime(lastUpdatedDateTime)
+        }
+        
+        return ""
+    }
+    
+    var searchText: String {
+        return DataSources.sharedInstance.searchingDataSource.searchText
+    }
     let searchPlaceholder = Localizations.CommandList.AllCommands.SearchPlaceholder
     var itemSelected: Bool = false
-    var requesting: Bool = false
-    var sectionViewModels = [SectionViewModel]()
-    var sectionIndexes = [String]()
+    var requesting: Bool {
+        return DataSources.sharedInstance.baseDataSource.requesting
+    }
     
-    var searchableDataSource: SearchableDataSourceType!
-    var dataSources: [DataSourceType]!
+    // TODO: animate tableview contents when this changes
+    // TODO: cache sectionViewModels for each selectable datasource, and only update when we get an update signal from that datasource
+    var sectionViewModels = [SectionViewModel]()
+    
+    var sectionIndexes = [String]()
     var dataSourceNames: [String]!
     
     var detailVisible: Bool = false
     
+    private let dataSource = DataSources.sharedInstance.switchingDataSource
+    
     private let dateFormatter = DateFormatter()
-    private var selectedDataSource: DataSourceType!
-    var selectedDataSourceIndex: Int! {
-        didSet {
-            selectedDataSource = dataSources[selectedDataSourceIndex]
-            selectedDataSource.updateSignal = {
-                self.update()
-            }
-            
-            if let _ = selectedDataSource as? SearchableDataSourceType {
-                canSearch = true
-                canRefresh = true
-            } else {
-                canSearch = false
-                canRefresh = false
-            }
-            
-            refreshableDataSource = selectedDataSource as? RefreshableDataSourceType
-
-            Preferences.sharedInstance.setCurrentDataSource(selectedDataSource.type)
+    var selectedDataSourceIndex: Int {
+        get {
+            return DataSources.sharedInstance.switchingDataSource.selectedDataSourceIndex
+        }
+        set {
+            let switcher = DataSources.sharedInstance.switchingDataSource
+            switcher.selectedDataSourceIndex = newValue
             
             // update the selected datasource (segment control) in the UI
             updateSegmentSignal()
-            
-            // and update the list of commands
-            update()
         }
     }
     
-    private var refreshableDataSource: RefreshableDataSourceType?
     private var cellViewModels = [BaseCellViewModel]()
     
     override init() {
         super.init()
         
+        dataSource.add(delegate: self)
+
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .short
         
-        dataSources = [DataSource.sharedInstance, FavouriteDataSource.sharedInstance]
-        dataSourceNames = []
-        for dataSource in dataSources {
-            dataSourceNames.append(dataSource.name)
-            if let searchable = dataSource as? SearchableDataSourceType {
-                searchableDataSource = searchable
-            }
-        }
+        dataSourceNames = DataSources.sharedInstance.switchingDataSource.underlyingDataSources.map({ (switchable) -> String in
+            return switchable.name
+        })
         
         NotificationCenter.default.addObserver(self, selector: #selector(ListViewModel.externalCommandChange(notification:)), name: Constant.ExternalCommandChangeNotification.name, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(ListViewModel.detailShown(notification:)), name: Constant.DetailViewPresence.shownNotificationName, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(ListViewModel.detailHidden(notification:)), name: Constant.DetailViewPresence.hiddenNotificationName, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(DetailViewModel.favouriteChange(notification:)), name: Constant.FavouriteChangeNotification.name, object: nil)
         
-        defer {
-            let currentDataSourceType = Preferences.sharedInstance.currentDataSource()
-            for (index, dataSource) in dataSources.enumerated() {
-                if currentDataSourceType == dataSource.type {
-                    selectedDataSourceIndex = index
-                }
-            }
-        }
+        DataSources.sharedInstance.baseDataSource.loadInitialCommands()
     }
     
     deinit {
@@ -100,18 +137,13 @@ class ListViewModel: NSObject {
     }
     
     @objc func externalCommandChange(notification: Notification) {
-        guard let userInfo = notification.userInfo else { return }
-        guard let commandName = userInfo[Constant.ExternalCommandChangeNotification.commandNameKey] as? String else { return }
-        
-        // switch back to the main datasource (first segment in the UI) because
-        // this new command might not be in the favourites list
-        selectedDataSourceIndex = 0
-        
-        if let searchableDataSource = selectedDataSource as? SearchableDataSourceType {
-            if let command = searchableDataSource.commandWith(name: commandName) {
-                showCommand(commandName: command.name)
-            }
+        guard let userInfo = notification.userInfo,
+            let commandName = userInfo[Constant.ExternalCommandChangeNotification.commandNameKey] as? String,
+            let command = DataSources.sharedInstance.baseDataSource.commandWith(name: commandName) else {
+                return
         }
+        
+        showCommand(commandName: command.name)
     }
     
     @objc func detailShown(notification: Notification) {
@@ -122,63 +154,50 @@ class ListViewModel: NSObject {
         detailVisible = false
     }
     
-    @objc func favouriteChange(notification: Notification) {
-        update()
-    }
-    
     func refreshData() {
-        refreshableDataSource?.beginRequest()
+        DataSources.sharedInstance.baseDataSource.refresh()
     }
     
     private func update() {
         var vms = [BaseCellViewModel]()
-        var commands: [Command]
-        if let searchableDataSource = selectedDataSource as? SearchableDataSourceType {
-            commands = searchableDataSource.commandsWith(filter: searchText)
-        } else {
-            commands = selectedDataSource.allCommands()
-        }
+        let commands = dataSource.commands
         
-        if let refreshableDataSource = self.refreshableDataSource {
-            requesting = refreshableDataSource.requesting
-            if let lastUpdateTime = refreshableDataSource.lastUpdateTime() {
-                let lastUpdatedDateTime = dateFormatter.string(from: lastUpdateTime)
-                lastUpdatedString = Localizations.CommandList.AllCommands.UpdatedDateTime(lastUpdatedDateTime)
-            } else {
-                lastUpdatedString = ""
-            }
-            
+        if dataSource.isRefreshable {
             if requesting {
                 let cellViewModel = LoadingCellViewModel()
                 vms.append(cellViewModel)
             }
             
-            if commands.count == 0 && searchText.count > 0 {
-                // search had no results
-                let cellViewModel = NoResultsCellViewModel(searchTerm: searchText, buttonAction: {
-                    let url = URL(string: "https://github.com/tldr-pages/tldr/blob/master/CONTRIBUTING.md")!
-                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                })
-                vms.append(cellViewModel)
-            }
-            
-            if let errorText = refreshableDataSource.requestError {
+            let baseDataSource = DataSources.sharedInstance.baseDataSource
+            if let errorText = baseDataSource.requestError {
                 let cellViewModel = ErrorCellViewModel(errorText: errorText, buttonAction: {
-                    refreshableDataSource.beginRequest()
+                    baseDataSource.refresh()
                 })
                 vms.append(cellViewModel)
-            } else if !requesting, let oldIndexCell = OldIndexCellViewModel.create(dataSource: refreshableDataSource) {
+            } else if !requesting, let oldIndexCell = OldIndexCellViewModel.create() {
                 vms.append(oldIndexCell)
             }
         }
         
-        if selectedDataSource.type == .favourites && commands.count == 0 {
-            vms.append(NoFavouritesCellViewModel())
+        if commands.count == 0 {
+            switch dataSource.selectedDataSourceType {
+            case .all:
+                if !DataSources.sharedInstance.searchingDataSource.searchText.isEmpty {
+                    // no search results
+                    let cellViewModel = NoResultsCellViewModel(searchTerm: searchText, buttonAction: {
+                        let url = URL(string: "https://github.com/tldr-pages/tldr/blob/master/CONTRIBUTING.md")!
+                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                    })
+                    vms.append(cellViewModel)
+                }
+            case .favourites:
+                vms.append(NoFavouritesCellViewModel())
+            }
         }
-        
+
         for command in commands {
             let cellViewModel = CommandCellViewModel(command: command, action: {
-                let detailViewModel = DetailViewModel(dataSource: self.searchableDataSource, command: command)
+                let detailViewModel = DetailViewModel(command: command)
                 self.showDetail(detailViewModel)
             })
             vms.append(cellViewModel)
@@ -222,22 +241,18 @@ class ListViewModel: NSObject {
     }
     
     private func setFilter(text: String) {
-        searchText = text
-        update()
+        DataSources.sharedInstance.searchingDataSource.searchText = text
     }
     
     func filterCancel() {
-        setFilter(text: "")
         cancelSearchSignal()
+        setFilter(text: "")
     }
     
     func showCommand(commandName: String) {
         // kill any search
-        searchText = ""
         cancelSearchSignal()
-        
-        // update the results (to show all cells)
-        update()
+        DataSources.sharedInstance.searchingDataSource.searchText = ""
         
         // now find the NSIndexPath for the CommandCellViewModel for this command name
         var indexPath: IndexPath?
@@ -262,5 +277,11 @@ class ListViewModel: NSObject {
     
     func showDetailWhenHorizontallyCompact() -> Bool {
         return itemSelected
+    }
+}
+
+extension ListViewModel: DataSourceDelegate {
+    func dataSourceDidUpdate(dataSource: DataSourcing) {
+        update()
     }
 }

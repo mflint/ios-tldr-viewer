@@ -139,7 +139,7 @@ class DetailViewController: UIViewController {
     @IBAction func platformSegmentDidChange(_ sender: AnyObject) {
         guard let viewModel = viewModel else { return }
         
-        viewModel.select(platformIndex: self.platformsSegmentedControl.selectedSegmentIndex)
+        viewModel.select(variantIndex: self.platformsSegmentedControl.selectedSegmentIndex)
     }
     
     private func setPasteboard(string: String, message: String) {
@@ -175,7 +175,7 @@ class DetailViewController: UIViewController {
     
     private func doConfigureCommand() {
         if let viewModel = viewModel {
-            if viewModel.showPlatforms {
+            if viewModel.showVariants {
                 doConfigureSegmentedControl(viewModel)
                 doShowOrHideSegmentedControl(true)
             } else {
@@ -189,8 +189,9 @@ class DetailViewController: UIViewController {
         var message: NSAttributedString?
         var sceneTitle: String
 
-        if let viewModel = viewModel,
-            let platformViewModel = viewModel.selectedPlatform {
+        if let viewModel = viewModel {
+            let platformViewModel = viewModel.selectedVariant
+            
             if (platformViewModel.message != nil) {
                 message = platformViewModel.message
                 htmlString = nil
@@ -248,11 +249,12 @@ class DetailViewController: UIViewController {
     private func doConfigureSegmentedControl(_ viewModel: DetailViewModel) {
         self.platformsSegmentedControl.removeAllSegments()
         
-        for (index, platform) in viewModel.platforms.enumerated() {
-            self.platformsSegmentedControl.insertSegment(withTitle: platform.platformName, at: index, animated: false)
+        for (index, variant) in viewModel.variantViewModels.enumerated() {
+            self.platformsSegmentedControl.insertSegment(withTitle: variant.platformName, at: index, animated: false)
         }
         
-        self.platformsSegmentedControl.selectedSegmentIndex = viewModel.selectedPlatform.platformIndex
+        
+        self.platformsSegmentedControl.selectedSegmentIndex = viewModel.selectedVariantIndex
     }
     
     private func doShowOrHideSegmentedControl(_ show: Bool) {
@@ -267,31 +269,31 @@ class DetailViewController: UIViewController {
 
 extension DetailViewController: DetailViewModelDelegate {
     func updateFavourite() {
-        if viewIfLoaded == nil {
-            return
-        }
-        
         DispatchQueue.main.async {
+            if self.viewIfLoaded == nil {
+                return
+            }
+            
             self.doConfigureFavourite()
         }
     }
     
     func updateCommand() {
-        if viewIfLoaded == nil {
-            return
-        }
-        
         DispatchQueue.main.async {
+            if self.viewIfLoaded == nil {
+                return
+            }
+            
             self.doConfigureCommand()
         }
     }
     
     func updatePlatformContent() {
-        if viewIfLoaded == nil {
-            return
-        }
-        
         DispatchQueue.main.async {
+            if self.viewIfLoaded == nil {
+                return
+            }
+            
             self.doConfigurePlatformContent()
         }
     }

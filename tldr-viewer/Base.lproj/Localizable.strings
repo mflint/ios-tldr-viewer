@@ -19,6 +19,8 @@
 "COMMAND_LIST.ERROR.COULD_NOT_SAVE_DOWNLOAD"="Could not save the download";
 "COMMAND_LIST.ERROR.COULD_NOT_UNZIP_DOWNLOAD"="Could not unzip the download";
 "COMMAND_LIST.ERROR.COULD_NOT_READ_INDEX_FILE"="Could not the read index file";
+"COMMAND_LIST.ERROR.COULD_NOT_INDEX_FILES"="Could not index the tldr files";
+
 "COMMAND_LIST.INDEX_OLD.NUMBER_OF_DAYS"="The index is %d days old.";
 "COMMAND_LIST.INDEX_OLD.UPDATE_NOW"="Update index now";
 "COMMAND_LIST.SEARCH.NOTHING_FOUND.FOR"="Nothing found for '%@'.\n\ntldr is a community effort, and needs people like you to contribute content.\n";

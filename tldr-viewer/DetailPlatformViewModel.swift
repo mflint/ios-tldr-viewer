@@ -45,8 +45,7 @@ class DetailPlatformViewModel {
     var message: NSAttributedString?
     
     // platform name and index
-    var platformName: String!
-    var platformIndex: Int
+    var platformName: String
     
     // tldr page in HTML, with CSS
     var detailHTML: String? {
@@ -60,20 +59,15 @@ class DetailPlatformViewModel {
     // raw examples in this manpage
     var examples: [String]?
     
-    private let dataSource: SearchableDataSourceType
-    private let command: Command
-    private let platform: Platform
+    private let commandVariant: CommandVariant
     private var unstyledDetailHTML: String?
     
-    init(dataSource: SearchableDataSourceType, command: Command, platform: Platform, platformIndex: Int) {
-        self.dataSource = dataSource
-        self.command = command
-        self.platform = platform
-        self.platformIndex = platformIndex
+    init(commandVariant: CommandVariant) {
+        self.commandVariant = commandVariant
+
+        self.platformName = commandVariant.platform.displayName
         
-        self.platformName = platform.displayName
-        
-        let detailDataSource = DetailDataSource(command: command, platform: platform)
+        let detailDataSource = DetailDataSource(commandVariant)
         guard let markdown = detailDataSource.markdown else {
             handleError(detailDataSource.errorString)
             return
@@ -136,14 +130,23 @@ class DetailPlatformViewModel {
     /// section, and changes the reference in the markdown to a hyperlink which opens the linked
     /// command
     private func generateSeeAlso(_ markdown: String) -> (markdown:String, seeAlsoHTML:String) {
-        var seeAlsoCommands = [String:Command]()
+        var seeAlsoCommands = [Command]()
         let codeBlocksAndRanges = markdown.capturedGroups(withRegex: "`(.*?)`")
+        
+        // this dataSource is used for finding related Commands
+        let dataSource = DataSources.sharedInstance.filteredDataSource
         
         for codeBlockAndRange in codeBlocksAndRanges {
             let codeBlock = codeBlockAndRange.substring
-            if codeBlock != self.command.name {
-                if let command = dataSource.commandWith(name: codeBlock) {
-                    seeAlsoCommands[codeBlock] = command
+            
+            // check this codeblock doesn't reference the current command -
+            // we don't want to generate hyperlinks to ourself
+            if codeBlock != commandVariant.commandName {
+                let matchingCommands = dataSource.commands.filter { (command) -> Bool in
+                    command.name == codeBlock
+                }
+                if let matchingCommand = matchingCommands.first {
+                    seeAlsoCommands.append(matchingCommand)
                 }
             }
         }
@@ -152,13 +155,30 @@ class DetailPlatformViewModel {
         
         // make the "see also" html
         if seeAlsoCommands.count > 0 {
+            seeAlsoCommands.sort()
+            
             seeAlsoHTML += "<div class=\"seeAlso\">"
             seeAlsoHTML += "<h2>\(Localizations.CommandDetail.SeeAlso)</h2>"
             seeAlsoHTML += "<dl>"
-            for seeAlsoCommandName in seeAlsoCommands.keys.sorted() {
-                let command = seeAlsoCommands[seeAlsoCommandName]!
-                let summary = command.summary()
-                seeAlsoHTML += "<dt><a href=\"\(seeAlsoCommandName)\">\(seeAlsoCommandName)</a></dt><dd>\(summary)</dd>"
+            
+            for seeAlsoCommand in seeAlsoCommands {
+                let seeAlsoCommandName = seeAlsoCommand.name
+                
+                // if there's a platform variant for this command which is the same
+                // as out currently-selected platform, then use that for the summary
+                var seeAlsoCommandVariant = seeAlsoCommand.variants.filter { (variant) -> Bool in
+                    variant.platform == self.commandVariant.platform
+                }.first
+                
+                // if not, then use the first variant for this seeAlsoCommand
+                if seeAlsoCommandVariant == nil {
+                    seeAlsoCommandVariant = seeAlsoCommand.variants.first
+                }
+                
+                if let seeAlsoCommandVariant = seeAlsoCommandVariant {
+                    let summary = seeAlsoCommandVariant.summary()
+                    seeAlsoHTML += "<dt><a href=\"\(seeAlsoCommandName)\">\(seeAlsoCommandName)</a></dt><dd>\(summary)</dd>"
+                }
             }
             seeAlsoHTML += "</dl></div>"
         }
@@ -168,7 +188,8 @@ class DetailPlatformViewModel {
         // to a hyperlink:
         //   [cut](cut)
         var changedMarkdown = markdown
-        for seeAlsoCommandName in seeAlsoCommands.keys {
+        for seeAlsoCommand in seeAlsoCommands {
+            let seeAlsoCommandName = seeAlsoCommand.name
             changedMarkdown = changedMarkdown.replacingOccurrences(of: "`\(seeAlsoCommandName)`", with: "[\(seeAlsoCommandName)](\(seeAlsoCommandName))")
         }
         

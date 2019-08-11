@@ -19,6 +19,9 @@ protocol DetailViewModelDelegate: class {
     func updatePlatformContent()
 }
 
+/// `DetailViewModel` is the ViewModel for the detail screen. It contains one or more
+/// `DetailPlatformViewModel` objects, which hold the actual tldr text for a single
+/// variant of the current Command
 class DetailViewModel {
     weak var delegate: DetailViewModelDelegate?
     
@@ -28,26 +31,33 @@ class DetailViewModel {
     // navigation bar title
     var navigationBarTitle: String = ""
 
-    // multi-platforms
-    var platforms: [DetailPlatformViewModel] = [] {
+    // ViewModels for this Command's Variants
+    var variantViewModels: [DetailPlatformViewModel] = [] {
         didSet {
-            self.showPlatforms = self.command.platforms.count > 1
-            self.selectedPlatform = self.platforms[0]
+            showVariants = command.variants.count > 1
+            selectedVariantIndex = 0
         }
     }
-    var showPlatforms: Bool = false
-    var selectedPlatform: DetailPlatformViewModel! {
+    var showVariants: Bool = false
+    var selectedVariantIndex: Int!  {
         didSet {
             delegate?.updatePlatformContent()
+        }
+    }
+    var selectedVariant: DetailPlatformViewModel {
+        get {
+            return variantViewModels[selectedVariantIndex]
         }
     }
     
     var favourite: Bool = false
     var favouriteButtonIconSmall: String!
     var favouriteButtonIconLarge: String!
-    private let dataSource: SearchableDataSourceType
     
     private var command: Command! {
+        willSet {
+            selectedVariantIndex = 0
+        }
         didSet {
             self.navigationBarTitle = self.command.name
             
@@ -55,19 +65,17 @@ class DetailViewModel {
             delegate?.updateCommand()
             delegate?.updateFavourite()
             
-            var platforms: [DetailPlatformViewModel] = []
-            for (index, platform) in self.command.platforms.enumerated() {
-                let platformVM = DetailPlatformViewModel(dataSource: dataSource, command: self.command, platform: platform, platformIndex: index)
-                platforms.append(platformVM)
+            var variantViewModels = [DetailPlatformViewModel]()
+            for variant in command.variants {
+                let platformVM = DetailPlatformViewModel(commandVariant: variant)
+                variantViewModels.append(platformVM)
             }
             
-            self.platforms = platforms
+            self.variantViewModels = variantViewModels
         }
     }
     
-    init(dataSource: SearchableDataSourceType, command: Command) {
-        self.dataSource = dataSource
-        
+    init(command: Command) {
         NotificationCenter.default.addObserver(self, selector: #selector(DetailViewModel.externalCommandChange(notification:)), name: Constant.ExternalCommandChangeNotification.name, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(DetailViewModel.favouriteChange(notification:)), name: Constant.FavouriteChangeNotification.name, object: nil)
         
@@ -80,10 +88,9 @@ class DetailViewModel {
         NotificationCenter.default.removeObserver(self)
     }
     
-    func select(platformIndex: Int) {
-        if (platformIndex >= 0 && platformIndex <= self.platforms.count-1) {
-            self.selectedPlatform = self.platforms[platformIndex]
-            delegate?.updatePlatformContent()
+    func select(variantIndex: Int) {
+        if (variantIndex >= 0 && variantIndex <= variantViewModels.count-1) {
+            selectedVariantIndex = variantIndex
         }
     }
     
@@ -98,10 +105,12 @@ class DetailViewModel {
     }
     
     func onFavouriteToggled() {
+        let favourtes = DataSources.sharedInstance.favouritesDataSource
+        
         if favourite {
-            FavouriteDataSource.sharedInstance.remove(commandName: command.name)
+            favourtes.remove(commandName: command.name)
         } else {
-            FavouriteDataSource.sharedInstance.add(commandName: command.name)
+            favourtes.add(commandName: command.name)
         }
     }
     
@@ -110,12 +119,16 @@ class DetailViewModel {
         let numberIndex = path.index(path.startIndex, offsetBy: 1)
         let numberString = path[numberIndex...]
         if let number = Int(numberString),
-            let example = selectedPlatform.example(at: number) {
+            let example = selectedVariant.example(at: number) {
             setPasteboardValue(example, Localizations.CommandDetail.CopiedToPasteboard)
         }
     }
     
+    /// handle a user tap on a hyperlink, while viewing command details
+    /// - Parameter absoluteURLString: the tapped URL string (which might match a command-name)
     func handleAbsoluteURL(_ absoluteURLString: String) -> Bool {
+        // TODO: handle variants
+        let dataSource = DataSources.sharedInstance.baseDataSource
         if dataSource.commandWith(name: absoluteURLString) != nil {
             // command exists, so handle it here
             NotificationCenter.default.post(name: Constant.ExternalCommandChangeNotification.name, object: nil, userInfo: [Constant.ExternalCommandChangeNotification.commandNameKey : absoluteURLString as NSSecureCoding])
@@ -127,11 +140,14 @@ class DetailViewModel {
         return true
     }
     
+    /// Something caused the selected command to change, and this function handles that change
+    /// - Parameter notification: notification containing the new command details
     @objc func externalCommandChange(notification: Notification) {
         guard let userInfo = notification.userInfo else { return }
         guard let commandName = userInfo[Constant.ExternalCommandChangeNotification.commandNameKey] as? String else { return }
-        
-        if let command = DataSource.sharedInstance.commandWith(name: commandName) {
+
+        // TODO: handle variants
+        if let command = DataSources.sharedInstance.baseDataSource.commandWith(name: commandName) {
             self.command = command
             onCommandDisplayed()
         }
@@ -143,7 +159,7 @@ class DetailViewModel {
     }
     
     private func setupFavourite() {
-        favourite = FavouriteDataSource.sharedInstance.favouriteCommandNames.contains(command.name)
+        favourite = DataSources.sharedInstance.favouritesDataSource.isFavourite(commandName: command.name)
         favouriteButtonIconSmall = favourite ? "heart-small" : "heart-o-small"
         favouriteButtonIconLarge = favourite ? "heart-large" : "heart-o-large"
     }

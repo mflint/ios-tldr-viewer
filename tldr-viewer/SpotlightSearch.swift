@@ -13,10 +13,12 @@ import UIKit
 
 struct SpotlightSearch {
     func addToIndex(command: Command) {
+        guard let firstVariant = command.variants.first else { return }
+        
         let attributeSet = CSSearchableItemAttributeSet(itemContentType: kUTTypeText as String)
         // Add metadata that supplies details about the item.
         attributeSet.title = command.name
-        attributeSet.contentDescription = command.summary()
+        attributeSet.contentDescription = firstVariant.summary()
         
         if let image = UIImage(named: "AppIcon") {
             attributeSet.thumbnailData = image.pngData()
