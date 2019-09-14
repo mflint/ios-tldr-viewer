@@ -18,11 +18,13 @@ private struct Device {
 
 private struct Devices {
     private static let devices = [
+        Device(name: "iPhone Xʀ", splitView: true, phone: true),
         Device(name: "iPhone Xs Max", splitView: true, phone: true),
         Device(name: "iPhone Xs", splitView: false, phone: true),
         Device(name: "iPhone 8 Plus", splitView: true, phone: true),
         Device(name: "iPhone 8", splitView: false, phone: true),
         Device(name: "iPhone 5s", splitView: false, phone: true),
+        Device(name: "iPhone SE", splitView: false, phone: true),
         Device(name: "iPad Pro (12.9-inch) (3rd generation)", splitView: true, phone: false),
         Device(name: "iPad Pro (12.9-inch) (2nd generation)", splitView: true, phone: false),
         Device(name: "iPad Pro (11-inch)", splitView: true, phone: false),
@@ -63,14 +65,20 @@ class SnapshotTests: XCTestCase {
     func testCommandList() {
         guard Devices.currentDevice().phone else { return }
         
-        Thread.sleep(forTimeInterval: 2)
+        Thread.sleep(forTimeInterval: 3)
+        
+        app.buttons["All"].firstMatch.tap()
+        
         snapshot(ScreenshotNames.commandList.rawValue)
     }
     
     func testCommandDetail() {
-        app.staticTexts["say"].firstMatch.tap()
+        Thread.sleep(forTimeInterval: 3)
         
-        Thread.sleep(forTimeInterval: 2)
+        app.buttons["All"].firstMatch.tap()
+        app.staticTexts["say"].firstMatch.tap()
+
+        Thread.sleep(forTimeInterval: 3)
         
         if Devices.currentDevice().phone {
             snapshot(ScreenshotNames.commandDetail.rawValue)

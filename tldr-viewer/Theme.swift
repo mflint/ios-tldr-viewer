@@ -25,26 +25,38 @@ class Theme {
 
         // segmented control appearance changed a lot in iOS 13
         if #available(iOS 13.0, *) {
-            SegmentedControl.appearance().selectedSegmentTintColor = Color.inverseBody.uiColor()
-            SegmentedControl.appearance().backgroundColor = Color.segmentBackground.uiColor()
-            SegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Color.inverseBody.uiColor()], for: .normal)
-            SegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Color.bodyTint.uiColor()], for: .selected)
+            // Note: this `backgroundColor` property displays darker than the colour in the asset catalog
+            // when in light mode, and displays lighter when in dark mode
+            SegmentedControl.appearance().backgroundColor = Color.segmentUnselectedBackground.uiColor()
+            SegmentedControl.appearance().selectedSegmentTintColor = Color.segmentSelectedBackground.uiColor()
+            SegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Color.segmentUnselectedForeground.uiColor()], for: .normal)
+            SegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Color.segmentSelectedForeground.uiColor()], for: .selected)
             
-            SegmentedControlInverse.appearance().selectedSegmentTintColor = Color.segmentBackground.uiColor()
-            SegmentedControlInverse.appearance().backgroundColor = Color.inverseBody.uiColor()
-            SegmentedControlInverse.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Color.bodyTint.uiColor()], for: .normal)
-            SegmentedControlInverse.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Color.inverseBody.uiColor()], for: .selected)
+            // Note: this `backgroundColor` property displays darker than the colour in the asset catalog
+            // when in light mode, and displays lighter when in dark mode
+            SegmentedControlInverse.appearance().backgroundColor = Color.segmentInverseUnselectedBackground.uiColor()
+            SegmentedControlInverse.appearance().selectedSegmentTintColor = Color.segmentInverseSelectedBackground.uiColor()
+            SegmentedControlInverse.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Color.segmentInverseUnselectedForeground.uiColor()], for: .normal)
+            SegmentedControlInverse.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Color.segmentInverseSelectedForeground.uiColor()], for: .selected)
         } else {
-            SegmentedControl.appearance().tintColor = Color.inverseBody.uiColor()
+            SegmentedControl.appearance().tintColor = Color.segmentSelectedBackground.uiColor()
             
-            SegmentedControlInverse.appearance().tintColor = Color.segmentBackground.uiColor()
+            SegmentedControlInverse.appearance().tintColor = Color.segmentInverseSelectedBackground.uiColor()
         }
         
         // UISearchBar text field
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).font = UIFont.tldrBody()
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = Color.inverseBody.uiColor()
-        UILabel.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = Color.inverseBody.uiColor() // placeholder
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = Color.searchBackground.uiColor()
         UISearchBar.appearance().tintColor = .white // cursor and cancel button
+        UISearchBar.appearance().backgroundColor = .clear
+        
+        if #available(iOS 13.0, *) {
+            // can't find a way to change the placeholder text of
+            // a UISearchBar in iOS 13. Anyone?
+        } else {
+            UILabel.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = Color.codeBackground.uiColor() // placeholder text
+        }
     }
     
     private static func imageWith(color: UIColor, size: CGSize = CGSize(width: 1, height: 1)) -> UIImage? {
@@ -147,6 +159,9 @@ enum Color: String {
     /// a standard completely-black or completely-white background
     /// for ViewControllers
     case background = "clrBackground"
+    
+    ///
+    case searchBackground = "clrSearchBackground"
 
     /// the standard background colour for TableViewControllers
     case tableBackground = "clrTableBackground"
@@ -170,10 +185,30 @@ enum Color: String {
     /// inside a paragraph of "body" text)
     case bodyHighlight = "clrBodyHighlight"
     
-    /// a slightly different tint, used in SegmentedControls (so the SegmentedControl
-    /// background doesn't blend in with the background of its parent view)
-    case segmentBackground = "clrSegmentBackground"
+    ///
+    case segmentSelectedBackground = "clrSegmentSelectedBackground"
     
+    ///
+    case segmentSelectedForeground = "clrSegmentSelectedForeground"
+    
+    ///
+    case segmentUnselectedBackground = "clrSegmentUnselectedBackground"
+    
+    ///
+    case segmentUnselectedForeground = "clrSegmentUnselectedForeground"
+    
+    ///
+    case segmentInverseSelectedBackground = "clrSegmentInverseSelectedBackground"
+    
+    ///
+    case segmentInverseSelectedForeground = "clrSegmentInverseSelectedForeground"
+    
+    ///
+    case segmentInverseUnselectedBackground = "clrSegmentInverseUnselectedBackground"
+    
+    ///
+    case segmentInverseUnselectedForeground = "clrSegmentInverseUnselectedForeground"
+
     /// the background for an action button (example: the "Update index now" button"
     case actionBackground = "clrActionBackground"
     

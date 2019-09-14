@@ -2,6 +2,8 @@
 #
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
 
+.DS_Store
+
 ## Build generated
 build/
 DerivedData
@@ -16,6 +18,9 @@ Carthage/Checkouts/*
 
 ## other Fastlane output
 fastlane/report.xml
+
+tldr-viewer.app.dSYM.zip
+tldr-viewer.ipa
 
 ## Various settings
 *.pbxuser
@@ -33,8 +38,9 @@ xcuserdata
 *.moved-aside
 *.xcuserstate
 
-screenshots/*
-fastlane/screenshots/*
 fastlane/metadata/*
 fastlane/Preview.html
+fastlane/README.md
+fastlane/report.xml
+fastlane/screenshots/screenshots.html 
 
