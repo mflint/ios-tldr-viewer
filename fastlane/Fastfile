@@ -1,0 +1,71 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+def xcode
+    xcode_select("/Applications/Xcode.app")
+end
+
+def xcodebeta
+    xcode_select("/Applications/Xcode-beta7.app")
+end
+
+platform :ios do
+  desc "Generate new localized screenshots"
+  lane :tldrscreenshots do
+    xcode
+    #capture_screenshots(project "./tldr-viewer.xcodeproj",
+    capture_screenshots(
+                        scheme: "snapshot"
+                        )
+  end
+
+  desc "Upload screenshots and metadata"
+  lane :tldruploadmetadata do
+    upload_to_app_store(skip_binary_upload: true,
+                        skip_metadata: false,
+                        skip_screenshots: false)
+  end
+
+  desc "Upload binary and submit for review"
+  lane :tldrsubmitbinary do
+    xcode
+    build_ios_app()
+    upload_to_app_store(submit_for_review: true,
+                        automatic_release: true,
+                        skip_binary_upload: false,
+                        skip_metadata: true,
+                        skip_screenshots: true,
+                        force: true)
+  end
+
+  desc "Upload binary to testflight"
+  lane :tldrtestflight do
+    xcode
+    build_ios_app()
+    xcode
+    upload_to_testflight()
+  end
+
+  desc "Reject binary"
+    lane :tldrreject do
+    upload_to_app_store(skip_binary_upload: true,
+                        skip_metadata: true,
+                        skip_screenshots: true,
+                        reject_if_possible: true,
+                        force: true)
+    end
+end
