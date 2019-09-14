@@ -47,8 +47,16 @@ class Theme {
         // UISearchBar text field
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).font = UIFont.tldrBody()
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = Color.inverseBody.uiColor()
-        UILabel.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = Color.inverseBody.uiColor() // placeholder
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = Color.searchBackground.uiColor()
         UISearchBar.appearance().tintColor = .white // cursor and cancel button
+        UISearchBar.appearance().backgroundColor = .clear
+        
+        if #available(iOS 13.0, *) {
+            // can't find a way to change the placeholder text of
+            // a UISearchBar in iOS 13. Anyone?
+        } else {
+            UILabel.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = Color.codeBackground.uiColor() // placeholder text
+        }
     }
     
     private static func imageWith(color: UIColor, size: CGSize = CGSize(width: 1, height: 1)) -> UIImage? {
@@ -151,6 +159,9 @@ enum Color: String {
     /// a standard completely-black or completely-white background
     /// for ViewControllers
     case background = "clrBackground"
+    
+    ///
+    case searchBackground = "clrSearchBackground"
 
     /// the standard background colour for TableViewControllers
     case tableBackground = "clrTableBackground"

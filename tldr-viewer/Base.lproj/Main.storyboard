@@ -119,7 +119,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="VYr-b7-OYd">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="56"/>
+                                <rect key="frame" x="10" y="0.0" width="300" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="7bK-jq-Zjz" id="kTf-ON-FtZ"/>
@@ -138,8 +138,8 @@
                             <constraint firstItem="jew-g3-mNh" firstAttribute="leading" secondItem="rlv-56-8ec" secondAttribute="leading" id="AZQ-J2-dDr"/>
                             <constraint firstItem="jew-g3-mNh" firstAttribute="top" secondItem="VYr-b7-OYd" secondAttribute="bottom" id="Djm-u5-vIT"/>
                             <constraint firstItem="VYr-b7-OYd" firstAttribute="top" secondItem="hV6-gJ-abv" secondAttribute="top" id="Q4Z-kd-WrL"/>
-                            <constraint firstItem="VYr-b7-OYd" firstAttribute="leading" secondItem="hV6-gJ-abv" secondAttribute="leading" id="rkL-Ul-zps"/>
-                            <constraint firstItem="hV6-gJ-abv" firstAttribute="trailing" secondItem="VYr-b7-OYd" secondAttribute="trailing" id="uTo-zl-SA7"/>
+                            <constraint firstItem="VYr-b7-OYd" firstAttribute="leading" secondItem="hV6-gJ-abv" secondAttribute="leading" constant="10" id="rkL-Ul-zps"/>
+                            <constraint firstItem="hV6-gJ-abv" firstAttribute="trailing" secondItem="VYr-b7-OYd" secondAttribute="trailing" constant="10" id="uTo-zl-SA7"/>
                             <constraint firstAttribute="trailing" secondItem="jew-g3-mNh" secondAttribute="trailing" id="wnS-lu-6a0"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="hV6-gJ-abv"/>
