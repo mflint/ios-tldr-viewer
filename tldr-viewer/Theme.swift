@@ -25,13 +25,17 @@ class Theme {
 
         // segmented control appearance changed a lot in iOS 13
         if #available(iOS 13.0, *) {
+            // Note: this `backgroundColor` property displays darker than the colour in the asset catalog
+            // when in light mode, and displays lighter when in dark mode
+            SegmentedControl.appearance().backgroundColor = Color.segmentUnselectedBackground.uiColor()
             SegmentedControl.appearance().selectedSegmentTintColor = Color.segmentSelectedBackground.uiColor()
-            SegmentedControl.appearance().backgroundColor = Color.segmentUnselectedBackground.uiColor() // this displays darker than the colour in the asset catalog
             SegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Color.segmentUnselectedForeground.uiColor()], for: .normal)
             SegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Color.segmentSelectedForeground.uiColor()], for: .selected)
             
-            SegmentedControlInverse.appearance().selectedSegmentTintColor = Color.segmentInverseSelectedBackground.uiColor()
+            // Note: this `backgroundColor` property displays darker than the colour in the asset catalog
+            // when in light mode, and displays lighter when in dark mode
             SegmentedControlInverse.appearance().backgroundColor = Color.segmentInverseUnselectedBackground.uiColor()
+            SegmentedControlInverse.appearance().selectedSegmentTintColor = Color.segmentInverseSelectedBackground.uiColor()
             SegmentedControlInverse.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Color.segmentInverseUnselectedForeground.uiColor()], for: .normal)
             SegmentedControlInverse.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Color.segmentInverseSelectedForeground.uiColor()], for: .selected)
         } else {
