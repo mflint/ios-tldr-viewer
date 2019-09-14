@@ -7,7 +7,7 @@
     {
       "idiom" : "universal",
       "color" : {
-        "color-space" : "srgb",
+        "color-space" : "extended-srgb",
         "components" : {
           "red" : "0",
           "alpha" : "1.000",
@@ -25,7 +25,7 @@
         }
       ],
       "color" : {
-        "color-space" : "srgb",
+        "color-space" : "extended-srgb",
         "components" : {
           "red" : "0",
           "alpha" : "1.000",
@@ -43,13 +43,8 @@
         }
       ],
       "color" : {
-        "color-space" : "srgb",
-        "components" : {
-          "red" : "5",
-          "alpha" : "1.000",
-          "blue" : "35",
-          "green" : "35"
-        }
+        "platform" : "ios",
+        "reference" : "systemPinkColor"
       }
     }
   ]
