@@ -9,7 +9,7 @@ devices([
 "iPhone Xs",             # 5.8 inches, 1125 x 2436
 "iPhone 8 Plus",         # 5.5 inches, 1242 × 2208
 "iPhone 8",              # 4.7 inches, 750 × 1334
-"iPhone 5s",             # 4.0 inches, 640 x 1136
+"iPhone SE",             # 4.0 inches, 640 x 1136
 "iPad Pro (12.9-inch) (2nd generation)",  # 12.9 inches, 2048 x 2732
 "iPad Pro (12.9-inch) (3rd generation)",  # 12.9 inches, 2048 x 2732
 "iPad Pro (11-inch)",    # 11 inches, 1668 x 2388
@@ -33,7 +33,7 @@ scheme("snapshot")
 output_directory "./fastlane/screenshots"
 
 # remove the '#' to clear all previously generated screenshots before creating new ones
-clear_previous_screenshots(true)
+# clear_previous_screenshots(true)
 
 # Choose which project/workspace to use
 project "./tldr-viewer.xcodeproj"

@@ -20,14 +20,14 @@ def xcode
 end
 
 def xcodebeta
-    xcode_select("/Applications/Xcode-beta.app")
+    xcode_select("/Applications/Xcode-beta7.app")
 end
 
 platform :ios do
   desc "Generate new localized screenshots"
   lane :tldrscreenshots do
     xcode
-    capture_screenshots(project "./tldr-viewer.xcodeproj",
+    capture_screenshots(
                         scheme: "snapshot"
                         )
   end
@@ -41,7 +41,7 @@ platform :ios do
 
   desc "Upload binary and submit for review"
   lane :tldrsubmitbinary do
-    xcodebeta
+    xcode
     build_ios_app()
     upload_to_app_store(submit_for_review: true,
                         automatic_release: true,
@@ -53,7 +53,7 @@ platform :ios do
 
   desc "Upload binary to testflight"
   lane :tldrtestflight do
-    xcodebeta
+    xcode
     build_ios_app()
     xcode
     upload_to_testflight()
