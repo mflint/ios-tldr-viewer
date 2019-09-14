@@ -42,4 +42,5 @@ fastlane/metadata/*
 fastlane/Preview.html
 fastlane/README.md
 fastlane/report.xml
+fastlane/screenshots/screenshots.html 
 

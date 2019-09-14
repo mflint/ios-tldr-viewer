@@ -18,6 +18,7 @@ private struct Device {
 
 private struct Devices {
     private static let devices = [
+        Device(name: "iPhone Xʀ", splitView: true, phone: true),
         Device(name: "iPhone Xs Max", splitView: true, phone: true),
         Device(name: "iPhone Xs", splitView: false, phone: true),
         Device(name: "iPhone 8 Plus", splitView: true, phone: true),
@@ -77,7 +78,7 @@ class SnapshotTests: XCTestCase {
         app.buttons["All"].firstMatch.tap()
         app.staticTexts["say"].firstMatch.tap()
 
-        Thread.sleep(forTimeInterval: 2)
+        Thread.sleep(forTimeInterval: 3)
         
         if Devices.currentDevice().phone {
             snapshot(ScreenshotNames.commandDetail.rawValue)
