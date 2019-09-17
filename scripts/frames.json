@@ -1,0 +1,70 @@
+{
+    "languages": [
+        "en-GB",
+        "en-US"
+    ],
+    "device_sets": [
+        {
+            "devices": [
+                "iphone_se",
+                "iphone_xs_max"
+            ],
+            "screens": 3,
+            "background": {
+                "gradient_from": "#266594",
+                "gradient_to": "#3f92d1",
+                "gradient_angle": 20
+            },
+            "frames": [
+                {
+                    "source": "CommandList.png",
+                    "x_location": 0.95,
+                    "y_location": 0,
+                    "scale": 1.1,
+                    "rotation": 8
+                },
+                {
+                    "source": "CommandDetail.png",
+                    "x_location": 2.1,
+                    "y_location": -0.1,
+                    "scale": 1.1,
+                    "rotation": -12
+                },
+                {
+                    "source": "CommandList.png",
+                    "x_location": 3.25,
+                    "y_location": 0,
+                    "scale": 1.1,
+                    "rotation": -24
+                }
+            ],
+            "text_styles": {
+                "normal": {
+                    "font": "Tahoma",
+                    "size": 0.8,
+                    "colour": "#ffffff"
+                }
+            },
+            "texts": [
+                {
+                    "en-GB": "Search the app for\ncommand-line tools\nin multiple platforms",
+                    "en-US": "Search the app for\ncommand-line tools\nin multiple platforms",
+                    "screen": 1,
+                    "style": "normal"
+                },
+                {
+                    "en-GB": "View command usage\nwith examples",
+                    "en-US": "View command usage\nwith examples",
+                    "screen": 2,
+                    "style": "normal"
+                },
+                {
+                    "en-GB": "Favourite commands\nsync to your other\ndevices with iCloud",
+                    "en-US": "Favorite commands\nsync to your other\ndevices with iCloud",
+                    "screen": 3,
+                    "style": "normal"
+                }
+            ]
+        }
+    ]
+}
