@@ -50,6 +50,7 @@ class SnapshotTests: XCTestCase {
         case commandList = "01CommandList"
         case commandDetail = "02CommandDetail"
         case commandListAndDetail = "03CommandListAndDetail"
+        case favouriteCommands = "04FavouriteCommands"
     }
     
     private var app: XCUIApplication!
@@ -58,6 +59,11 @@ class SnapshotTests: XCTestCase {
         continueAfterFailure = false
 
         app = XCUIApplication()
+
+        // overwrite the list of favourites by passing in this
+        // comma-separated value into the argument domain
+        app.launchArguments.append(contentsOf: ["-favouriteCommandNames",
+                                                "curl,find,nmap,openssl,caffeinate,carthage,xcodebuild"])
         setupSnapshot(app)
         app.launch()
     }
@@ -70,6 +76,27 @@ class SnapshotTests: XCTestCase {
         app.buttons["All"].firstMatch.tap()
         
         snapshot(ScreenshotNames.commandList.rawValue)
+    }
+    
+    func testFavouriteCommands() {
+        Thread.sleep(forTimeInterval: 3)
+        
+        app.buttons["All"].firstMatch.tap()
+        
+        Thread.sleep(forTimeInterval: 2)
+
+        if app.buttons["Favorites"].exists {
+            app.buttons["Favorites"].firstMatch.tap()
+        } else {
+            app.buttons["Favourites"].firstMatch.tap()
+        }
+        
+        if !Devices.currentDevice().phone {
+            app.staticTexts["nmap"].firstMatch.tap()
+            Thread.sleep(forTimeInterval: 3)
+        }
+        
+        snapshot(ScreenshotNames.favouriteCommands.rawValue)
     }
     
     func testCommandDetail() {
