@@ -1,0 +1,122 @@
+{
+    "languages": [
+        "en-GB",
+        "en-US"
+    ],
+    "device_sets": [
+        {
+            "devices": [
+                "iphone_se",
+                "iphone_8",
+                "iphone_8plus",
+                "iphone_xs",
+                "iphone_xs_max"
+            ],
+            "screens": 3,
+            "background": {
+                "gradient_from": "#266594",
+                "gradient_to": "#3f92d1",
+                "gradient_angle": 20
+            },
+            "frames": [
+                {
+                    "source": "CommandList.png",
+                    "x_location": 0.95,
+                    "y_location": 0,
+                    "scale": 1.1,
+                    "rotation": 8
+                },
+                {
+                    "source": "CommandDetail.png",
+                    "x_location": 2.1,
+                    "y_location": -0.1,
+                    "scale": 1.1,
+                    "rotation": -12
+                },
+                {
+                    "source": "FavouriteCommands.png",
+                    "x_location": 3.25,
+                    "y_location": 0,
+                    "scale": 1.1,
+                    "rotation": -24
+                }
+            ],
+            "text_styles": {
+                "normal": {
+                    "font": "Tahoma",
+                    "size": 0.8,
+                    "colour": "#ffffff"
+                }
+            },
+            "texts": [
+                {
+                    "en-GB": "Browse hundreds of\ncommand-line tools\nfor multiple platforms",
+                    "en-US": "Browse hundreds of\ncommand-line tools\nfor multiple platforms",
+                    "screen": 1,
+                    "style": "normal"
+                },
+                {
+                    "en-GB": "View command details\nwith usage examples",
+                    "en-US": "View command details\nwith usage examples",
+                    "screen": 2,
+                    "style": "normal"
+                },
+                {
+                    "en-GB": "Favourite commands,\nand sync them to\nyour other devices",
+                    "en-US": "Favorite commands,\nand sync them to\nyour other devices",
+                    "screen": 3,
+                    "style": "normal"
+                }
+            ]
+        },
+        {
+            "devices": [
+                "ipad_pro_12_9_2nd_gen",
+                "ipad_pro_12_9_3rd_gen"
+            ],
+            "screens": 2,
+            "background": {
+                "gradient_from": "#266594",
+                "gradient_to": "#3f92d1",
+                "gradient_angle": 20
+            },
+            "frames": [
+                {
+                    "source": "CommandListAndDetail.png",
+                    "x_location": 1,
+                    "y_location": 0.1,
+                    "scale": 1.0,
+                    "rotation": 0
+                },
+                {
+                    "source": "FavouriteCommands.png",
+                    "x_location": 2.1,
+                    "y_location": 0.05,
+                    "scale": 1,
+                    "rotation": -12
+                }
+            ],
+            "text_styles": {
+                "normal": {
+                    "font": "Tahoma",
+                    "size": 0.8,
+                    "colour": "#ffffff"
+                }
+            },
+            "texts": [
+                {
+                    "en-GB": "Browse hundreds of\ncommand-line tools\nfor multiple platforms",
+                    "en-US": "Browse hundreds of\ncommand-line tools\nfor multiple platforms",
+                    "screen": 1,
+                    "style": "normal"
+                },
+                {
+                    "en-GB": "Favourite commands,\nand sync them to\nyour other devices",
+                    "en-US": "Favorite commands,\nand sync them to\nyour other devices",
+                    "screen": 2,
+                    "style": "normal"
+                }
+            ]
+        }
+    ]
+}

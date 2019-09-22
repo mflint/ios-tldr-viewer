@@ -54,8 +54,16 @@ class Preferences {
     }
     
     func favouriteCommandNames() -> [String] {
-        guard let result = userDefaults.stringArray(forKey: Constant.PreferenceKey.favouriteCommandNames) else { return [] }
-        return result
+        switch userDefaults.value(forKey: Constant.PreferenceKey.favouriteCommandNames) {
+        case let stringArray as [String]:
+            return stringArray
+        case let string as String:
+            // when XCUITests run, for creating screenshots, favourites are passed into
+            // the argument domain as a comma separated string
+            return string.components(separatedBy: ",")
+        default:
+            return []
+        }
     }
     
     func setFavouriteCommandNames(_ favouriteCommandNames: [String]) {

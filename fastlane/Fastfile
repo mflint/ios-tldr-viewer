@@ -48,7 +48,6 @@ platform :ios do
                         skip_binary_upload: false,
                         skip_metadata: true,
                         skip_screenshots: true,
-                        include_in_app_purchases: false,
                         force: true)
   end
 
