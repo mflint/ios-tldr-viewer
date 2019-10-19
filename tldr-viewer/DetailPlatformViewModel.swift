@@ -138,6 +138,10 @@ class DetailPlatformViewModel {
         
         for codeBlockAndRange in codeBlocksAndRanges {
             let codeBlock = codeBlockAndRange.substring
+            if seeAlsoCommands.contains(where: { $0.name == codeBlock }) {
+                // Command has already been collected
+                continue
+            }
             
             // check this codeblock doesn't reference the current command -
             // we don't want to generate hyperlinks to ourself
