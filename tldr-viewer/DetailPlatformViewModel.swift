@@ -181,7 +181,8 @@ class DetailPlatformViewModel {
                 
                 if let seeAlsoCommandVariant = seeAlsoCommandVariant {
                     let summary = seeAlsoCommandVariant.summary()
-                    seeAlsoHTML += "<dt><a href=\"\(seeAlsoCommandName)\">\(seeAlsoCommandName)</a></dt><dd>\(summary)</dd>"
+                    let htmlSummary = (try? Down(markdownString: summary).toHTML()) ?? summary
+                    seeAlsoHTML += "<dt><a href=\"\(seeAlsoCommandName)\">\(seeAlsoCommandName)</a></dt><dd>\(htmlSummary)</dd>"
                 }
             }
             seeAlsoHTML += "</dl></div>"
