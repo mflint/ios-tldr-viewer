@@ -26,9 +26,8 @@ Changelog
 Requirements
 ------------
 
-* Xcode 11
-* Swift 5.1
-* [My fork of a Swift Zip library][MyZip] (hopefully this is temporary, while Swift 5.1 is unsupported in the upstream repo)
+* Xcode 12
+* Swift 5.3
 
 Acknowledgements
 ----------------
@@ -36,7 +35,7 @@ Acknowledgements
 Thanks to:
 
 * Romain Prieto and all other contributors to the [TLDR-pages project][TLDR-pages]
-* Kristopher Johnson for [Markingbird, a Markdown to HTML converter][Markingbird]
+* Rob Phillips for [Down, a Markdown renderer][Down] built upon [cmark][cmark]
 * Roy Marmelstein for the [Swift Zip framework][Zip]
 * 'Arabidopsis' for the gorgeous teal-deer artwork. Found on [DeviantArt][TealDeerArtworkDeviantArt], currently used without permission.
 * Anyone who has submitted bug reports or other feedback
@@ -52,9 +51,9 @@ Pull requests
 Yup. Welcome!
 
 
-[MyZip]: https://github.com/mflint/Zip/tree/swift5.1
 [Zip]: https://github.com/marmelroy/Zip
 [TLDR-pages]: https://github.com/tldr-pages/tldr
-[Markingbird]: https://github.com/kristopherjohnson/Markingbird
+[Down]: https://github.com/iwasrobbed/Down
+[cmark]: https://github.com/commonmark/cmark
 [TealDeerArtworkDeviantArt]: http://arabidopsis.deviantart.com/art/Teal-Deer-II-158802763
 [TealDeerArtworkRedbubble]: http://www.redbubble.com/people/arabidopsis/works/5386340-1-teal-deer-too-long-didnt-read
