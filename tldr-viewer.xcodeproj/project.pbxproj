@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -45,6 +45,9 @@
 		3487250522C77BF7004D4FD1 /* SnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3487250422C77BF7004D4FD1 /* SnapshotTests.swift */; };
 		3487250D22C77C4E004D4FD1 /* fastlane in Resources */ = {isa = PBXBuildFile; fileRef = 3487250C22C77C4E004D4FD1 /* fastlane */; };
 		3487250F22C77C7D004D4FD1 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3487250E22C77C7D004D4FD1 /* SnapshotHelper.swift */; };
+		34970E8E2516875C00FCAAFC /* Down in Frameworks */ = {isa = PBXBuildFile; productRef = 34970E8D2516875C00FCAAFC /* Down */; };
+		34970E91251687E300FCAAFC /* Zip in Frameworks */ = {isa = PBXBuildFile; productRef = 34970E90251687E300FCAAFC /* Zip */; };
+		34970E942516888C00FCAAFC /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34970E932516888C00FCAAFC /* CoreServices.framework */; };
 		34AFB61A22F636F7007153B3 /* FilteringDataSourceDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AFB61922F636F7007153B3 /* FilteringDataSourceDecorator.swift */; };
 		34AFB61D22F6BE89007153B3 /* SwitchingDataSourceDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AFB61C22F6BE89007153B3 /* SwitchingDataSourceDecorator.swift */; };
 		34AFB61F22F6BED7007153B3 /* SearchingDataSourceDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AFB61E22F6BED7007153B3 /* SearchingDataSourceDecorator.swift */; };
@@ -53,14 +56,12 @@
 		34AFB62522F704B8007153B3 /* WeakCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AFB62422F704B8007153B3 /* WeakCollection.swift */; };
 		34C800571E3D5CB000164493 /* Localizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C800561E3D5CB000164493 /* Localizations.swift */; };
 		34D06BBD1C537CC100D30041 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D06BBC1C537CC100D30041 /* DataSource.swift */; };
-		34D06BBE1C5386DF00D30041 /* Zip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34D06BB91C519C1100D30041 /* Zip.framework */; };
 		34D06BC41C54203300D30041 /* DetailDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D06BC31C54203300D30041 /* DetailDataSource.swift */; };
 		34D06BC61C5428D800D30041 /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D06BC51C5428D800D30041 /* ListTableViewController.swift */; };
 		34D06BC81C54C60C00D30041 /* OldIndexCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D06BC71C54C60C00D30041 /* OldIndexCellViewModel.swift */; };
 		34D06BCB1C54CA6100D30041 /* NSDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D06BCA1C54CA6100D30041 /* NSDateExtension.swift */; };
 		34D06BCF1C5CC93700D30041 /* SpotlightSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D06BCE1C5CC93700D30041 /* SpotlightSearch.swift */; };
 		34D06BD11C5CC9A000D30041 /* CoreSpotlight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34D06BD01C5CC9A000D30041 /* CoreSpotlight.framework */; };
-		34D06BD31C5CCAF500D30041 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34D06BD21C5CCAF500D30041 /* MobileCoreServices.framework */; };
 		34D5B6501E350DA500C6AB64 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D5B64F1E350DA500C6AB64 /* Preferences.swift */; };
 		34D5B6521E350EF500C6AB64 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D5B6511E350EF500C6AB64 /* Constants.swift */; };
 		34D5B6541E35168700C6AB64 /* Shortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D5B6531E35168700C6AB64 /* Shortcuts.swift */; };
@@ -130,6 +131,7 @@
 		3487250622C77BF7004D4FD1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3487250C22C77C4E004D4FD1 /* fastlane */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fastlane; sourceTree = "<group>"; };
 		3487250E22C77C7D004D4FD1 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
+		34970E932516888C00FCAAFC /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		34AFB61922F636F7007153B3 /* FilteringDataSourceDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilteringDataSourceDecorator.swift; sourceTree = "<group>"; };
 		34AFB61C22F6BE89007153B3 /* SwitchingDataSourceDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchingDataSourceDecorator.swift; sourceTree = "<group>"; };
 		34AFB61E22F6BED7007153B3 /* SearchingDataSourceDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingDataSourceDecorator.swift; sourceTree = "<group>"; };
@@ -138,7 +140,6 @@
 		34AFB62422F704B8007153B3 /* WeakCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakCollection.swift; sourceTree = "<group>"; };
 		34C15E76226329CB00350367 /* en-US */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-US"; path = "en-US.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		34C800561E3D5CB000164493 /* Localizations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localizations.swift; sourceTree = "<group>"; };
-		34D06BB91C519C1100D30041 /* Zip.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Zip.framework; path = Carthage/Build/iOS/Zip.framework; sourceTree = "<group>"; };
 		34D06BBC1C537CC100D30041 /* DataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 		34D06BC31C54203300D30041 /* DetailDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailDataSource.swift; sourceTree = "<group>"; };
 		34D06BC51C5428D800D30041 /* ListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
@@ -168,10 +169,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				34D06BD31C5CCAF500D30041 /* MobileCoreServices.framework in Frameworks */,
+				34970E91251687E300FCAAFC /* Zip in Frameworks */,
 				34D06BD11C5CC9A000D30041 /* CoreSpotlight.framework in Frameworks */,
+				34970E8E2516875C00FCAAFC /* Down in Frameworks */,
+				34970E942516888C00FCAAFC /* CoreServices.framework in Frameworks */,
 				34358AF51C3589D200BB7DDB /* WebKit.framework in Frameworks */,
-				34D06BBE1C5386DF00D30041 /* Zip.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,12 +206,12 @@
 				34474FE01E3D2E3E00CBA95D /* README.md */,
 				34D06BD21C5CCAF500D30041 /* MobileCoreServices.framework */,
 				34D06BD01C5CC9A000D30041 /* CoreSpotlight.framework */,
-				34D06BB91C519C1100D30041 /* Zip.framework */,
 				34358AF41C3589D200BB7DDB /* WebKit.framework */,
 				342514821C349D96001D31F4 /* tldr-viewer */,
 				348724F522C77BB2004D4FD1 /* tldr-pages-screenshot */,
 				3487250322C77BF7004D4FD1 /* tldr-viewer-snapshottests */,
 				342514811C349D96001D31F4 /* Products */,
+				34970E922516888B00FCAAFC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -328,6 +330,14 @@
 			path = "tldr-viewer-snapshottests";
 			sourceTree = "<group>";
 		};
+		34970E922516888B00FCAAFC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				34970E932516888C00FCAAFC /* CoreServices.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		34AFB61B22F6B9ED007153B3 /* DataSource */ = {
 			isa = PBXGroup;
 			children = (
@@ -374,13 +384,16 @@
 				3425147C1C349D96001D31F4 /* Sources */,
 				3425147D1C349D96001D31F4 /* Frameworks */,
 				3425147E1C349D96001D31F4 /* Resources */,
-				34D06BBB1C519C2100D30041 /* Run Script (carthage copy frameworks) */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = "tldr-viewer";
+			packageProductDependencies = (
+				34970E8D2516875C00FCAAFC /* Down */,
+				34970E90251687E300FCAAFC /* Zip */,
+			);
 			productName = "tldr-viewer";
 			productReference = 342514801C349D96001D31F4 /* tldr-viewer.app */;
 			productType = "com.apple.product-type.application";
@@ -410,7 +423,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1020;
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "Green Light";
 				TargetAttributes = {
 					3425147F1C349D96001D31F4 = {
@@ -442,6 +455,10 @@
 				"en-US",
 			);
 			mainGroup = 342514771C349D96001D31F4;
+			packageReferences = (
+				34970E8C2516875C00FCAAFC /* XCRemoteSwiftPackageReference "Down" */,
+				34970E8F251687E300FCAAFC /* XCRemoteSwiftPackageReference "Zip" */,
+			);
 			productRefGroup = 342514811C349D96001D31F4 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -505,23 +522,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "set -x\n\n# Get base path to project\nBASE_PATH=\"$PROJECT_DIR/$PROJECT_NAME\"\n\n#--------- START OF YOUR CONFIGURATION (change Path_To_.. to fit)\n\n# Get path to Laurine Generator script its the binary\nLAURINE_PATH=\"$BASE_PATH/../scripts/LaurineGenerator.swift\"\nLAURINE_BIN_PATH=\"$BASE_PATH/../bin/laurine\"\n\n# Get path to main localization file (usually english).\nSOURCE_PATH=\"$BASE_PATH/Base.lproj/Localizable.strings\"\n\n# Get path to output. If you use ObjC version of output, set implementation file (.m), as header will be generated automatically\nOUTPUT_PATH=\"$BASE_PATH/Localizations.swift\"\n\n#--------- END OF YOUR CONFIGURATION\n\n# Build laurine binary if necessary\nif [ ! -f $LAURINE_BIN_PATH ]; then\nenv -i swiftc -emit-executable -o$LAURINE_BIN_PATH $LAURINE_PATH\nfi\n\n# Actually generate output. -- CUSTOMIZE -- parameters to your needs (see documentation).\n# Will only re-generate script if something changed\nif [ \"$OUTPUT_PATH\" -ot \"$SOURCE_PATH\" ]; then\n\"$LAURINE_BIN_PATH\" -i \"$SOURCE_PATH\" -c -o \"$OUTPUT_PATH\"\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		34D06BBB1C519C2100D30041 /* Run Script (carthage copy frameworks) */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Zip.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Down.framework",
-			);
-			name = "Run Script (carthage copy frameworks)";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -665,6 +665,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -689,7 +690,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -722,6 +723,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -740,10 +742,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -761,12 +764,14 @@
 				DEVELOPMENT_TEAM = 5Q656C7A6K;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = "tldr-viewer/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.9.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "uk.co.greenlightapps.tldr-viewer";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -784,12 +789,14 @@
 				DEVELOPMENT_TEAM = 5Q656C7A6K;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = "tldr-viewer/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.9.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "uk.co.greenlightapps.tldr-viewer";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -812,7 +819,11 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "tldr-viewer-snapshottests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.tthew.tldr-viewer-snapshottests";
@@ -839,7 +850,11 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "tldr-viewer-snapshottests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.tthew.tldr-viewer-snapshottests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -880,6 +895,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		34970E8C2516875C00FCAAFC /* XCRemoteSwiftPackageReference "Down" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/iwasrobbed/Down.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		34970E8F251687E300FCAAFC /* XCRemoteSwiftPackageReference "Zip" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/marmelroy/Zip.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		34970E8D2516875C00FCAAFC /* Down */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 34970E8C2516875C00FCAAFC /* XCRemoteSwiftPackageReference "Down" */;
+			productName = Down;
+		};
+		34970E90251687E300FCAAFC /* Zip */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 34970E8F251687E300FCAAFC /* XCRemoteSwiftPackageReference "Zip" */;
+			productName = Zip;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 342514781C349D96001D31F4 /* Project object */;
 }

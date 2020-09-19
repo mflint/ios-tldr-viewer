@@ -63,7 +63,7 @@ class SnapshotTests: XCTestCase {
         // overwrite the list of favourites by passing in this
         // comma-separated value into the argument domain
         app.launchArguments.append(contentsOf: ["-favouriteCommandNames",
-                                                "curl,find,nmap,openssl,caffeinate,carthage,xcodebuild"])
+                                                "curl,find,nmap,openssl,caffeinate,swift,xcodebuild"])
         setupSnapshot(app)
         app.launch()
     }
