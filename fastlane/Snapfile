@@ -5,16 +5,16 @@
 
 # A list of devices you want to take the screenshots from
 devices([
-"iPad Pro (10.5-inch)",  # 10.5 inches, 1668 x 2224
-"iPad Pro (11-inch)",    # 11 inches, 1668 x 2388
-"iPad Pro (12.9-inch) (2nd generation)",  # 12.9 inches, 2048 x 2732
-"iPad Pro (12.9-inch) (3rd generation)",  # 12.9 inches, 2048 x 2732
-"iPad Pro (9.7-inch)",   # 9.7 inches, 1536 x 2008 or 1536 x 2048
+"iPhone 11 Pro Max",         # 6.5 inches, 1242 x 2688
+"iPhone 11 Pro",             # 5.8 inches, 1125 x 2436
 "iPhone 8 Plus",         # 5.5 inches, 1242 × 2208
 "iPhone 8",              # 4.7 inches, 750 × 1334
-"iPhone SE",             # 4.0 inches, 640 x 1136
-"iPhone Xs Max",         # 6.5 inches, 1242 x 2688
-"iPhone Xs"              # 5.8 inches, 1125 x 2436
+"iPhone SE (1st generation)",# 4.0 inches, 640 x 1136
+"iPad Pro (12.9-inch) (3rd generation)",  # 12.9 inches, 2048 x 2732
+"iPad Pro (12.9-inch) (2nd generation)",  # 12.9 inches, 2048 x 2732
+"iPad Pro (11-inch)",    # 11 inches, 1668 x 2388
+"iPad Air (4th generation)", # 10.5 inches, 1668 x 2224 
+"iPad Pro (9.7-inch)",   # 9.7 inches, 1536 x 2008 or 1536 x 2048
 ])
 
 languages([

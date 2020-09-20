@@ -18,18 +18,16 @@ private struct Device {
 
 private struct Devices {
     private static let devices = [
-        Device(name: "iPhone Xʀ", splitView: true, phone: true),
-        Device(name: "iPhone Xs Max", splitView: true, phone: true),
-        Device(name: "iPhone Xs", splitView: false, phone: true),
+        Device(name: "iPhone 11 Pro Max", splitView: true, phone: true),
+        Device(name: "iPhone 11 Pro", splitView: false, phone: true),
         Device(name: "iPhone 8 Plus", splitView: true, phone: true),
         Device(name: "iPhone 8", splitView: false, phone: true),
-        Device(name: "iPhone 5s", splitView: false, phone: true),
-        Device(name: "iPhone SE", splitView: false, phone: true),
+        Device(name: "iPhone SE (1st generation)", splitView: false, phone: true),
         Device(name: "iPad Pro (12.9-inch) (3rd generation)", splitView: true, phone: false),
         Device(name: "iPad Pro (12.9-inch) (2nd generation)", splitView: true, phone: false),
-        Device(name: "iPad Pro (11-inch)", splitView: true, phone: false),
-        Device(name: "iPad Pro (10.5-inch)", splitView: true, phone: false),
-        Device(name: "iPad Pro (9.7-inch)", splitView: true, phone: false)
+		Device(name: "iPad Pro (11-inch)", splitView: true, phone: false),
+		Device(name: "iPad Air (4th generation)", splitView: true, phone: false),
+        Device(name: "iPad Pro (9.7-inch)", splitView: true, phone: false),
     ]
     
     static func currentDevice() -> Device {

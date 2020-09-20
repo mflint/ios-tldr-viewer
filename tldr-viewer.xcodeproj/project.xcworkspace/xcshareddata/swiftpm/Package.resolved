@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Down",
+        "repositoryURL": "https://github.com/iwasrobbed/Down.git",
+        "state": {
+          "branch": "master",
+          "revision": "ff68cfec886a4ca70679a7c3982ee3333df6db97",
+          "version": null
+        }
+      },
+      {
+        "package": "Zip",
+        "repositoryURL": "https://github.com/marmelroy/Zip.git",
+        "state": {
+          "branch": "master",
+          "revision": "80b1c3005ee25b4c7ce46c4029ac3347e8d5e37e",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}

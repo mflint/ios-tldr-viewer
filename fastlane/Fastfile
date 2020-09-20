@@ -16,7 +16,7 @@
 default_platform(:ios)
 
 def xcode
-    xcode_select("/Applications/Xcode.app")
+    xcode_select("/Applications/Xcode_12.0.app")
 end
 
 def xcodebeta
