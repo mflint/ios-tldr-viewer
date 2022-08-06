@@ -34,15 +34,6 @@ code {
     vertical-align: +6%;
     padding: 0.20em 0.6em;
     margin: 0.1em 0.1em 0.1em 0.1em;
-	word-wrap: break-word;
-}
-
-p a code {
-	display: block;
-}
-
-a.copylink {
-	text-decoration: none;
 }
 
 ul {
