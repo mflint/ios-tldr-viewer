@@ -12,7 +12,7 @@ protocol DataSourceDelegate {
     func dataSourceDidUpdate(dataSource: DataSourcing)
 }
 
-protocol DataSourcing: class {
+protocol DataSourcing: AnyObject {
     var commands: [Command] { get }
     
     // TODO: isSearchable/isRefreshable might be better as an OptionSet

@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol DetailViewModelDelegate: class {
+protocol DetailViewModelDelegate: AnyObject {
     /// the "favourite" status of the command has changed, and should be redrawn
     func updateFavourite()
     
