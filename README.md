@@ -6,6 +6,7 @@ An iOS client for "TLDR-pages".
 Changelog
 ---------
 
+* 1.9.3: Adds mardown support to "See also" box (Thank-you Danny Mösch), and other small changes
 * 1.9.2: Do not add commands to "See also" box multiple times (Thank-you Danny Mösch)
 * 1.9.1: Crash-fix for iOS 11 users. Sorry about that :-(
 * 1.9.0: Update to support iOS 13 and "dark mode"; change of internal Markdown parser
@@ -38,6 +39,7 @@ Thanks to:
 * Rob Phillips for [Down, a Markdown renderer][Down] built upon [cmark][cmark]
 * Roy Marmelstein for the [Swift Zip framework][Zip]
 * 'Arabidopsis' for the gorgeous teal-deer artwork. Found on [DeviantArt][TealDeerArtworkDeviantArt], currently used without permission.
+  * if you're reading this, Arabidopsis, please get in touch!
 * Anyone who has submitted bug reports or other feedback
 
 Notes
