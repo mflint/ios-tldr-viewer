@@ -1110,6 +1110,7 @@ private extension FileManager {
                 let type = attributes[FileAttributeKey.type] as? String
                 return type == FileAttributeType.typeDirectory.rawValue
             }
+			return false
         } catch _ {
             return false
         }
