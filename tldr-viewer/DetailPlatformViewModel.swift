@@ -94,8 +94,9 @@ class DetailPlatformViewModel {
         
         html = linkifyCodeBlocks(markdown: changedMarkdownAndSeeAlso.markdown, html: html)
             .replacingOccurrences(of: "{{", with: "<span class='parameter'>")
-            .replacingOccurrences(of: "}}", with: "</span>")
-        
+			.replacingOccurrences(of: "}}}", with: "}</span>")
+			.replacingOccurrences(of: "}}", with: "</span>")
+
         unstyledDetailHTML = html + changedMarkdownAndSeeAlso.seeAlsoHTML
         
         self.message = nil
