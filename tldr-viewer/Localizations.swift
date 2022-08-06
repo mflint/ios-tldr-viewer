@@ -53,18 +53,6 @@ public struct Localizations {
 
         }
 
-        public struct Author {
-
-            /// Base translation: © %@ Green Light Apps
-            public static func Detail(_ value1 : String) -> String {
-                return String(format: NSLocalizedString("INFO.AUTHOR.DETAIL", comment: ""), value1)
-            }
-
-            /// Base translation: Author
-            public static var Title : String = NSLocalizedString("INFO.AUTHOR.TITLE", comment: "")
-
-        }
-
         public struct Thanks {
 
             /// Base translation: Thanks to
@@ -73,7 +61,7 @@ public struct Localizations {
 
             public struct Contributors {
 
-                /// Base translation: People who have reported issues and contributed code: kleerkoat, melgu, Marco Bonelli, Danny Mösch
+                /// Base translation: People who have reported issues and contributed code: kleerkoat, melgu, Marco Bonelli, Danny Mösch, Reinhart Previano Koentjoro
                 public static var Message : String = NSLocalizedString("INFO.THANKS.CONTRIBUTORS.MESSAGE", comment: "")
 
             }
@@ -88,16 +76,6 @@ public struct Localizations {
 
                 /// Base translation: cmark
                 public static var LinkAnchor2 : String = NSLocalizedString("INFO.THANKS.DOWN_LIBRARY.LINK_ANCHOR2", comment: "")
-
-            }
-
-            public struct TldrPages {
-
-                /// Base translation: Romain Prieto and all other contributors to tldr-pages.
-                public static var Message : String = NSLocalizedString("INFO.THANKS.TLDR_PAGES.MESSAGE", comment: "")
-
-                /// Base translation: tldr-pages
-                public static var LinkAnchor : String = NSLocalizedString("INFO.THANKS.TLDR_PAGES.LINK_ANCHOR", comment: "")
 
             }
 
@@ -116,6 +94,16 @@ public struct Localizations {
                     public static var Deviantart : String = NSLocalizedString("INFO.THANKS.ARTWORK.LINK_ANCHOR.DEVIANTART", comment: "")
 
                 }
+            }
+
+            public struct TldrPages {
+
+                /// Base translation: Romain Prieto and all other contributors to tldr-pages.
+                public static var Message : String = NSLocalizedString("INFO.THANKS.TLDR_PAGES.MESSAGE", comment: "")
+
+                /// Base translation: tldr-pages
+                public static var LinkAnchor : String = NSLocalizedString("INFO.THANKS.TLDR_PAGES.LINK_ANCHOR", comment: "")
+
             }
 
             public struct ZipLibrary {
@@ -141,16 +129,28 @@ public struct Localizations {
 
         }
 
+        public struct Author {
+
+            /// Base translation: © %@ Green Light Apps
+            public static func Detail(_ value1 : String) -> String {
+                return String(format: NSLocalizedString("INFO.AUTHOR.DETAIL", comment: ""), value1)
+            }
+
+            /// Base translation: Author
+            public static var Title : String = NSLocalizedString("INFO.AUTHOR.TITLE", comment: "")
+
+        }
+
         public struct OpenSource {
 
-            /// Base translation: Open Source app
-            public static var Header : String = NSLocalizedString("INFO.OPEN_SOURCE.HEADER", comment: "")
+            /// Base translation: Fork me
+            public static var LinkAnchor : String = NSLocalizedString("INFO.OPEN_SOURCE.LINK_ANCHOR", comment: "")
 
             /// Base translation: Fork me on GitHub!
             public static var Message : String = NSLocalizedString("INFO.OPEN_SOURCE.MESSAGE", comment: "")
 
-            /// Base translation: Fork me
-            public static var LinkAnchor : String = NSLocalizedString("INFO.OPEN_SOURCE.LINK_ANCHOR", comment: "")
+            /// Base translation: Open Source app
+            public static var Header : String = NSLocalizedString("INFO.OPEN_SOURCE.HEADER", comment: "")
 
         }
 
@@ -208,30 +208,30 @@ public struct Localizations {
     public struct CommandList {
 
 
-        public struct Favourites {
-
-            /// Base translation: No favourites yet!  Tap the ♡ button to favourite a command.
-            public static var None : String = NSLocalizedString("COMMAND_LIST.FAVOURITES.NONE", comment: "")
-
-        }
-
         public struct Search {
 
 
             public struct NothingFound {
+
+                /// Base translation: tldr
+                public static var ForHighlight : String = NSLocalizedString("COMMAND_LIST.SEARCH.NOTHING_FOUND.FOR_HIGHLIGHT", comment: "")
 
                 /// Base translation: Nothing found for '%@'.  tldr is a community effort, and needs people like you to contribute content. 
                 public static func For(_ value1 : String) -> String {
                     return String(format: NSLocalizedString("COMMAND_LIST.SEARCH.NOTHING_FOUND.FOR", comment: ""), value1)
                 }
 
-                /// Base translation: tldr
-                public static var ForHighlight : String = NSLocalizedString("COMMAND_LIST.SEARCH.NOTHING_FOUND.FOR_HIGHLIGHT", comment: "")
-
                 /// Base translation: Contribute new content
                 public static var ContributeContent : String = NSLocalizedString("COMMAND_LIST.SEARCH.NOTHING_FOUND.CONTRIBUTE_CONTENT", comment: "")
 
             }
+        }
+
+        public struct Favourites {
+
+            /// Base translation: No favourites yet!  Tap the ♡ button to favourite a command.
+            public static var None : String = NSLocalizedString("COMMAND_LIST.FAVOURITES.NONE", comment: "")
+
         }
 
         public struct AllCommands {
@@ -294,17 +294,17 @@ public struct Localizations {
 
         public struct Error {
 
-            /// Base translation: Could not the read index file
-            public static var CouldNotReadIndexFile : String = NSLocalizedString("COMMAND_LIST.ERROR.COULD_NOT_READ_INDEX_FILE", comment: "")
-
             /// Base translation: Could not save the download
             public static var CouldNotSaveDownload : String = NSLocalizedString("COMMAND_LIST.ERROR.COULD_NOT_SAVE_DOWNLOAD", comment: "")
+
+            /// Base translation: Could not index the tldr files
+            public static var CouldNotIndexFiles : String = NSLocalizedString("COMMAND_LIST.ERROR.COULD_NOT_INDEX_FILES", comment: "")
 
             /// Base translation: Could not unzip the download
             public static var CouldNotUnzipDownload : String = NSLocalizedString("COMMAND_LIST.ERROR.COULD_NOT_UNZIP_DOWNLOAD", comment: "")
 
-            /// Base translation: Could not index the tldr files
-            public static var CouldNotIndexFiles : String = NSLocalizedString("COMMAND_LIST.ERROR.COULD_NOT_INDEX_FILES", comment: "")
+            /// Base translation: Could not the read index file
+            public static var CouldNotReadIndexFile : String = NSLocalizedString("COMMAND_LIST.ERROR.COULD_NOT_READ_INDEX_FILE", comment: "")
 
             /// Base translation: Try again
             public static var TryAgain : String = NSLocalizedString("COMMAND_LIST.ERROR.TRY_AGAIN", comment: "")
@@ -326,17 +326,17 @@ public struct Localizations {
 
         public struct CommandPlatform {
 
+            /// Base translation: Linux
+            public static var Linux : String = NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORM.LINUX", comment: "")
+
             /// Base translation: Solaris
             public static var Solaris : String = NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORM.SOLARIS", comment: "")
-
-            /// Base translation: macOS
-            public static var Osx : String = NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORM.OSX", comment: "")
 
             /// Base translation: Windows
             public static var Windows : String = NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORM.WINDOWS", comment: "")
 
-            /// Base translation: Linux
-            public static var Linux : String = NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORM.LINUX", comment: "")
+            /// Base translation: macOS
+            public static var Osx : String = NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORM.OSX", comment: "")
 
             /// Base translation: Common
             public static var Common : String = NSLocalizedString("COMMAND_LIST.COMMAND_PLATFORM.COMMON", comment: "")
