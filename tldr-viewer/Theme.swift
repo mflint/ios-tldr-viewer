@@ -18,10 +18,25 @@ class Theme {
         UINavigationBar.appearance().tintColor = Color.inverseBody.uiColor()
         UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont.tldrBody()], for: .normal)
 
-        // set the background image for UINavigationBar, which removes the ugly black shadow
-        if let backgroundImage = imageWith(color: UIColor.clear) {
-            UINavigationBar.appearance().shadowImage = backgroundImage
-        }
+		if #available(iOS 13.0, *) {
+			let navBarAppearance = UINavigationBarAppearance()
+			navBarAppearance.configureWithOpaqueBackground()
+			navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+			navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+			navBarAppearance.backgroundColor = Color.backgroundTint.uiColor()
+			if let backgroundImage = imageWith(color: UIColor.clear) {
+				navBarAppearance.shadowImage = backgroundImage
+			}
+			UINavigationBar.appearance().standardAppearance = navBarAppearance
+			UINavigationBar.appearance().scrollEdgeAppearance = navBarAppearance
+//			navigationBar.standardAppearance = navBarAppearance
+//			navigationBar.scrollEdgeAppearance = navBarAppearance
+		} else {
+			// set the background image for UINavigationBar, which removes the ugly black shadow
+			if let backgroundImage = imageWith(color: UIColor.clear) {
+				UINavigationBar.appearance().shadowImage = backgroundImage
+			}
+		}
 
         // segmented control appearance changed a lot in iOS 13
         if #available(iOS 13.0, *) {
@@ -46,17 +61,11 @@ class Theme {
         
         // UISearchBar text field
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).font = UIFont.tldrBody()
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = Color.inverseBody.uiColor()
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = Color.searchBackground.uiColor()
-        UISearchBar.appearance().tintColor = .white // cursor and cancel button
-        UISearchBar.appearance().backgroundColor = .clear
-        
-        if #available(iOS 13.0, *) {
-            // can't find a way to change the placeholder text of
-            // a UISearchBar in iOS 13. Anyone?
-        } else {
-            UILabel.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = Color.codeBackground.uiColor() // placeholder text
-        }
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = Color.body.uiColor()
+		if #available(iOS 13.0, *) {
+			UISearchTextField.appearance().backgroundColor = .white
+			UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).tintColor = .white
+		}
     }
     
     private static func imageWith(color: UIColor, size: CGSize = CGSize(width: 1, height: 1)) -> UIImage? {
