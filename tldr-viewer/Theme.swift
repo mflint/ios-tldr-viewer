@@ -29,8 +29,6 @@ class Theme {
 			}
 			UINavigationBar.appearance().standardAppearance = navBarAppearance
 			UINavigationBar.appearance().scrollEdgeAppearance = navBarAppearance
-//			navigationBar.standardAppearance = navBarAppearance
-//			navigationBar.scrollEdgeAppearance = navBarAppearance
 		} else {
 			// set the background image for UINavigationBar, which removes the ugly black shadow
 			if let backgroundImage = imageWith(color: UIColor.clear) {
@@ -59,13 +57,16 @@ class Theme {
             SegmentedControlInverse.appearance().tintColor = Color.segmentInverseSelectedBackground.uiColor()
         }
         
-        // UISearchBar text field
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).font = UIFont.tldrBody()
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = Color.body.uiColor()
-		if #available(iOS 13.0, *) {
-			UISearchTextField.appearance().backgroundColor = .white
-			UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).tintColor = .white
-		}
+		// UISearchBar
+		UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).font = UIFont.tldrBody()
+		UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = Color.inverseBody.uiColor()
+		UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = Color.searchBackground.uiColor()
+
+		// UISearchBar
+		// cursor and cancel button
+		UISearchBar.appearance().tintColor = Color.inverseBody.uiColor()
+		// placeholder text
+		UILabel.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = Color.inverseBodySlightlyTransparent.uiColor()
     }
     
     private static func imageWith(color: UIColor, size: CGSize = CGSize(width: 1, height: 1)) -> UIImage? {
@@ -228,6 +229,9 @@ enum Color: String {
     /// body colour for when text is on an inversed background (example: navigation bar
     /// or segmented control)
     case inverseBody = "clrBodyInverse"
+
+	/// a slightly transparent version of `inverseBody`
+	case inverseBodySlightlyTransparent = "clrBodyInverseSlightlyTransparent"
     
     /// background colour for showing code examples in the "detail" view
     case codeBackground = "clrCodeBackground"

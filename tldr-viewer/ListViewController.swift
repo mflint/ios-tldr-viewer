@@ -58,6 +58,16 @@ class ListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
+		if #available(iOS 13.0, *),
+		   let searchTextField = searchBar?.searchTextField {
+			// set the foreground colour of the placeholder text
+			// (this works more reliably than
+			// UILabel.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor
+			searchTextField.attributedPlaceholder = NSAttributedString(string: self.viewModel.searchPlaceholder, attributes: [NSAttributedString.Key.foregroundColor: Color.inverseBodySlightlyTransparent.uiColor()])
+			// colour of the magnifying glass icon
+			searchTextField.leftView?.tintColor = Color.inverseBodySlightlyTransparent.uiColor()
+		}
         
         doShowOrHideSearchBar()
     }
