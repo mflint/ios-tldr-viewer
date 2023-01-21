@@ -29,7 +29,7 @@ class InfoViewModel {
     private func aboutCell() -> BaseCellViewModel {
         let message = attributedString(text: Localizations.Info.About.Message,
                                        anchors: [Localizations.Info.About.LinkAnchor, Localizations.Info.About.ContributionAnchor],
-                                       urls: ["http://tldr-pages.github.io", "https://github.com/tldr-pages/tldr/blob/master/CONTRIBUTING.md"])
+                                       urls: ["http://tldr-pages.github.io", "https://github.com/tldr-pages/tldr/blob/main/CONTRIBUTING.md"])
         return TextCellViewModel(attributedText: message)
     }
     

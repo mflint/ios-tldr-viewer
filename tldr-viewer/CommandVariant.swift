@@ -23,7 +23,7 @@ struct CommandVariant: Codable {
         /**
          tl;dr pages conform to a specific markdown format. We'll try to grab the stuff in the first blockquote
          
-         See https://github.com/tldr-pages/tldr/blob/master/CONTRIBUTING.md#markdown-format
+         See https://github.com/tldr-pages/tldr/blob/main/CONTRIBUTING.md#markdown-format
          **/
         var result = ""
         var stop = false
