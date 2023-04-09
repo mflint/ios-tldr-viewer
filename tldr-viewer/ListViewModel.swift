@@ -185,7 +185,7 @@ class ListViewModel: NSObject {
                 if !DataSources.sharedInstance.searchingDataSource.searchText.isEmpty {
                     // no search results
                     let cellViewModel = NoResultsCellViewModel(searchTerm: searchText, buttonAction: {
-                        let url = URL(string: "https://github.com/tldr-pages/tldr/blob/master/CONTRIBUTING.md")!
+                        let url = URL(string: "https://github.com/tldr-pages/tldr/blob/main/CONTRIBUTING.md")!
                         UIApplication.shared.open(url, options: [:], completionHandler: nil)
                     })
                     vms.append(cellViewModel)
