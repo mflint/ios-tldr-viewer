@@ -6,6 +6,8 @@ An iOS client for "TLDR-pages".
 Changelog
 ---------
 
+* 1.9.6: Fixes incorrect source URL for the tldr content
+* 1.9.5: Update branch for tldr contributions
 * 1.9.4: Fixes colour bug in the dark-mode search box. Sorry about that :-/
 * 1.9.3: Adds mardown support to "See also" box (Thank-you Danny Mösch), and other small changes
 * 1.9.2: Do not add commands to "See also" box multiple times (Thank-you Danny Mösch)
