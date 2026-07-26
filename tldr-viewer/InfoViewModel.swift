@@ -56,7 +56,7 @@ class InfoViewModel {
     }
     
     private func contactCell() -> BaseCellViewModel {
-        let message = attributedString(text: Localizations.Info.Contact.Message, anchors: [Localizations.Info.Contact.Email.LinkAnchor, Localizations.Info.Contact.Twitter.LinkAnchor], urls: [NSURL(string: "mailto:tldr@greenlightapps.co.uk")!, "https://twitter.com/intent/tweet?text=@mkflint%20"])
+        let message = attributedString(text: Localizations.Info.Contact.Message, anchors: [Localizations.Info.Contact.Email.LinkAnchor], urls: [NSURL(string: "mailto:tldr@greenlightapps.co.uk")!])
         return TextCellViewModel(attributedText: message)
     }
     

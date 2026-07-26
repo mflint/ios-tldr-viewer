@@ -53,9 +53,8 @@
 "INFO.BUG_REPORTS.MESSAGE"="Bug reports, requests, pull requests welcome at the GitHub Issues page.";
 "INFO.BUG_REPORTS.LINK_ANCHOR"="GitHub Issues";
 
-"INFO.CONTACT.MESSAGE"="Contact via email or Twitter.";
+"INFO.CONTACT.MESSAGE"="Contact via email.";
 "INFO.CONTACT.EMAIL.LINK_ANCHOR"="email";
-"INFO.CONTACT.TWITTER.LINK_ANCHOR"="Twitter";
 
 "INFO.THANKS.HEADER"="Thanks to";
 "INFO.THANKS.TLDR_PAGES.MESSAGE"="Romain Prieto and all other contributors to tldr-pages.";
