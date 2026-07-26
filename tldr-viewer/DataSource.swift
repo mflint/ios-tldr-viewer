@@ -64,7 +64,7 @@ public class DataSource: DataSourcing {
         requesting = true
         requestError = nil
         
-        TLDRRequest.requestWithURL(urlString: "https://tldr.sh/assets/tldr.zip") { response in
+        TLDRRequest.requestWithURL(urlString: "https://github.com/tldr-pages/tldr/releases/latest/download/tldr.zip") { response in
             self.processResponse(response: response)
         }
         
