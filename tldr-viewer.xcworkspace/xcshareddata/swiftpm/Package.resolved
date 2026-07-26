@@ -1,4 +1,5 @@
 {
+  "originHash" : "690500ca92417d67acf13ea61c9eb1a3fc2568a45be9d87e5f1394f2795d835e",
   "pins" : [
     {
       "identity" : "down",
@@ -15,9 +16,9 @@
       "location" : "https://github.com/marmelroy/Zip.git",
       "state" : {
         "branch" : "master",
-        "revision" : "67fa55813b9e7b3b9acee9c0ae501def28746d76"
+        "revision" : "bca30f6d6c7d37cbc4aa8f6b0002e281dcc36195"
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }
